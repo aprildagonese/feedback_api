@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_21_171658) do
+ActiveRecord::Schema.define(version: 2019_04_21_174831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.bigint "question_id"
+    t.integer "value"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_answers_on_question_id"
+  end
 
   create_table "group_members", force: :cascade do |t|
     t.bigint "user_id"
@@ -32,6 +41,32 @@ ActiveRecord::Schema.define(version: 2019_04_21_171658) do
     t.index ["survey_id"], name: "index_groups_on_survey_id"
   end
 
+  create_table "questions", force: :cascade do |t|
+    t.string "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "responses", force: :cascade do |t|
+    t.bigint "answer_id"
+    t.integer "response_user_id"
+    t.integer "target_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["answer_id"], name: "index_responses_on_answer_id"
+    t.index ["response_user_id", "target_user_id"], name: "index_responses_on_response_user_id_and_target_user_id", unique: true
+    t.index ["target_user_id", "response_user_id"], name: "index_responses_on_target_user_id_and_response_user_id", unique: true
+  end
+
+  create_table "survey_questions", force: :cascade do |t|
+    t.bigint "survey_id"
+    t.bigint "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_survey_questions_on_question_id"
+    t.index ["survey_id"], name: "index_survey_questions_on_survey_id"
+  end
+
   create_table "surveys", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -44,7 +79,11 @@ ActiveRecord::Schema.define(version: 2019_04_21_171658) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "answers", "questions"
   add_foreign_key "group_members", "groups"
   add_foreign_key "group_members", "users"
   add_foreign_key "groups", "surveys"
+  add_foreign_key "responses", "answers"
+  add_foreign_key "survey_questions", "questions"
+  add_foreign_key "survey_questions", "surveys"
 end
