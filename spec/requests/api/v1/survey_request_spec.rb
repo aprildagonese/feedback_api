@@ -4,8 +4,8 @@ describe 'Surveys API' do
   it "creates a survey" do
     user1, user2, user3, user4, user5 = create_list(:user, 5)
     json = {  "survey_name": "Mod3 Terrificus",
-              "groups": [ { "name": "Team1", "members": ["1", "2"] },
-                          { "name": "Team2", "members": ["3", "4"] } ],
+              "groups": [ { "name": "Team1", "members": ["#{user1.id}", "#{user2.id}"] },
+                          { "name": "Team2", "members": ["#{user3.id}", "#{user4.id}"] } ],
               "questions": [ { "text": "How was this person's code?",
                                "answers": { "1": "Poor quality",
                                             "2": "Ok",
@@ -17,15 +17,19 @@ describe 'Surveys API' do
                              { "text": "Would you work with this person again?",
                                "answers": { "1": "I would avoid it if I could",
                                             "2": "That would be ok wiht me",
-                                            "3": "I would love to!" } } ] }
+                                            "3": "I would love to!" } } ],
+              "message": "You've been requested to complete a feedback survey about your Terrificus project team"  }
 
-    post '/api/v1/surveys', params: {
-                                          "location": "Denver, CO",
-                                          "api_key": "jgn983hy48thw9begh98h4539h4"
-                                        }
+    post '/api/v1/surveys', params: json
 
-    expect(response).to be_successful
+    expect(response.status).to eq(201)
+    result = JSON.parse(response.body, symbolize_names: true)
+    expect(result[:result]).to eq("Survey created")
 
-    parsed = JSON.parse(response.body, symbolize_names: true)
+    expect(Survey.count).to eq(1)
+    expect(Group.count).to eq(2)
+    expect(Question.count).to eq(3)
+    expect(SurveyQuestion.count).to eq(3)
+    expect(Answer.count).to eq(9)
   end
 end
