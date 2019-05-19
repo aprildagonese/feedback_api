@@ -3,14 +3,15 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   import Ecto.Query
 
   def create_survey(arguments) do
-    try do
-      survey = Survey.changeset(%Survey{}, arguments) |> Repo.insert!()
-      create_groups(survey, arguments["groups"])
-      create_questions(survey, arguments["questions"])
-      {:ok, survey}
-    rescue
-      e in RuntimeError -> {:error, e}
-    end
+    Repo.transaction(fn() ->
+      try do
+        survey = Survey.changeset(%Survey{}, arguments) |> Repo.insert!()
+        create_groups(survey, arguments["groups"])
+        create_questions(survey, arguments["questions"])
+      rescue
+        e -> Repo.rollback("Missing required fields")
+      end
+    end)
   end
 
   defp create_groups(survey, groups) do
