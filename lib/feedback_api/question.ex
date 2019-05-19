@@ -4,7 +4,8 @@ defmodule FeedbackApi.Question do
 
   schema "questions" do
     field :text, :string
-    field :survey_id, :id
+    belongs_to :survey, FeedbackApi.Survey
+    has_many :answers, FeedbackApi.Answer
 
     timestamps()
   end

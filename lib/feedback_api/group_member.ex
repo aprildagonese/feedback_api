@@ -3,8 +3,8 @@ defmodule FeedbackApi.GroupMember do
   import Ecto.Changeset
 
   schema "group_members" do
-    field :user_id, :id
-    field :group_id, :id
+    belongs_to :user, FeedbackApi.User
+    belongs_to :group, FeedbackApi.Group
 
     timestamps()
   end

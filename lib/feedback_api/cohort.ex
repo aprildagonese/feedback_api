@@ -5,6 +5,7 @@ defmodule FeedbackApi.Cohort do
   schema "cohorts" do
     field :name, :string
     field :program, :string
+    has_many :users, FeedbackApi.User
 
     timestamps()
   end

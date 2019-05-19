@@ -5,7 +5,8 @@ defmodule FeedbackApi.Answer do
   schema "answers" do
     field :description, :string
     field :value, :integer
-    field :question_id, :id
+    belongs_to :question, FeedbackApi.Question
+    has_many :responses, FeedbackApi.Response
 
     timestamps()
   end

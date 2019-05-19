@@ -8,6 +8,8 @@ defmodule FeedbackApi.Survey do
   schema "surveys" do
     field :name, :string
     field :status, StatusEnum, default: :active
+    has_many :groups, FeedbackApi.Group
+    has_many :questions, FeedbackApi.Question
 
     timestamps()
   end
@@ -15,7 +17,7 @@ defmodule FeedbackApi.Survey do
   @doc false
   def changeset(survey, attrs) do
     survey
-    |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast(attrs, [:name, :status])
+    |> validate_required([:name, :status])
   end
 end
