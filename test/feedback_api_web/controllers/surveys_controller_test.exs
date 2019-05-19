@@ -40,7 +40,7 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
   end
 
   test "Return all surveys", %{conn: conn} do
-    conn.get("/api/v1/surveys")
+    conn = get(conn, "/api/v1/surveys")
 
     assert json_response(conn, 200) == %{"surveys" => [
       %{
