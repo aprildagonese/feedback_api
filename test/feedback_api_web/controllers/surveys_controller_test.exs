@@ -15,9 +15,11 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
   end
 
   test "Create new survey", %{conn: conn} do
+    conn = conn |> put_req_header("content-type", "application/json")
     body = File.read!("test/fixtures/survey_create.json")
-    conn = post(conn, "/api/v1/surveys")
+    conn = post(conn, "/api/v1/surveys", body)
     assert json_response(conn, 201) =~ ~s{"success": "survey stored"}
+    assert Cohort |> Repo.aggregate(:count, :id) == 1
   end
 
 end
