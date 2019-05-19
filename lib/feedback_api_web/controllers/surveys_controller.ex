@@ -9,6 +9,7 @@ defmodule FeedbackApiWeb.SurveysController do
   end
 
   def create(conn, params) do
+    require IEx; IEx.pry()
     survey = Survey.changeset(%Survey{}, params)
 
     case Repo.insert(survey) do
