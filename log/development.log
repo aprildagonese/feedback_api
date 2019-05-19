@@ -1,0 +1,316 @@
+  [1m[35m (489.0ms)[0m  [1m[35mCREATE DATABASE "feedback_api_development" ENCODING = 'unicode'[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (407.4ms)[0m  [1m[35mCREATE DATABASE "feedback_api_test" ENCODING = 'unicode'[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (8.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4624176897934497960)[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateUsers (20190421170705)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (6.2ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/migrate/20190421170705_create_users.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190421170705"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateSurveys (20190421170808)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (5.6ms)[0m  [1m[35mCREATE TABLE "surveys" ("id" bigserial primary key, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/migrate/20190421170808_create_surveys.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190421170808"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateGroups (20190421171336)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE TABLE "groups" ("id" bigserial primary key, "survey_id" bigint, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_397e00fe0a"
+FOREIGN KEY ("survey_id")
+  REFERENCES "surveys" ("id")
+)[0m
+  ↳ db/migrate/20190421171336_create_groups.rb:3
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE  INDEX  "index_groups_on_survey_id" ON "groups"  ("survey_id")[0m
+  ↳ db/migrate/20190421171336_create_groups.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190421171336"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateGroupMembers (20190421171658)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (4.6ms)[0m  [1m[35mCREATE TABLE "group_members" ("id" bigserial primary key, "user_id" bigint, "group_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_bb66f6bca8"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_e9fdb70ec5"
+FOREIGN KEY ("group_id")
+  REFERENCES "groups" ("id")
+)[0m
+  ↳ db/migrate/20190421171658_create_group_members.rb:3
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE  INDEX  "index_group_members_on_user_id" ON "group_members"  ("user_id")[0m
+  ↳ db/migrate/20190421171658_create_group_members.rb:3
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_group_members_on_group_id" ON "group_members"  ("group_id")[0m
+  ↳ db/migrate/20190421171658_create_group_members.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190421171658"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2019-04-21 17:17:41.984799"], ["updated_at", "2019-04-21 17:17:41.984799"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(4624176897934497960)[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4624176897934497960)[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateQuestions (20190421172543)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (13.1ms)[0m  [1m[35mCREATE TABLE "questions" ("id" bigserial primary key, "text" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/migrate/20190421172543_create_questions.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190421172543"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateSurveyQuestions (20190421172615)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (7.6ms)[0m  [1m[35mCREATE TABLE "survey_questions" ("id" bigserial primary key, "survey_id" bigint, "question_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_d0558bfd89"
+FOREIGN KEY ("survey_id")
+  REFERENCES "surveys" ("id")
+, CONSTRAINT "fk_rails_a94b58177d"
+FOREIGN KEY ("question_id")
+  REFERENCES "questions" ("id")
+)[0m
+  ↳ db/migrate/20190421172615_create_survey_questions.rb:3
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_survey_questions_on_survey_id" ON "survey_questions"  ("survey_id")[0m
+  ↳ db/migrate/20190421172615_create_survey_questions.rb:3
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_survey_questions_on_question_id" ON "survey_questions"  ("question_id")[0m
+  ↳ db/migrate/20190421172615_create_survey_questions.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190421172615"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateAnswers (20190421172729)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (5.5ms)[0m  [1m[35mCREATE TABLE "answers" ("id" bigserial primary key, "question_id" bigint, "value" integer, "description" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_3d5ed4418f"
+FOREIGN KEY ("question_id")
+  REFERENCES "questions" ("id")
+)[0m
+  ↳ db/migrate/20190421172729_create_answers.rb:3
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_answers_on_question_id" ON "answers"  ("question_id")[0m
+  ↳ db/migrate/20190421172729_create_answers.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190421172729"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateResponses (20190421172857)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (3.2ms)[0m  [1m[35mCREATE TABLE "responses" ("id" bigserial primary key, "answer_id" bigint, "response_user_id" integer, "target_user_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_f1c17bfc3d"
+FOREIGN KEY ("answer_id")
+  REFERENCES "answers" ("id")
+)[0m
+  ↳ db/migrate/20190421172857_create_responses.rb:3
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX  "index_responses_on_answer_id" ON "responses"  ("answer_id")[0m
+  ↳ db/migrate/20190421172857_create_responses.rb:3
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_responses_on_response_user_id_and_target_user_id" ON "responses"  ("response_user_id", "target_user_id")[0m
+  ↳ db/migrate/20190421172857_create_responses.rb:11
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_responses_on_target_user_id_and_response_user_id" ON "responses"  ("target_user_id", "response_user_id")[0m
+  ↳ db/migrate/20190421172857_create_responses.rb:12
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190421172857"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(4624176897934497960)[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4624176897934497960)[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateResponses (20190421174831)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (7.2ms)[0m  [1m[35mCREATE TABLE "responses" ("id" bigserial primary key, "answer_id" bigint, "response_user_id" integer, "target_user_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_f1c17bfc3d"
+FOREIGN KEY ("answer_id")
+  REFERENCES "answers" ("id")
+)[0m
+  ↳ db/migrate/20190421174831_create_responses.rb:3
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(4624176897934497960)[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (220.9ms)[0m  [1m[35mDROP DATABASE IF EXISTS "feedback_api_development"[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (209.3ms)[0m  [1m[35mDROP DATABASE IF EXISTS "feedback_api_test"[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (361.2ms)[0m  [1m[35mCREATE DATABASE "feedback_api_development" ENCODING = 'unicode'[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (418.0ms)[0m  [1m[35mCREATE DATABASE "feedback_api_test" ENCODING = 'unicode'[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4624176897934497960)[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateUsers (20190421170705)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/migrate/20190421170705_create_users.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190421170705"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateSurveys (20190421170808)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "surveys" ("id" bigserial primary key, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/migrate/20190421170808_create_surveys.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190421170808"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateGroups (20190421171336)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE TABLE "groups" ("id" bigserial primary key, "survey_id" bigint, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_397e00fe0a"
+FOREIGN KEY ("survey_id")
+  REFERENCES "surveys" ("id")
+)[0m
+  ↳ db/migrate/20190421171336_create_groups.rb:3
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_groups_on_survey_id" ON "groups"  ("survey_id")[0m
+  ↳ db/migrate/20190421171336_create_groups.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190421171336"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateGroupMembers (20190421171658)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "group_members" ("id" bigserial primary key, "user_id" bigint, "group_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_bb66f6bca8"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_e9fdb70ec5"
+FOREIGN KEY ("group_id")
+  REFERENCES "groups" ("id")
+)[0m
+  ↳ db/migrate/20190421171658_create_group_members.rb:3
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_group_members_on_user_id" ON "group_members"  ("user_id")[0m
+  ↳ db/migrate/20190421171658_create_group_members.rb:3
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE  INDEX  "index_group_members_on_group_id" ON "group_members"  ("group_id")[0m
+  ↳ db/migrate/20190421171658_create_group_members.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190421171658"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateQuestions (20190421172543)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "questions" ("id" bigserial primary key, "text" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/migrate/20190421172543_create_questions.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190421172543"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateSurveyQuestions (20190421172615)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "survey_questions" ("id" bigserial primary key, "survey_id" bigint, "question_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_d0558bfd89"
+FOREIGN KEY ("survey_id")
+  REFERENCES "surveys" ("id")
+, CONSTRAINT "fk_rails_a94b58177d"
+FOREIGN KEY ("question_id")
+  REFERENCES "questions" ("id")
+)[0m
+  ↳ db/migrate/20190421172615_create_survey_questions.rb:3
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_survey_questions_on_survey_id" ON "survey_questions"  ("survey_id")[0m
+  ↳ db/migrate/20190421172615_create_survey_questions.rb:3
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_survey_questions_on_question_id" ON "survey_questions"  ("question_id")[0m
+  ↳ db/migrate/20190421172615_create_survey_questions.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190421172615"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateAnswers (20190421172729)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "answers" ("id" bigserial primary key, "question_id" bigint, "value" integer, "description" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_3d5ed4418f"
+FOREIGN KEY ("question_id")
+  REFERENCES "questions" ("id")
+)[0m
+  ↳ db/migrate/20190421172729_create_answers.rb:3
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_answers_on_question_id" ON "answers"  ("question_id")[0m
+  ↳ db/migrate/20190421172729_create_answers.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190421172729"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+Migrating to CreateResponses (20190421174831)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (3.2ms)[0m  [1m[35mCREATE TABLE "responses" ("id" bigserial primary key, "answer_id" bigint, "response_user_id" integer, "target_user_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_f1c17bfc3d"
+FOREIGN KEY ("answer_id")
+  REFERENCES "answers" ("id")
+)[0m
+  ↳ db/migrate/20190421174831_create_responses.rb:3
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_responses_on_answer_id" ON "responses"  ("answer_id")[0m
+  ↳ db/migrate/20190421174831_create_responses.rb:3
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_responses_on_response_user_id_and_target_user_id" ON "responses"  ("response_user_id", "target_user_id")[0m
+  ↳ db/migrate/20190421174831_create_responses.rb:11
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_responses_on_target_user_id_and_response_user_id" ON "responses"  ("target_user_id", "response_user_id")[0m
+  ↳ db/migrate/20190421174831_create_responses.rb:12
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190421174831"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2019-04-21 17:50:05.848822"], ["updated_at", "2019-04-21 17:50:05.848822"]]
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(4624176897934497960)[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/aprildagonese/.rbenv/versions/2.4.1/bin/rake:23
