@@ -3,7 +3,7 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   import Ecto.Query
 
   def create_survey(arguments) do
-    Repo.transaction(fn() ->
+    Repo.transaction(fn ->
       try do
         survey = Survey.changeset(%Survey{}, arguments) |> Repo.insert!()
         create_groups(survey, arguments["groups"])
@@ -43,6 +43,7 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
       |> Repo.preload([:survey, :answers])
 
     create_answers(new_question, question["answers"])
+
     Ecto.Changeset.change(new_question)
     |> Ecto.Changeset.put_assoc(:survey, survey)
     |> Repo.update!()
