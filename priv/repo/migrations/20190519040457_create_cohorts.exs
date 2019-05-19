@@ -8,6 +8,5 @@ defmodule FeedbackApi.Repo.Migrations.CreateCohorts do
 
       timestamps()
     end
-
   end
 end

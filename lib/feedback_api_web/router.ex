@@ -24,5 +24,4 @@ defmodule FeedbackApiWeb.Router do
 
     resources "/surveys", SurveysController, only: [:index, :create]
   end
-
 end
