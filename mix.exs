@@ -5,7 +5,7 @@ defmodule FeedbackApi.MixProject do
     [
       app: :feedback_api,
       version: "0.1.0",
-      elixir: "~> 1.5",
+      elixir: "~> 1.8.2",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -44,7 +44,9 @@ defmodule FeedbackApi.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:ecto_enum, "~>0.2.1"},
-      {:corsica, "~> 1.0"}
+      {:corsica, "~> 1.0"},
+      {:httpoison, "~> 1.4"},
+      {:poison, "~> 3.1"}
     ]
   end
 
