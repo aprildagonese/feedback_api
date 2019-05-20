@@ -3,6 +3,7 @@ defmodule FeedbackApi.User do
   import Ecto.Changeset
 
   schema "users" do
+    field :name, :string
     belongs_to :cohort, FeedbackApi.Cohort
     has_many :responses, FeedbackApi.Response, foreign_key: :response_user
     has_many :ratings, FeedbackApi.Response, foreign_key: :target_user
