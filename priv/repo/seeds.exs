@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-
-=======
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     FeedbackApi.Repo.insert!(%FeedbackApi.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
 alias FeedbackApi.{Repo, Cohort, User}
 import Ecto.Query
 
@@ -92,4 +78,3 @@ Ecto.build_assoc(f_1901, :users, %{
 Ecto.build_assoc(f_1901, :users, %{
   name: "Kristen Hallstrom"
   }) |> Repo.insert!()
->>>>>>> master
