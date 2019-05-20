@@ -2,7 +2,7 @@ language: elixir
 elixir:
 - 1.8.2
 otp_release:
-  - '21.2.5'
+- 21.2.5
 addons:
   postgresql: '9.4'
 services:
@@ -16,5 +16,7 @@ script:
 - mix test
 deploy:
   provider: heroku
-  app:
+  app: turing-feedback-api
   buildpack: https://github.com/HashNuke/heroku-buildpack-elixir.git
+  api_key:
+    secure: bQdrN7nV4feJz89qcc+2y7ZnAneHRrzJnZUcG6Cs0zTThEFHgWJDRxLMf9cs0GPcLazKMq83fmhjtBpGq1DOYCjGnzc4Hpnx8lq2q1CIzCsx/OqxQ7beLc3M9hrMAtoM78/AYwjMlN7XWpttJblDx6C4Lo7VHHZI1ixk804EDscXRpjCDSIbZUczMjsi0O7irsuP2Qd9PNJcyGWhF9UWqARf/jbTKNbPQn2byTOMJyiy3UQcwDSyde/mIC/7wzCurQ9v8dkmjXWbekyrbzW47OtfBy9AXxDcyJc6sAnlkPJaFr3n25zLf96/SxO36Bjv76/E7KLBgbvpNVNYRr3l3bCB3UdGemxViZOomqRMWMNphidDXGGPcfuFc3Vby6tmb+7Qip+N7gIjXEw/2MWHQRg+2yYoB2Yrap08ygNduErTnMcVa0P0NR82u5Y7cPh9ZznR2ldeZZmXfPVpPAXUayxIDM9f/VMVwSHk4SXGuPxfB5MrcYPd4WpvUIidFlwW1rAF2lGHU1ULcWiGaqr0YTX7JcsII+DGPI+EcEs0U1MR1sZ6nIwQp44CYN0iZ/8l7elDKLKGFhRxHXjJ0yxeW+yLz8n9oYndIoBg9TQ/wHIuWJGUh/I/QedSDS+b1BWT94Hxnn2bIjAB9DZUI2cWI4/X/4HackwQp/B6MxpDZuc=
