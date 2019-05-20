@@ -1,16 +1,16 @@
-defmodule FeedbackApiWeb.SurveysView do
+defmodule FeedbackApiWeb.SurveyView do
   use FeedbackApiWeb, :view
-  alias FeedbackApiWeb.{SurveysView, QuestionView, GroupView}
+  alias FeedbackApiWeb.{SurveyView, QuestionView, GroupView}
 
   def render("index.json", %{surveys: surveys}) do
-    render_many(surveys, SurveysView, "survey.json")
+    render_many(surveys, SurveyView, "survey.json")
   end
 
   def render("show.json", %{survey: survey}) do
-    render_one(survey, SurveysView, "survey.json")
+    render_one(survey, SurveyView, "survey.json")
   end
 
-  def render("survey.json", %{surveys: survey}) do
+  def render("survey.json", %{survey: survey}) do
     %{
       id: survey.id,
       name: survey.name,

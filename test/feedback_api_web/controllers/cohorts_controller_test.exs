@@ -12,14 +12,14 @@ defmodule FeedbackApiWeb.CohortsControllerTest do
   end
 
   test "It returns a list of all cohorts", %{conn: conn} do
-    cohorts = Cohort |> Repo.all
+    [cohort_1, cohort_2] = Cohort |> Repo.all
     conn = get(conn, "/api/v1/cohorts")
 
     expected = [
       %{"name" => "1811",
-        "id" => cohorts[0].id},
+        "id" => cohort_1.id},
       %{"name" => "1901",
-        "id" => cohorts[1].id}
+        "id" => cohort_2.id}
     ]
 
     assert json_response(conn, 200) == expected
