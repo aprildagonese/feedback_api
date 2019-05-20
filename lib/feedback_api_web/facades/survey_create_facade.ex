@@ -9,12 +9,13 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
         create_groups(survey, arguments["groups"])
         create_questions(survey, arguments["questions"])
       rescue
-        e -> Repo.rollback("Missing required fields")
+        _e -> Repo.rollback("Missing required fields")
       end
     end)
   end
 
   defp create_groups(survey, groups) do
+    IO.inspect(groups)
     Enum.map(groups, fn group -> create_group(survey, group) end)
   end
 
@@ -23,8 +24,10 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   end
 
   defp create_group(survey, group) do
+    IO.puts "here"
     new_group =
       Group.changeset(%Group{}, group) |> Repo.insert!() |> Repo.preload([:survey, :users])
+    IO.inspect(new_group)
 
     users = Repo.all(from u in User, where: u.id in ^group["members_ids"])
 
