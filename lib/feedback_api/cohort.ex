@@ -7,7 +7,6 @@ defmodule FeedbackApi.Cohort do
 
   schema "cohorts" do
     field :name, :string
-    field :program, :string
     field :status, StatusEnum
     has_many :users, FeedbackApi.User
 
@@ -17,7 +16,7 @@ defmodule FeedbackApi.Cohort do
   @doc false
   def changeset(cohort, attrs) do
     cohort
-    |> cast(attrs, [:name, :program])
-    |> validate_required([:name, :program])
+    |> cast(attrs, [:name])
+    |> validate_required([:name])
   end
 end

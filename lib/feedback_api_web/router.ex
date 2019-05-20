@@ -23,5 +23,6 @@ defmodule FeedbackApiWeb.Router do
     pipe_through :api
 
     resources "/surveys", SurveysController, only: [:index, :create]
+    resources "/users", UsersController, only: [:index, :create]
   end
 end
