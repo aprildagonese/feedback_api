@@ -24,10 +24,8 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   end
 
   defp create_group(survey, group) do
-    IO.puts "here"
     new_group =
       Group.changeset(%Group{}, group) |> Repo.insert!() |> Repo.preload([:survey, :users])
-    IO.inspect(new_group)
 
     users = Repo.all(from u in User, where: u.id in ^group["members_ids"])
 

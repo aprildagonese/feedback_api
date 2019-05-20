@@ -58,24 +58,24 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
     survey = Repo.one(Survey)
     conn = get(conn, "/api/v1/surveys")
 
-    expected = [%{
-      "groups" => [],
-      "name" => "A test survey",
-      "id" => survey.id,
-      "exp_date" => nil,
-      "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
-      "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
-      "questions" => [
-        %{
-          "answers" => [%{"description" => "A thing", "value" => 3}],
-          "text" => "What is this?"
-        }
-      ],
-      "status" => "active"
-    }
-  ]
+    expected = [
+      %{
+        "groups" => [],
+        "name" => "A test survey",
+        "id" => survey.id,
+        "exp_date" => nil,
+        "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
+        "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
+        "questions" => [
+          %{
+            "answers" => [%{"description" => "A thing", "value" => 3}],
+            "text" => "What is this?"
+          }
+        ],
+        "status" => "active"
+      }
+    ]
 
     assert expected == json_response(conn, 200)
-
   end
 end
