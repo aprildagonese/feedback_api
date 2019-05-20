@@ -16,6 +16,7 @@ script:
 - mix test
 deploy:
   provider: heroku
+  buildpack: https://github.com/HashNuke/heroku-buildpack-elixir.git
   api_key:
     secure: REql9wOs6qDaO1oj2u/rGS8OUx/JnJjsgudkRrllJCQ8BuVw/RaR7/SiP/cc01W3eLg8GNnNR3lU2lNh/1Ln0K2zydP5rUq0Gx/wBDlsI0SFzUxD3/21Inzjv/UVREAywjr4IMFfjsT0o/jb8kZVYg3/Ki8w6fufTQmhbwDLAl45ZYDx9DNLBo6RHlcA4f+36r52RLnLBVIcPEC9YlgfwS3Y9EkuLlh/hpDr2KM2XMbqz7H3Mc1DPMvD+IMxGHPTe8CsFs6RZhtmFivPm1TFrZf15BEq8DBUAgafKUIsc/xz2Ind9125IoDQhnLYJy1Q7+gCyJ/3r4fkgLtzEGM8KF65yMLrmu86xDPpoUvIWOrzgn+cEJp2rOSzrY10gGtfjItwj+2naxuo302qkfscIP9/YvPxzlNzy5F1bhIWaJ75R9YqKZU1zta0/G5MlNaJVYMUKQWbRjDLfQL3KQC0jiTj06eww3gMoFzYPsTszLQ2jVudZuExQ8lCvExii4V9R5jvNtJu5kuibRiHpmqI6EJsGi80Ttk4eyJ/WFKyehxxRynwGnBvCNabk0U+NWxFw9mHdioMJQoX371Re+siDGcrrdl8cyR8SxpI4gxtgMEdGTN3u0noGIOkFJMpGhDuCZGbgLGhRTQGqJ6nRCVbUBWc9b+8pTrR8q78+yEVxI0=
   app: turing-feedback-api
