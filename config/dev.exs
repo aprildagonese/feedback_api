@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :feedback_api, FeedbackApi.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "",
   database: "feedback_api_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
