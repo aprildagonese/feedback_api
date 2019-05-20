@@ -10,9 +10,8 @@ defmodule FeedbackApiWeb.UsersController do
     end
   end
 
-  def index(conn, %{"name" => name}) do
-    # users = User |> Repo.all()
-    json(conn, %{name: name})
-    # render(conn, "index.json", users: users)
+  def index(conn, _params) do
+    users = User.all_with_cohort()
+    render(conn, "index.json", users: users)
   end
 end
