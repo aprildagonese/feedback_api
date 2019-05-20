@@ -15,7 +15,6 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   end
 
   defp create_groups(survey, groups) do
-    IO.inspect(groups)
     Enum.map(groups, fn group -> create_group(survey, group) end)
   end
 
