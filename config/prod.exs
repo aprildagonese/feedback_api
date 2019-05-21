@@ -12,7 +12,6 @@ use Mix.Config
 
 config :feedback_api, FeedbackApiWeb.Endpoint,
   http: [port: {:system, "PORT"}],
-  cache_static_manifest: "priv/static/cache_manifest.json",
   load_from_system_env: true,
   url: [host: "turing-feedback-api.herokuapp.com", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
