@@ -1,35 +1,18 @@
-<section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>A productive web framework that<br/>does not compromise speed or maintainability.</p>
-</section>
-
 <section class="row">
-  <article class="column">
-    <h2>Resources</h2>
+  <h2>Turing Feedback API Endpoints</h2>
+  <div className="students-endpoint">
+    <h4>Students Endpoint</h4>
+    <p>Endpoint: http://turing-feedback-api.herokuapp.com/api/v1/users</p>
+    <p>ApiKey: Include as a url param</p>
+    <p>Query Params:</p>
     <ul>
-      <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.4/CHANGELOG.md">v1.4 Changelog</a>
-      </li>
+       <li>'cohort=1811' or 'cohort=1901', etc.</li>
+       <li>'program=B' or 'program=F', etc.</li>
     </ul>
-  </article>
-  <article class="column">
-    <h2>Help</h2>
-    <ul>
-      <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
-      </li>
-      <li>
-        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-    </ul>
-  </article>
+  </div>
+  <div className="surveys-endpoint">
+    <h4>Surveys Endpoint</h4>
+    <p>Endpoint: http://turing-feedback-api.herokuapp.com/api/v1/surveys</p>
+    <p>ApiKey: Include as a url param</p>
+  </div>
 </section>
