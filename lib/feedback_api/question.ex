@@ -6,6 +6,7 @@ defmodule FeedbackApi.Question do
     field :text, :string
     belongs_to :survey, FeedbackApi.Survey
     has_many :answers, FeedbackApi.Answer
+    has_many :responses, FeedbackApi.Response
 
     timestamps()
   end

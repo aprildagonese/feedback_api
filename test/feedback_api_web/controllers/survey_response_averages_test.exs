@@ -22,15 +22,18 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
     ]
     [answer_1, answer_2, answer_3, answer_4] = Enum.map(answer_list, fn answer -> Ecto.build_assoc(question, :answers, answer) |> Repo.insert!() end)
     [user_1, user_2, user_3] = users # User_1 : 3.5, User_2 : 3, User_3 : nil
-    response_1 = Ecto.build_assoc(answer_4, :responses, %{}) |> Repo.insert!() |> Repo.preload([:reviewer, :recipient, :answer])
+    response_1 = Ecto.build_assoc(answer_4, :responses, %{}) |> Repo.insert!() |> Repo.preload([:reviewer, :recipient, :answer, :question])
     Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_1), :recipient, user_1) |> Repo.update!()
     Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_1), :reviewer, user_3) |> Repo.update!()
-    response_2 = Ecto.build_assoc(answer_3, :responses, %{}) |> Repo.insert!() |> Repo.preload([:reviewer, :recipient, :answer])
+    Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_1), :question, question) |> Repo.update!()
+    response_2 = Ecto.build_assoc(answer_3, :responses, %{}) |> Repo.insert!() |> Repo.preload([:reviewer, :recipient, :answer, :question])
     Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_2), :recipient, user_1) |> Repo.update!()
     Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_2), :reviewer, user_2) |> Repo.update!()
-    response_3 = Ecto.build_assoc(answer_3, :responses, %{}) |> Repo.insert!() |> Repo.preload([:reviewer, :recipient, :answer])
+    Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_2), :question, question) |> Repo.update!()
+    response_3 = Ecto.build_assoc(answer_3, :responses, %{}) |> Repo.insert!() |> Repo.preload([:reviewer, :recipient, :answer, :question])
     Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_3), :recipient, user_2) |> Repo.update!()
     Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_3), :reviewer, user_1) |> Repo.update!()
+    Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_3), :question, question) |> Repo.update!()
     :ok
   end
 

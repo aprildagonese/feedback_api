@@ -41,4 +41,8 @@ defmodule FeedbackApi.Survey do
       preload: [questions: {questions, answers: answers}]
     )
   end
+
+  def group_averages(survey_id, group_id) do
+
+  end
 end

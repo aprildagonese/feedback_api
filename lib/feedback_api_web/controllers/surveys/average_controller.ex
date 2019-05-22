@@ -9,7 +9,9 @@ defmodule FeedbackApiWeb.Surveys.AverageController do
   end
 
   def show(conn, params) do
-    # Work in progress
+    average = Survey.group_averages(params["survey_id"], params["group_id"])
+
+    render(conn, "show.json", %{average: average})
   end
 
 end

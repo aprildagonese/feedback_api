@@ -3,14 +3,14 @@ defmodule FeedbackApiWeb.Surveys.AverageView do
   alias FeedbackApiWeb.{QuestionView, Surveys.AverageView}
 
   def render("index.json", %{averages: averages}) do
-    render_one(averages, AverageView, "average.json")
+    render_one(averages, AverageView, "class_average.json")
   end
 
   def render("show.json", %{average: average}) do
-    render_one(average, AverageView, "average.json")
+    render_one(average, AverageView, "group_average.json")
   end
 
-  def render("average.json", %{average: average}) do
+  def render("class_average.json", %{average: average}) do
     %{
       id: average.survey.id,
       name: average.survey.name,
@@ -25,5 +25,9 @@ defmodule FeedbackApiWeb.Surveys.AverageView do
         average_rating: average.average
         } end)
     }
+  end
+
+  def render("group_average.json", %{average: average}) do
+    %{}
   end
 end

@@ -6,6 +6,7 @@ defmodule FeedbackApi.Response do
     belongs_to :answer, FeedbackApi.Answer
     belongs_to :reviewer, FeedbackApi.User
     belongs_to :recipient, FeedbackApi.User
+    belongs_to :question, FeedbackApi.Question
 
     timestamps()
   end
