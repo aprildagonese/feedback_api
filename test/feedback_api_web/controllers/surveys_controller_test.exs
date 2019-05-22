@@ -3,7 +3,7 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
   alias FeedbackApi.{Cohort, Survey, Question, Repo}
 
   setup do
-    cohorts = [%{id: 1, name: "1811"}, %{id: 2, name: "1811"}]
+    cohorts = [%{id: 1, status: :Active, name: "1811"}, %{id: 2, status: :Active, name: "1811"}]
     cohort_changesets = Enum.map(cohorts, fn cohort -> Cohort.changeset(%Cohort{}, cohort) end)
 
     [cohort_1, cohort_2] =

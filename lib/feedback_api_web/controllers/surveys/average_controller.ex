@@ -3,8 +3,8 @@ defmodule FeedbackApiWeb.Surveys.AverageController do
   alias FeedbackApi.Survey
 
   def index(conn, params) do
-    averages = Survey.class_averages(params["surveys_id"])
-    
+    averages = Survey.class_averages(params["survey_id"])
+
     render(conn, "index.json", %{averages: averages})
   end
 

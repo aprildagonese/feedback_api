@@ -4,7 +4,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
 
   setup do
     survey = %Survey{name: "Test Survey"} |> Repo.insert!() |> Repo.preload([:groups, :questions])
-    cohort = %Cohort{name: "1811"} |> Repo.insert!() |> Repo.preload(:users)
+    cohort = %Cohort{name: "1811", status: :Active} |> Repo.insert!() |> Repo.preload(:users)
     students = [
       %{name: "User 1", program: "B"},
       %{name: "User 2", program: "B"},
