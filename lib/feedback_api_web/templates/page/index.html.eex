@@ -16,6 +16,13 @@
     </ul>
   </ul>
 
+  <li>POST /api/v1/surveys</li>
+  <ul>
+    <li>Purpose: Create a survey, setting the Owner as the user whose api_key is supplied</li>
+    <li>api_key: Include as a url param</li>
+    <li>Required Data Structure: https://github.com/aprildagonese/feedback_api</li>
+  </ul>
+
   <li>GET /api/v1/surveys</li>
   <ul>
     <li>Purpose: Grab all surveys for the user whose API key is provided as a param</li>
