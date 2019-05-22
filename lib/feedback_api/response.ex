@@ -3,11 +3,9 @@ defmodule FeedbackApi.Response do
   import Ecto.Changeset
 
   schema "responses" do
-    field :target_user, :id
-    field :response_user, :id
     belongs_to :answer, FeedbackApi.Answer
-    belongs_to :reviewer, FeedbackApi.User, define_field: :target_user
-    belongs_to :recipient, FeedbackApi.User, define_field: :response_user
+    belongs_to :reviewer, FeedbackApi.User
+    belongs_to :recipient, FeedbackApi.User
 
     timestamps()
   end
