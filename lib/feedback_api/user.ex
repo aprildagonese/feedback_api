@@ -3,7 +3,6 @@ defmodule FeedbackApi.User do
   import Ecto.Changeset
   import Ecto.Query
   import Ecto.Enum
-  alias FeedbackApi.{User, Repo}
 
   defenum(StatusEnum, active: 0, inactive: 1)
 
@@ -23,13 +22,5 @@ defmodule FeedbackApi.User do
     user
     |> cast(attrs, [:name, :program, :status, :cohort_id])
     |> validate_required([:name, :program, :status, :cohort_id])
-  end
-
-  def all_with_cohort do
-    Repo.all(
-      from u in User,
-        join: cohort in assoc(u, :cohort),
-        preload: [cohort: cohort]
-    )
   end
 end
