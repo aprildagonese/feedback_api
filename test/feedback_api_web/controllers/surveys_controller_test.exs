@@ -56,6 +56,7 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
 
   test "Return all surveys", %{conn: conn} do
     survey = Repo.one(Survey)
+    question = Repo.one(Question)
     conn = get(conn, "/api/v1/surveys")
 
     expected = [
@@ -68,6 +69,7 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
         "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
         "questions" => [
           %{
+            "id" => question.id,
             "answers" => [%{"description" => "A thing", "value" => 3}],
             "text" => "What is this?"
           }
