@@ -3,14 +3,13 @@ The backend data source for Turing's FeedbackLoop Service
 
 Base url: https://turing-feedback-api.herokuapp.com
 
-## Users Endpoints
-- `POST /api/v1/users`
+## `POST /api/v1/users`
 
    Purpose: To trigger a refresh of the users and cohorts data stored in our database
    
    Params: None
 
-- `GET /api/v1/users`
+## `GET /api/v1/users`
 
    Purpose: To retrieve all users stored in the database, with optional params
    
@@ -41,8 +40,7 @@ Base url: https://turing-feedback-api.herokuapp.com
    ]
    ```
 
-## Surveys Endpoints
-- `POST /api/v1/surveys?api_key={USER_API_KEY_HERE}'
+## `POST /api/v1/surveys?api_key={USER_API_KEY_HERE}'
 
    Purpose: To store a survey to the account of the user whose api_key is supplied as a param, with survey data in the request body
    
@@ -98,7 +96,7 @@ Base url: https://turing-feedback-api.herokuapp.com
      ]
    }
    ```
-- `GET /api/v1/surveys?api_key={USER_API_KEY_HERE}'
+## `GET /api/v1/surveys?api_key={USER_API_KEY_HERE}'
 
    Purpose: To retrieve all surveys associated with the user whose api_key is supplied as a query param.
    
