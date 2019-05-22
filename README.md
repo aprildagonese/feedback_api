@@ -75,7 +75,7 @@ Base url: https://turing-feedback-api.herokuapp.com
            {
              "id": 4,
              "value": 4,
-             "description": "The person demonstrated demonstrated clear and timely communication very consistently."
+             "description": "The person demonstrated clear and timely communication very consistently."
            },
          ]
        }
@@ -136,7 +136,7 @@ Base url: https://turing-feedback-api.herokuapp.com
                {
                  "id": 4,
                  "value": 4,
-                 "description": "The person demonstrated demonstrated clear and timely communication very consistently."
+                 "description": "The person demonstrated clear and timely communication very consistently."
                },
              ]
            }
