@@ -159,7 +159,7 @@ Sample Response Body:
      ]
    }
    ```
-## `/api/v1/cohorts`
+## `GET /api/v1/cohorts`
 
 Purpose: To retrieve a list of all active cohorts.
 
@@ -167,6 +167,7 @@ Params: None
 
 Sample Response:
 ```
+   [
     {
         "id": 13,
         "name": "1903",
@@ -187,6 +188,6 @@ Sample Response:
         "name": "1811",
         "status": "Active"
     }
-]
+   ]
 ```
 
