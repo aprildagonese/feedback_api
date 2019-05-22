@@ -1,19 +1,14 @@
-# FeedbackApi
+# Turing Feedback API
+The backend data source for Turing's FeedbackLoop Service
+Base url: https://turing-feedback-api.herokuapp.com
 
-To start your Phoenix server:
+## Users Endpoints
+- POST /api/v1/users
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server`
+   Purpose: To trigger a refresh of the users and cohorts data stored in our database
+   Params Required: None
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+- GET /api/v1/users
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: http://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+   Purpose: To retrieve all users stored in the database, with optional params
+   
