@@ -3,7 +3,15 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
   alias Services.Rooster
   import Ecto.Query
 
-  def deactivate do
+
+  def update_data do
+    # update_cohorts()
+    deactivate_students()
+    # update_students()
+    {:ok, []}
+  end
+
+  def deactivate_students do
     Repo.update_all(User, set: [status: :inactive])
   end
 
@@ -12,7 +20,6 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
     Enum.map(cohorts, fn cohort ->
       refresh_cohort(cohort)
     end)
-    {:ok, cohorts}
   end
 
   def refresh_cohort(cohort) do
@@ -32,13 +39,13 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
     end
   end
 
-  # def update_students(students) do
-  #   Enum.map(students, fn student ->
-  #     refresh_student(student)
-  #   end)
-  # end
-  #
-  # def refresh_student(student) do
-  #   name = student["attributes"]
-  # end
+  def update_students(students) do
+    Enum.map(students, fn student ->
+      refresh_student(student)
+    end)
+  end
+
+  def refresh_student(student) do
+    name = student["attributes"]
+  end
 end

@@ -4,8 +4,7 @@ defmodule FeedbackApiWeb.UsersController do
   alias FeedbackApiWeb.UsersUpdateFacade
 
   def create(conn, _params) do
-    # UsersUpdateFacade.deactivate
-    case UsersUpdateFacade.update_cohorts do
+    case UsersUpdateFacade.update_data do
       {:ok, _users} -> conn |> put_status(:created) |> json(%{success: "Data refreshed"})
       {:error, error} -> conn |> put_status(:request_timeout) |> json(%{error: error})
     end
