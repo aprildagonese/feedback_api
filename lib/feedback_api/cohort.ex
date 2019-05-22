@@ -3,7 +3,7 @@ defmodule FeedbackApi.Cohort do
   import Ecto.Changeset
   import Ecto.Enum
 
-  defenum(StatusEnum, active: 0, graduated: 1, future: 3, miscellaneous: 4)
+  defenum(StatusEnum, Active: 0, Graduated: 1, Future: 3, Miscellaneous: 4)
 
   schema "cohorts" do
     field :name, :string
@@ -16,7 +16,7 @@ defmodule FeedbackApi.Cohort do
   @doc false
   def changeset(cohort, attrs) do
     cohort
-    |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast(attrs, [:name, :status])
+    |> validate_required([:name, :status])
   end
 end

@@ -11,6 +11,6 @@ defmodule FeedbackApiWeb.UsersView do
   end
 
   def render("user.json", %{users: user}) do
-    %{id: user.id, name: user.name, program: user.program, cohort: user.cohort.name}
+    %{id: user.id, name: user.name, program: user.program, cohort: user.cohort.name, status: user.status}
   end
 end
