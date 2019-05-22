@@ -1,9 +1,10 @@
 defmodule FeedbackApiWeb.Surveys.AverageController do
   use FeedbackApiWeb, :controller
-  alias FeedbackApiWeb.Survey
+  alias FeedbackApi.Survey
 
   def index(conn, params) do
-    Survey.survey_with_averages(params["survey_id"])
+    import IEx; IEx.pry()
+    Survey.class_averages(params["surveys_id"])
   end
 
   def show(conn, params) do
