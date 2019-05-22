@@ -5,21 +5,21 @@ Base url: https://turing-feedback-api.herokuapp.com
 
 ## `POST /api/v1/users`
 
-   Purpose: To trigger a refresh of the users and cohorts data stored in our database
-   
-   Params: None
+Purpose: To trigger a refresh of the users and cohorts data stored in our database
+
+Params: None
 
 ## `GET /api/v1/users`
 
-   Purpose: To retrieve all users stored in the database, with optional params
-   
-   Optional Params: 
-   - `/api/v1/users?program=b`
-   - `/api/v1/users?program=f`
-   - `/api/v1/users?cohort=1811`
-   - `/api/v1/users?cohort=1903`
-   
-   Sample Response:
+Purpose: To retrieve all users stored in the database, with optional params
+
+Optional Params: 
+- `/api/v1/users?program=b`
+- `/api/v1/users?program=f`
+- `/api/v1/users?cohort=1811`
+- `/api/v1/users?cohort=1903`
+
+Sample Response:
    
    ```
    [
@@ -42,11 +42,11 @@ Base url: https://turing-feedback-api.herokuapp.com
 
 ## `POST /api/v1/surveys`
 
-   Purpose: To store a survey to the account of the user whose api_key is supplied as a param, with survey data in the request body
-   
-   Required Params: `api_key={USER_API_KEY_HERE}`
-   
-   Sample Request Body:
+Purpose: To store a survey to the account of the user whose api_key is supplied as a param, with survey data in the request body
+
+Required Params: `api_key={USER_API_KEY_HERE}`
+
+Sample Request Body:
    ```
    {
      "api_key": "lkj4264lkmlkj98so9oug",
@@ -98,11 +98,11 @@ Base url: https://turing-feedback-api.herokuapp.com
    ```
 ## `GET /api/v1/surveys`
 
-   Purpose: To retrieve all surveys associated with the user whose api_key is supplied as a query param.
-   
-   Required Params: `api_key={USER_API_KEY_HERE}`
-   
-   Sample Response Body:
+Purpose: To retrieve all surveys associated with the user whose api_key is supplied as a query param.
+
+Required Params: `api_key={USER_API_KEY_HERE}`
+
+Sample Response Body:
    ```
    {
      "api_key": "lkj4264lkmlkj98so9oug",
@@ -159,4 +159,34 @@ Base url: https://turing-feedback-api.herokuapp.com
      ]
    }
    ```
+## `/api/v1/cohorts`
+
+Purpose: To retrieve a list of all active cohorts.
+
+Params: None
+
+Sample Response:
+```
+    {
+        "id": 13,
+        "name": "1903",
+        "status": "Active"
+    },
+    {
+        "id": 2,
+        "name": "1901",
+        "status": "Active"
+    },
+    {
+        "id": 28,
+        "name": "1904",
+        "status": "Active"
+    },
+    {
+        "id": 1,
+        "name": "1811",
+        "status": "Active"
+    }
+]
+```
 
