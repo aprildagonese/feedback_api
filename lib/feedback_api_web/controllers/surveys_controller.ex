@@ -1,4 +1,4 @@
-defmodule FeedbackApiWeb.SurveysController do
+defmodule FeedbackApiWeb.SurveyController do
   use FeedbackApiWeb, :controller
   alias FeedbackApi.{Survey, Repo}
   alias FeedbackApiWeb.SurveyCreateFacade
