@@ -20,3 +20,27 @@ Base url: https://turing-feedback-api.herokuapp.com
    - `/api/v1/users?cohort=1811`
    - `/api/v1/users?cohort=1903`
    
+   Sample Response:
+   
+   ```
+   [
+    {
+        "cohort": "1903",
+        "id": 48,
+        "name": "William Homer",
+        "program": "B",
+        "status": "active"
+    },
+    {
+        "cohort": "1903",
+        "id": 49,
+        "name": "Katherine Williams",
+        "program": "F",
+        "status": "active"
+    }
+   ]
+   ```
+
+## Surveys Endpoints
+- `POST /api/v1/surveys'
+   
