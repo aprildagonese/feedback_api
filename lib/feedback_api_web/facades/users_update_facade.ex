@@ -6,8 +6,8 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
 
   def update_data do
     # update_cohorts()
-    deactivate_students()
-    # update_students()
+    # deactivate_students()
+    update_students()
     {:ok, []}
   end
 
@@ -39,13 +39,37 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
     end
   end
 
-  def update_students(students) do
-    Enum.map(students, fn student ->
-      refresh_student(student)
+  def update_students do
+    cohorts = Rooster.students()
+    Enum.map(cohorts, fn cohort ->
+      get_students(cohort)
     end)
   end
 
-  def refresh_student(student) do
-    name = student["attributes"]
+  def get_students(cohort_data) do
+    name = cohort_data["attributes"]["name"]
+    cohort = Repo.get_by(Cohort, name: name)
+    students = cohort_data["attributes"]["students"]
+    Enum.map(students, fn student ->
+      update_student(student, cohort)
+    end)
+  end
+
+  def update_student(student, cohort) do
+    name = student["name"]
+    program = student["program"]
+    cohort_id = cohort.id
+    result =
+      case Repo.get_by(User, %{name: name}) do
+        nil -> %User{}
+        user -> Ecto.Changeset.change(user)
+      end
+      |> User.changeset(%{name: name, status: :active, program: program})
+      |> Repo.insert_or_update()
+
+    case result do
+      {:ok, model} -> {:ok, model}
+      {:error, changeset} -> {:error, changeset.errors}
+    end
   end
 end
