@@ -35,9 +35,8 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
   end
 
   test "It can return the results from a survey for all groups", %{conn: conn} do
-    import IEx; IEx.pry()
     survey = Repo.one(Survey)
-    uri = "/api/v1/surveys#{survey.id}/averages"
+    uri = "/api/v1/surveys/#{survey.id}/averages"
 
     conn = get(conn, uri)
 
@@ -71,7 +70,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
     [question] = survey.questions
     group = Repo.one(Group) |> Repo.preload(:users)
     [user_1, user_2, user_3] = group.users
-    uri = "/api/v1/surveys#{survey.id}/averages/#{group.id}"
+    uri = "/api/v1/surveys/#{survey.id}/averages/#{group.id}"
 
     conn = get(conn, uri)
 
