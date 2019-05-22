@@ -1,6 +1,6 @@
 defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
   use FeedbackApiWeb.ConnCase
-  alias FeedbackApi.{Cohort, User, Survey, Question, Answer, Response, Repo}
+  alias FeedbackApi.{Cohort, User, Group, Survey, Question, Answer, Response, Repo}
 
   setup do
     survey = %Survey{name: "Test Survey"} |> Repo.insert!() |> Repo.preload([:groups, :questions])
@@ -69,8 +69,8 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
   test "It can return the results from a survey for a group", %{conn: conn} do
     survey = Repo.one(Survey) |> Repo.preload(:questions)
     [question] = survey.questions
-    group = Repo.one(Group) |> Repo.preload([:users])
-    [user_1, user_2, user_3, user_4] = group.users
+    group = Repo.one(Group) |> Repo.preload(:users)
+    [user_1, user_2, user_3] = group.users
     uri = "/api/v1/surveys#{survey.id}/averages/#{group.id}"
 
     conn = get(conn, uri)
