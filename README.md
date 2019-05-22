@@ -40,7 +40,7 @@ Base url: https://turing-feedback-api.herokuapp.com
    ]
    ```
 
-## `POST /api/v1/surveys?api_key={USER_API_KEY_HERE}`
+## `POST /api/v1/surveys`
 
    Purpose: To store a survey to the account of the user whose api_key is supplied as a param, with survey data in the request body
    
@@ -96,7 +96,7 @@ Base url: https://turing-feedback-api.herokuapp.com
      ]
    }
    ```
-## `GET /api/v1/surveys?api_key={USER_API_KEY_HERE}`
+## `GET /api/v1/surveys`
 
    Purpose: To retrieve all surveys associated with the user whose api_key is supplied as a query param.
    
