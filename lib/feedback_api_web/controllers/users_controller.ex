@@ -2,6 +2,7 @@ defmodule FeedbackApiWeb.UsersController do
   use FeedbackApiWeb, :controller
   alias FeedbackApi.{User, Repo}
   alias FeedbackApiWeb.UsersUpdateFacade
+  import Ecto.Query
 
   def create(conn, _params) do
     case UsersUpdateFacade.update_data do
@@ -10,8 +11,23 @@ defmodule FeedbackApiWeb.UsersController do
     end
   end
 
-  def index(conn, _params) do
-    users = User.all_with_cohort()
+  def index(conn, params) do
+    users = case params do
+      %{"cohort" => cohort, "program" => program} -> Repo.all(from u in User,
+                                                join: cohorts in assoc(u, :cohort),
+                                                where: cohorts.name == ^cohort,
+                                                where: u.program == ^String.upcase(program),
+                                                preload: [cohort: cohorts])
+      %{"cohort" => cohort} -> Repo.all(from u in User,
+                                join: cohorts in assoc(u, :cohort),
+                                where: cohorts.name == ^cohort,
+                                preload: [cohort: cohorts])
+      %{"program" => program} -> Repo.all(from u in User,
+                                    join: cohorts in assoc(u, :cohort),
+                                    where: u.program == ^String.upcase(program),
+                                    preload: [cohort: cohorts])
+
+    end
     render(conn, "index.json", users: users)
   end
 end
