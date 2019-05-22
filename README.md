@@ -42,5 +42,60 @@ Base url: https://turing-feedback-api.herokuapp.com
    ```
 
 ## Surveys Endpoints
-- `POST /api/v1/surveys'
+- `POST /api/v1/surveys?api_key={USER_API_KEY_HERE}'
+
+   Purpose: To store a survey to the account of the user whose api_key is supplied as a param, with survey data in the request body
    
+   Required Params: `api_key={USER_API_KEY_HERE}`
+   
+   Sample Request Body:
+   ```
+   {
+     "api_key": "lkj4264lkmlkj98so9oug",
+     "name": "1811 Cross-Pollination Project",
+     "exp_date": "Mon May 20 2019 17:43:49 GMT-0600 (Mountain Daylight Time)",
+     "questions": [
+       {
+         "id": 1,
+         "text": "How well did this person communicate with the rest of the team?",
+         "answers": [
+           {
+             "id": 1,
+             "value": 1,
+             "description": "The person did not follow up regularly and often demonstrated unclear or inconsistent communication."
+           },
+           {
+             "id": 2,
+             "value": 2,
+             "description": "The person was mostly consistent but was sometimes unclear in a way that slowed down the team or created frustration."
+           },
+           {
+             "id": 3,
+             "value": 3,
+             "description": "The person overall contributed positively in terms of communication."
+           },
+           {
+             "id": 4,
+             "value": 4,
+             "description": "The person demonstrated demonstrated clear and timely communication very consistently."
+           },
+         ]
+       }
+     ],
+     "groups": [
+       {
+         "name": "Team1",
+         "members_ids": [
+           "7", "12", "4", "11"
+         ]
+       },
+       {
+         "name": "Team2",
+         "members_ids": [
+           "2", "13", "17", "9"
+         ]
+       }
+     ]
+   }
+   ```
+
