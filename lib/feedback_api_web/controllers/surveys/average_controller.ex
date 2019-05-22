@@ -3,8 +3,9 @@ defmodule FeedbackApiWeb.Surveys.AverageController do
   alias FeedbackApi.Survey
 
   def index(conn, params) do
-    import IEx; IEx.pry()
-    Survey.class_averages(params["surveys_id"])
+    averages = Survey.class_averages(params["surveys_id"])
+    
+    render(conn, "index.json", %{averages: averages})
   end
 
   def show(conn, params) do

@@ -11,6 +11,6 @@ defmodule FeedbackApiWeb.QuestionView do
   end
 
   def render("question.json", %{question: question}) do
-    %{text: question.text, answers: render_many(question.answers, AnswerView, "answer.json")}
+    %{id: question.id, text: question.text, answers: render_many(question.answers, AnswerView, "answer.json")}
   end
 end

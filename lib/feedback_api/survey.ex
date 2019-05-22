@@ -36,6 +36,7 @@ defmodule FeedbackApi.Survey do
       ),
       on: questions.id == averages.id,
       where: survey.id == ^survey_id,
+      order_by: [asc: questions.id, desc: answers.value],
       select: %{survey: survey, averages: [averages]},
       preload: [questions: {questions, answers: answers}]
     )

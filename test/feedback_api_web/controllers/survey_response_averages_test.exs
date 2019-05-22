@@ -36,6 +36,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
 
   test "It can return the results from a survey for all groups", %{conn: conn} do
     survey = Repo.one(Survey)
+    question = Repo.one(Question)
     uri = "/api/v1/surveys/#{survey.id}/averages"
 
     conn = get(conn, uri)
@@ -49,14 +50,21 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
       "status" => "active",
       "questions" => [
         %{
+          "id" => question.id,
           "text" => "Pick a number between one and four",
-          "average_rating" => 3.25,
           "answers" => [
-              %{"description" => "One", "value" => 1},
-              %{"description" => "Two", "value" => 2},
-              %{"description" => "Three", "value" => 3},
-              %{"description" => "Four", "value" => 4}
+            %{"description" => "Four", "value" => 4},
+            %{"description" => "Three", "value" => 3},
+            %{"description" => "Two", "value" => 2},
+            %{"description" => "One", "value" => 1}
           ]
+        }
+      ],
+      "averages" => [
+        %{
+          "question_id" => question.id,
+          "text" => question.text,
+          "average_rating" => "3.3333333333333333"
         }
       ]
     }
@@ -85,10 +93,10 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
         %{
           "text" => "Pick a number between one and four",
           "answers" => [
-              %{"description" => "One", "value" => 1},
-              %{"description" => "Two", "value" => 2},
+              %{"description" => "Four", "value" => 4},
               %{"description" => "Three", "value" => 3},
-              %{"description" => "Four", "value" => 4}
+              %{"description" => "Two", "value" => 2},
+              %{"description" => "One", "value" => 1}
           ]
         }
       ],
