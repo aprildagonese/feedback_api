@@ -98,4 +98,67 @@ Base url: https://turing-feedback-api.herokuapp.com
      ]
    }
    ```
+- `GET /api/v1/surveys?api_key={USER_API_KEY_HERE}'
+
+   Purpose: To retrieve all surveys associated with the user whose api_key is supplied as a query param.
+   
+   Required Params: `api_key={USER_API_KEY_HERE}`
+   
+   Sample Response Body:
+   ```
+   {
+     "api_key": "lkj4264lkmlkj98so9oug",
+     "surveys": [
+       {
+         "id": 1,
+         "status": "closed",
+         "exp_date": "Mon May 20 2019 17:43:49 GMT-0600 (Mountain Daylight Time)",
+         "created_at": "Sat May 18 2019 17:43:49 GMT-0600 (Mountain Daylight Time)",
+         "updated_at": "Sat May 18 2019 17:43:49 GMT-0600 (Mountain Daylight Time)",
+         "questions": [
+           {
+             "id": 1,
+             "text": "How well did this person communicate with the rest of the team?",
+             "answers": [
+               {
+                 "id": 1,
+                 "value": 1,
+                 "description": "The person did not follow up regularly and often demonstrated unclear or inconsistent communication."
+               },
+               {
+                 "id": 2,
+                 "value": 2,
+                 "description": "The person was mostly consistent but was sometimes unclear in a way that slowed down the team or created frustration."
+               },
+               {
+                 "id": 3,
+                 "value": 3,
+                 "description": "The person overall contributed positively in terms of communication."
+               },
+               {
+                 "id": 4,
+                 "value": 4,
+                 "description": "The person demonstrated demonstrated clear and timely communication very consistently."
+               },
+             ]
+           }
+         ],
+         "groups": [
+           {
+             "name": "Team1",
+             "members_ids": [
+               "7", "12", "4", "11"
+             ]
+           },
+           {
+             "name": "Team2",
+             "members_ids": [
+               "2", "13", "17", "9"
+             ]
+           }
+         ]
+       }
+     ]
+   }
+   ```
 
