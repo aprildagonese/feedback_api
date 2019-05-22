@@ -21,8 +21,8 @@ defmodule FeedbackApi.User do
 
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :program, :status])
-    |> validate_required([:name, :program, :status])
+    |> cast(attrs, [:name, :program, :status, :cohort_id])
+    |> validate_required([:name, :program, :status, :cohort_id])
   end
 
   def all_with_cohort do

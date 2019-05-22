@@ -3,10 +3,9 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
   alias Services.Rooster
   import Ecto.Query
 
-
   def update_data do
-    # update_cohorts()
-    # deactivate_students()
+    update_cohorts()
+    deactivate_students()
     update_students()
     {:ok, []}
   end
@@ -58,13 +57,13 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
   def update_student(student, cohort) do
     name = student["name"]
     program = student["program"]
-    cohort_id = cohort.id
+    cohort = Repo.preload(cohort, [:users])
     result =
       case Repo.get_by(User, %{name: name}) do
         nil -> %User{}
         user -> Ecto.Changeset.change(user)
       end
-      |> User.changeset(%{name: name, status: :active, program: program})
+      |> User.changeset(%{name: name, status: :active, program: program, cohort_id: cohort.id})
       |> Repo.insert_or_update()
 
     case result do
