@@ -17,12 +17,13 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
 
   def refresh_cohort(cohort) do
     name = cohort["attributes"]["name"]
+    status = cohort["attributes"]["status"]
     result =
       case Repo.get_by(Cohort, %{name: name}) do
         nil -> %Cohort{}
         cohort -> Ecto.Changeset.change(cohort)
       end
-      |> Cohort.changeset(%{name: name, status: 0})
+      |> Cohort.changeset(%{name: name, status: status})
       |> Repo.insert_or_update()
 
     case result do
