@@ -26,6 +26,9 @@ defmodule FeedbackApiWeb.UsersController do
                                     join: cohorts in assoc(u, :cohort),
                                     where: u.program == ^String.upcase(program),
                                     preload: [cohort: cohorts])
+      %{} -> Repo.all(from u in User,
+                join: cohorts in assoc(u, :cohort),
+                preload: [cohort: cohorts])
 
     end
     render(conn, "index.json", users: users)
