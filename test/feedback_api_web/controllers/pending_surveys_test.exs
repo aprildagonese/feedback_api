@@ -58,7 +58,7 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
     Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_1), :recipient, user_1)
     |> Repo.update!()
 
-    Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_1), :reviewer, user_3)
+    Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_1), :reviewer, user_2)
     |> Repo.update!()
 
     Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_1), :question, question)
@@ -69,7 +69,7 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
       |> Repo.insert!()
       |> Repo.preload([:reviewer, :recipient, :answer, :question])
 
-    Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_2), :recipient, user_2)
+    Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_2), :recipient, user_3)
     |> Repo.update!()
 
     Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_2), :reviewer, user_2)
@@ -99,16 +99,33 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
             "name" => "Test"
           }
         ],
-        "surveyName" => "A test survey",
+        "surveyName" => "Test Survey",
         "id" => survey.id,
         "surveyExpiration" => nil,
         "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
         "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
         "questions" => [
           %{
+            "options" => [
+              %{
+                "description" => "Four",
+                "pointValue" => 4
+              },
+              %{
+                "description" => "Three",
+                "pointValue" => 3
+              },
+              %{
+                "description" => "Two",
+                "pointValue" => 2
+              },
+              %{
+                "description" => "One",
+                "pointValue" => 1
+              }
+            ],
             "id" => question.id,
-            "options" => [%{"description" => "A thing", "pointValue" => 3}],
-            "questionTitle" => "What is this?"
+            "questionTitle" => "Pick a number between one and four"
           }
         ],
         "status" => "active"

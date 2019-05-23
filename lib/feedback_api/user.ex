@@ -24,10 +24,9 @@ defmodule FeedbackApi.User do
   end
 
   def authorize(api_key) do
-    # Repo.one(
-    #   from u in User,
-    #   where: u.api_key == ^api_key
-    # )
-    nil
+    Repo.one(
+      from u in User,
+      where: u.api_key == ^api_key
+    )
   end
 end
