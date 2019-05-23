@@ -4,6 +4,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
 
   setup do
     cohort = %Cohort{name: "1811", status: :Active} |> Repo.insert!() |> Repo.preload(:users)
+
     students = [
       %{name: "User 1", program: "B"},
       %{name: "User 2", program: "B"},
@@ -19,7 +20,11 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
 
     # User_1 : 3.5, User_2 : 3, User_3 : nil
     [user_1, user_2, user_3] = users
-    survey = Ecto.build_assoc(user_3, :surveys, %Survey{name: "Test Survey"}) |> Repo.insert!() |> Repo.preload([:groups, :questions])
+
+    survey =
+      Ecto.build_assoc(user_3, :surveys, %Survey{name: "Test Survey"})
+      |> Repo.insert!()
+      |> Repo.preload([:groups, :questions])
 
     group =
       Ecto.build_assoc(survey, :groups, %{name: "Test"})
@@ -44,7 +49,6 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
       Enum.map(answer_list, fn answer ->
         Ecto.build_assoc(question, :answers, answer) |> Repo.insert!()
       end)
-
 
     response_1 =
       Ecto.build_assoc(answer_4, :responses, %{})
@@ -125,17 +129,17 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
           %{
             "member_ids" => [user_1.id, user_2.id, user_3.id],
             "name" => "Test"
-            }
-          ]
-        },
-        "averages" => [
-          %{
-            "question_id" => question.id,
-            "text" => question.text,
-            "average_rating" => "3.3333333333333333"
           }
         ]
-      }
+      },
+      "averages" => [
+        %{
+          "question_id" => question.id,
+          "text" => question.text,
+          "average_rating" => "3.3333333333333333"
+        }
+      ]
+    }
 
     assert json_response(conn, 200) == expected
   end
@@ -160,39 +164,39 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
           "average_rating" => "3.0000000000000000",
           "question_id" => question.id,
           "user_id" => user_2.id
+        }
+      ],
+      "survey" => %{
+        "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
+        "exp_date" => nil,
+        "groups" => [
+          %{
+            "member_ids" => [user_1.id, user_2.id, user_3.id],
+            "name" => "Test"
           }
         ],
-        "survey" => %{
-          "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
-          "exp_date" => nil,
-          "groups" => [
-            %{
-              "member_ids" => [user_1.id, user_2.id, user_3.id],
-              "name" => "Test"
+        "id" => survey.id,
+        "name" => "Test Survey",
+        "questions" => [
+          %{
+            "answers" => [
+              %{
+                "description" => "Four",
+                "value" => 4
+              },
+              %{
+                "description" => "Three",
+                "value" => 3
+              },
+              %{
+                "description" => "Two",
+                "value" => 2
+              },
+              %{
+                "description" => "One",
+                "value" => 1
               }
             ],
-          "id" => survey.id,
-          "name" => "Test Survey",
-          "questions" => [
-            %{
-              "answers" => [
-                %{
-                  "description" => "Four",
-                  "value" => 4
-                },
-                %{
-                  "description" => "Three",
-                  "value" => 3
-                },
-                %{
-                  "description" => "Two",
-                  "value" => 2
-                },
-                %{
-                  "description" => "One",
-                  "value" => 1
-                }
-              ],
             "id" => question.id,
             "text" => "Pick a number between one and four"
           }

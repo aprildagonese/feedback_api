@@ -20,7 +20,8 @@ defmodule FeedbackApi.Survey do
   def changeset(survey, attrs) do
     survey
     |> cast(attrs, [:name, :status, :exp_date, :user_id])
-    |> validate_required([:name, :status]) # Re-add requirement following Auth
+    # Re-add requirement following Auth
+    |> validate_required([:name, :status])
   end
 
   def all do
