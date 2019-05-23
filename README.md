@@ -3,6 +3,16 @@ The backend data source for Turing's FeedbackLoop Service
 
 Base url: https://turing-feedback-api.herokuapp.com
 
+###### For any route requiring authorization:
+
+In the event that an API key is invalid or not provided on routes where the presence of an API key is mandated, you will receive a `401` status code and the following message:
+
+``` JSON
+{
+  "error": "Invalid API Key"
+}
+```
+
 ## `POST /api/v1/users`
 
 Purpose: To trigger a refresh of the users and cohorts data stored in our database
@@ -298,4 +308,54 @@ Sample Response:
     "updated_at": "2019-05-23T05:24:58"
   }
 }
+```
+
+## `GET /api/v1/surveys/pending`
+
+Purpose: To retrieve the pending surveys to be completed for a user
+
+Params: `api_key={USER_API_KEY_HERE}`
+
+Sample Response:
+``` JSON
+[
+  {
+    "groups": [
+      {
+        "member_ids": [2, 3],
+        "name": "Test"
+      }
+    ],
+    "surveyName": "Test Survey",
+    "id": 12,
+    "surveyExpiration": null,
+    "created_at": "2019-05-23T05:24:58",
+    "updated_at": "2019-05-23T05:24:58",
+    "questions": [
+      {
+        "options": [
+          {
+            "description": "Four",
+            "pointValue": 4
+          },
+          {
+            "description": "Three",
+            "pointValue": 3
+          },
+          {
+            "description": "Two",
+            "pointValue": 2
+          },
+          {
+            "description": "One",
+            "pointValue": 1
+          }
+        ],
+        "id": 42,
+        "questionTitle": "Pick a number between one and four"
+      }
+    ],
+    "status": "active"
+  }
+]
 ```
