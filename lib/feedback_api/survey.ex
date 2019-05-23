@@ -49,6 +49,20 @@ defmodule FeedbackApi.Survey do
     )
   end
 
+  def pending_for_user(user) do
+    Repo.all(
+      from survey in Survey,
+        join: groups in assoc(survey, :groups),
+        left_join: users in assoc(groups, :users),
+        join: responses in assoc(users, :responses)
+        join: questions in assoc(survey, :questions),
+        join: answers in assoc(questions, :answers),
+        where: users.id == ^user.id,
+        where: is_nil(responses.id),
+        preload: [groups: {groups, users: users}, questions: {questions, answers: answers}]
+    )
+  end
+
   def averages(survey_id) do
     Repo.one(
       from survey in Survey,
