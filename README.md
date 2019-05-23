@@ -21,7 +21,7 @@ Optional Params:
 
 Sample Response:
 
-   ```
+   ``` JSON
    [
     {
         "cohort": "1903",
@@ -47,7 +47,7 @@ Purpose: To store a survey to the account of the user whose api_key is supplied 
 Required Params: `api_key={USER_API_KEY_HERE}`
 
 Sample Request Body:
-   ```
+   ``` JSON
    {
      "api_key": "lkj4264lkmlkj98so9oug",
      "name": "1811 Cross-Pollination Project",
@@ -103,7 +103,7 @@ Purpose: To retrieve all surveys associated with the user whose api_key is suppl
 Required Params: `api_key={USER_API_KEY_HERE}`
 
 Sample Response Body:
-   ```
+   ``` JSON
    {
      "api_key": "lkj4264lkmlkj98so9oug",
      "surveys": [
@@ -166,7 +166,7 @@ Purpose: To retrieve a list of all active cohorts.
 Params: None
 
 Sample Response:
-```
+``` JSON
    [
     {
         "id": 13,
@@ -198,39 +198,39 @@ Purpose: To retrive the average response values for a survey
 Params: None
 
 Sample Response:
-```
+``` JSON
 {
-  "survey" => {
-    "id" => 1,
-    "name" => "Test survey",
-    "exp_date" => null,
-    "created_at" => "2019-05-23T05:24:58",
-    "updated_at" => "2019-05-23T05:24:58",
-    "status" => "active",
-    "questions" => [
+  "survey": {
+    "id": 1,
+    "name": "Test survey",
+    "exp_date": null,
+    "created_at": "2019-05-23T05:24:58",
+    "updated_at": "2019-05-23T05:24:58",
+    "status": "active",
+    "questions": [
       {
-        "id" => 42,
-        "text" => "Pick a number between one and four",
-        "answers" => [
-          {"description" => "Four", "value" => 4},
-          {"description" => "Three", "value" => 3},
-          {"description" => "Two", "value" => 2},
-          {"description" => "One", "value" => 1}
+        "id": 42,
+        "text": "Pick a number between one and four",
+        "answers": [
+          {"description": "Four", "value": 4},
+          {"description": "Three", "value": 3},
+          {"description": "Two", "value": 2},
+          {"description": "One", "value": 1}
         ]
       }
     ],
-    "groups" => [
+    "groups": [
         {
-          "member_ids" => [1, 2, 3],
-          "name" => "Test"
+          "member_ids": [1, 2, 3],
+          "name": "Test"
         }
       ]
     },
-    "averages" => [
+    "averages": [
       {
-        "question_id" => 42,
-        "text" => "Pick a number between one and four",
-        "average_rating" => 3.3333333333333333
+        "question_id": 42,
+        "text": "Pick a number between one and four",
+        "average_rating": 3.3333333333333333
       }
     ]
   }
@@ -243,57 +243,57 @@ Purpose: To retrive the average response values for a survey
 Params: None
 
 Sample Response:
-```
+``` JSON
 {
-  "averages" => [
+  "averages": [
     {
-      "average_rating" => 3.5000000000000000,
-      "question_id" => 42,
-      "user_id" => 1
+      "average_rating": 3.5000000000000000,
+      "question_id": 42,
+      "user_id": 1
     },
     {
-      "average_rating" => 3.0000000000000000,
-      "question_id" => 42,
-      "user_id" => 2
+      "average_rating": 3.0000000000000000,
+      "question_id": 42,
+      "user_id": 2
       }
     ],
-    "survey" => {
-      "created_at" => "2019-05-23T05:24:58",
-      "exp_date" => null,
-      "groups" => [
+    "survey": {
+      "created_at": "2019-05-23T05:24:58",
+      "exp_date": null,
+      "groups": [
         {
-          "member_ids" => [1, 2, 3],
-          "name" => "Test"
+          "member_ids": [1, 2, 3],
+          "name": "Test"
           }
         ],
-      "id" => 1,
-      "name" => "Test Survey",
-      "questions" => [
+      "id": 1,
+      "name": "Test Survey",
+      "questions": [
         {
-          "answers" => [
+          "answers": [
             {
-              "description" => "Four",
-              "value" => 4
+              "description": "Four",
+              "value": 4
             },
             {
-              "description" => "Three",
-              "value" => 3
+              "description": "Three",
+              "value": 3
             },
             {
-              "description" => "Two",
-              "value" => 2
+              "description": "Two",
+              "value": 2
             },
             {
-              "description" => "One",
-              "value" => 1
+              "description": "One",
+              "value": 1
             }
           ],
-        "id" => 42,
-        "text" => "Pick a number between one and four"
+        "id": 42,
+        "text": "Pick a number between one and four"
       }
     ],
-    "status" => "active",
-    "updated_at" => "2019-05-23T05:24:58"
+    "status": "active",
+    "updated_at": "2019-05-23T05:24:58"
   }
 }
 ```
