@@ -4,11 +4,16 @@ defmodule FeedbackApi.User do
   import Ecto.Enum
 
   defenum(StatusEnum, active: 0, inactive: 1)
+  defenum(RoleEnum, Student: 0, Instructor: 1)
 
   schema "users" do
     field :name, :string
     field :program, :string
     field :status, StatusEnum
+    field :email, :string
+    field :password, :string
+    field :api_key, :string
+    field :role, RoleEnum
     belongs_to :cohort, FeedbackApi.Cohort
     has_many :responses, FeedbackApi.Response, foreign_key: :reviewer_id
     has_many :ratings, FeedbackApi.Response, foreign_key: :recipient_id

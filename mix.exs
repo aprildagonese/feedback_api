@@ -46,7 +46,8 @@ defmodule FeedbackApi.MixProject do
       {:ecto_enum, "~>0.2.1"},
       {:corsica, "~> 1.0"},
       {:httpoison, "~> 1.4"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:bcrypt_elixir, "~> 2.0"}
     ]
   end
 
