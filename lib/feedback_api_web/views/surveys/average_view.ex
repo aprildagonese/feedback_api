@@ -13,7 +13,7 @@ defmodule FeedbackApiWeb.Surveys.AverageView do
         Enum.map(average.averages, fn average ->
           %{
             question_id: average.id,
-            text: average.text,
+            questionTitle: average.text,
             average_rating: average.average
           }
         end)
