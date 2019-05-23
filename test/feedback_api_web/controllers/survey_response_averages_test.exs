@@ -134,7 +134,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
     [question] = survey.questions
     group = Repo.one(Group) |> Repo.preload(:users)
     [user_1, user_2, user_3] = group.users
-    uri = "/api/v1/surveys/#{survey.id}/averages/#{group.id}"
+    uri = "/api/v1/surveys/#{survey.id}/user_averages"
 
     conn = get(conn, uri)
 
