@@ -7,14 +7,14 @@ defmodule FeedbackApiWeb.Surveys.UserAverageView do
   end
 
   def render("user_average.json", %{user_average: user_average}) do
-    import IEx; IEx.pry()
     %{
       survey: render_one(user_average.survey, SurveyView, "survey.json"),
       averages: Enum.map(user_average.average, fn user -> %{
         user_id: user.user_id,
         question_id: user.question_id,
         average_rating: user.average_rating
-        } end)
+        }
+      end)
     }
   end
 end
