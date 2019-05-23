@@ -3,9 +3,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
   alias FeedbackApi.{Cohort, Group, Survey, Question, Repo}
 
   setup do
-    survey = %Survey{name: "Test Survey"} |> Repo.insert!() |> Repo.preload([:groups, :questions])
     cohort = %Cohort{name: "1811", status: :Active} |> Repo.insert!() |> Repo.preload(:users)
-
     students = [
       %{name: "User 1", program: "B"},
       %{name: "User 2", program: "B"},
@@ -18,6 +16,10 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
         |> Repo.insert!()
         |> Repo.preload([:responses, :ratings])
       end)
+
+    # User_1 : 3.5, User_2 : 3, User_3 : nil
+    [user_1, user_2, user_3] = users
+    survey = Ecto.build_assoc(user_3, :surveys, %Survey{name: "Test Survey"}) |> Repo.insert!() |> Repo.preload([:groups, :questions])
 
     group =
       Ecto.build_assoc(survey, :groups, %{name: "Test"})
@@ -43,8 +45,6 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
         Ecto.build_assoc(question, :answers, answer) |> Repo.insert!()
       end)
 
-    # User_1 : 3.5, User_2 : 3, User_3 : nil
-    [user_1, user_2, user_3] = users
 
     response_1 =
       Ecto.build_assoc(answer_4, :responses, %{})

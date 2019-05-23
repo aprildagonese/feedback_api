@@ -1,7 +1,7 @@
 defmodule FeedbackApi.Survey do
   use Ecto.Schema
   import Ecto.{Enum, Query, Changeset}
-  alias FeedbackApi.{Survey, Question, User, Repo}
+  alias FeedbackApi.{Survey, Question, User, Repo, Group}
 
   defenum(StatusEnum, active: 0, closed: 1, disabled: 3)
 
@@ -20,7 +20,7 @@ defmodule FeedbackApi.Survey do
   def changeset(survey, attrs) do
     survey
     |> cast(attrs, [:name, :status, :exp_date, :user_id])
-    |> validate_required([:name, :status, :user_id])
+    |> validate_required([:name, :status]) # Re-add requirement following Auth
   end
 
   def all do
