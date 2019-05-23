@@ -108,20 +108,20 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
     expected = %{
       "survey" => %{
         "id" => survey.id,
-        "name" => survey.name,
-        "exp_date" => nil,
+        "surveyName" => survey.name,
+        "surveyExpiration" => nil,
         "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
         "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
         "status" => "active",
         "questions" => [
           %{
             "id" => question.id,
-            "text" => "Pick a number between one and four",
-            "answers" => [
-              %{"description" => "Four", "value" => 4},
-              %{"description" => "Three", "value" => 3},
-              %{"description" => "Two", "value" => 2},
-              %{"description" => "One", "value" => 1}
+            "questionTitle" => "Pick a number between one and four",
+            "options" => [
+              %{"description" => "Four", "pointValue" => 4},
+              %{"description" => "Three", "pointValue" => 3},
+              %{"description" => "Two", "pointValue" => 2},
+              %{"description" => "One", "pointValue" => 1}
             ]
           }
         ],
@@ -135,7 +135,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
       "averages" => [
         %{
           "question_id" => question.id,
-          "text" => question.text,
+          "questionTitle" => question.text,
           "average_rating" => "3.3333333333333333"
         }
       ]
@@ -168,7 +168,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
       ],
       "survey" => %{
         "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
-        "exp_date" => nil,
+        "surveyExpiration" => nil,
         "groups" => [
           %{
             "member_ids" => [user_1.id, user_2.id, user_3.id],
@@ -176,29 +176,29 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
           }
         ],
         "id" => survey.id,
-        "name" => "Test Survey",
+        "surveyName" => "Test Survey",
         "questions" => [
           %{
-            "answers" => [
+            "options" => [
               %{
                 "description" => "Four",
-                "value" => 4
+                "pointValue" => 4
               },
               %{
                 "description" => "Three",
-                "value" => 3
+                "pointValue" => 3
               },
               %{
                 "description" => "Two",
-                "value" => 2
+                "pointValue" => 2
               },
               %{
                 "description" => "One",
-                "value" => 1
+                "pointValue" => 1
               }
             ],
             "id" => question.id,
-            "text" => "Pick a number between one and four"
+            "questionTitle" => "Pick a number between one and four"
           }
         ],
         "status" => "active",

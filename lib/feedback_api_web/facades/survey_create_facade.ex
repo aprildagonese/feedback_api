@@ -5,7 +5,14 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   def create_survey(arguments) do
     Repo.transaction(fn ->
       try do
-        survey = Survey.changeset(%Survey{}, arguments) |> Repo.insert!()
+        survey =
+          Survey.changeset(%Survey{}, %{
+            name: arguments["surveyName"],
+            status: arguments["status"],
+            exp_date: arguments["surveyExpiration"]
+          })
+          |> Repo.insert!()
+
         create_groups(survey, arguments["groups"])
         create_questions(survey, arguments["questions"])
       rescue
@@ -38,11 +45,11 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
 
   defp create_question(survey, question) do
     new_question =
-      Question.changeset(%Question{}, question)
+      Question.changeset(%Question{}, %{text: question["questionTitle"]})
       |> Repo.insert!()
       |> Repo.preload([:survey, :answers])
 
-    create_answers(new_question, question["answers"])
+    create_answers(new_question, question["options"])
 
     Ecto.Changeset.change(new_question)
     |> Ecto.Changeset.put_assoc(:survey, survey)
@@ -53,11 +60,14 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
     Enum.map(answers, fn answer -> create_answer(question, answer) end)
   end
 
-  defp create_answer(question, answer) do
+  defp create_answer(question, nested_answer) do
+    # Answer is received as nested object, grab values for actual answer
+    answer = hd(Map.values(nested_answer))
+
     new_answer =
       Ecto.build_assoc(question, :answers, %{
         description: answer["description"],
-        value: answer["value"]
+        value: answer["pointValue"]
       })
 
     Repo.insert!(new_answer)

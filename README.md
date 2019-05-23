@@ -50,50 +50,52 @@ Sample Request Body:
    ``` JSON
    {
      "api_key": "lkj4264lkmlkj98so9oug",
-     "name": "1811 Cross-Pollination Project",
-     "exp_date": "Mon May 20 2019 17:43:49 GMT-0600 (Mountain Daylight Time)",
-     "questions": [
-       {
-         "id": 1,
-         "text": "How well did this person communicate with the rest of the team?",
-         "answers": [
-           {
-             "id": 1,
-             "value": 1,
-             "description": "The person did not follow up regularly and often demonstrated unclear or inconsistent communication."
-           },
-           {
-             "id": 2,
-             "value": 2,
-             "description": "The person was mostly consistent but was sometimes unclear in a way that slowed down the team or created frustration."
-           },
-           {
-             "id": 3,
-             "value": 3,
-             "description": "The person overall contributed positively in terms of communication."
-           },
-           {
-             "id": 4,
-             "value": 4,
-             "description": "The person demonstrated clear and timely communication very consistently."
-           },
-         ]
-       }
-     ],
-     "groups": [
-       {
-         "name": "Team1",
-         "members_ids": [
-           "7", "12", "4", "11"
-         ]
-       },
-       {
-         "name": "Team2",
-         "members_ids": [
-           "2", "13", "17", "9"
-         ]
-       }
-     ]
+     "survey": {
+       "name": "1811 Cross-Pollination Project",
+       "surveyExpiration": "Mon May 20 2019 17:43:49 GMT-0600 (Mountain Daylight Time)",
+       "questions": [
+         {
+           "id": 1,
+           "questionTitle": "How well did this person communicate with the rest of the team?",
+           "options": [
+             {
+               "id": 1,
+               "value": 1,
+               "description": "The person did not follow up regularly and often demonstrated unclear or inconsistent communication."
+             },
+             {
+               "id": 2,
+               "value": 2,
+               "description": "The person was mostly consistent but was sometimes unclear in a way that slowed down the team or created frustration."
+             },
+             {
+               "id": 3,
+               "value": 3,
+               "description": "The person overall contributed positively in terms of communication."
+             },
+             {
+               "id": 4,
+               "value": 4,
+               "description": "The person demonstrated clear and timely communication very consistently."
+             },
+           ]
+         }
+       ],
+       "groups": [
+         {
+           "name": "Team1",
+           "members_ids": [
+             "7", "12", "4", "11"
+           ]
+         },
+         {
+           "name": "Team2",
+           "members_ids": [
+             "2", "13", "17", "9"
+           ]
+         }
+       ]
+     }
    }
    ```
 ## `GET /api/v1/surveys`
@@ -110,32 +112,32 @@ Sample Response Body:
        {
          "id": 1,
          "status": "closed",
-         "exp_date": "Mon May 20 2019 17:43:49 GMT-0600 (Mountain Daylight Time)",
+         "surveyExpiration": "Mon May 20 2019 17:43:49 GMT-0600 (Mountain Daylight Time)",
          "created_at": "Sat May 18 2019 17:43:49 GMT-0600 (Mountain Daylight Time)",
          "updated_at": "Sat May 18 2019 17:43:49 GMT-0600 (Mountain Daylight Time)",
          "questions": [
            {
              "id": 1,
-             "text": "How well did this person communicate with the rest of the team?",
-             "answers": [
+             "questionTitle": "How well did this person communicate with the rest of the team?",
+             "options": [
                {
                  "id": 1,
-                 "value": 1,
+                 "pointValue": 1,
                  "description": "The person did not follow up regularly and often demonstrated unclear or inconsistent communication."
                },
                {
                  "id": 2,
-                 "value": 2,
+                 "pointValue": 2,
                  "description": "The person was mostly consistent but was sometimes unclear in a way that slowed down the team or created frustration."
                },
                {
                  "id": 3,
-                 "value": 3,
+                 "pointValue": 3,
                  "description": "The person overall contributed positively in terms of communication."
                },
                {
                  "id": 4,
-                 "value": 4,
+                 "pointValue": 4,
                  "description": "The person demonstrated clear and timely communication very consistently."
                },
              ]
@@ -202,16 +204,16 @@ Sample Response:
 {
   "survey": {
     "id": 1,
-    "name": "Test survey",
-    "exp_date": null,
+    "surveyName": "Test survey",
+    "surveyExpiration": null,
     "created_at": "2019-05-23T05:24:58",
     "updated_at": "2019-05-23T05:24:58",
     "status": "active",
     "questions": [
       {
         "id": 42,
-        "text": "Pick a number between one and four",
-        "answers": [
+        "questionTitle": "Pick a number between one and four",
+        "options": [
           {"description": "Four", "value": 4},
           {"description": "Three", "value": 3},
           {"description": "Two", "value": 2},
@@ -229,7 +231,7 @@ Sample Response:
     "averages": [
       {
         "question_id": 42,
-        "text": "Pick a number between one and four",
+        "questionTitle": "Pick a number between one and four",
         "average_rating": 3.3333333333333333
       }
     ]
@@ -259,7 +261,7 @@ Sample Response:
     ],
     "survey": {
       "created_at": "2019-05-23T05:24:58",
-      "exp_date": null,
+      "surveyExpiration": null,
       "groups": [
         {
           "member_ids": [1, 2, 3],
@@ -267,29 +269,29 @@ Sample Response:
           }
         ],
       "id": 1,
-      "name": "Test Survey",
+      "surveyName": "Test Survey",
       "questions": [
         {
-          "answers": [
+          "options": [
             {
               "description": "Four",
-              "value": 4
+              "pointValue": 4
             },
             {
               "description": "Three",
-              "value": 3
+              "pointValue": 3
             },
             {
               "description": "Two",
-              "value": 2
+              "pointValue": 2
             },
             {
               "description": "One",
-              "value": 1
+              "pointValue": 1
             }
           ],
         "id": 42,
-        "text": "Pick a number between one and four"
+        "questionTitle": "Pick a number between one and four"
       }
     ],
     "status": "active",

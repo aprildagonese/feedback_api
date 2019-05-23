@@ -13,9 +13,9 @@ defmodule FeedbackApiWeb.SurveyView do
   def render("survey.json", %{survey: survey}) do
     %{
       id: survey.id,
-      name: survey.name,
+      surveyName: survey.name,
       status: survey.status,
-      exp_date: survey.exp_date,
+      surveyExpiration: survey.exp_date,
       created_at: survey.inserted_at,
       updated_at: survey.updated_at,
       questions: render_many(survey.questions, QuestionView, "question.json"),

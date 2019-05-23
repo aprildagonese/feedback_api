@@ -11,7 +11,7 @@ defmodule FeedbackApiWeb.SurveyController do
   end
 
   def create(conn, params) do
-    case SurveyCreateFacade.create_survey(params) do
+    case SurveyCreateFacade.create_survey(params["survey"]) do
       {:ok, _survey} -> conn |> put_status(:created) |> json(%{success: "Survey stored"})
       {:error, error} -> conn |> put_status(:unprocessable_entity) |> json(%{error: error})
     end
