@@ -1,7 +1,6 @@
 defmodule FeedbackApi.User do
   use Ecto.Schema
-  import Ecto.Changeset
-  import Ecto.Enum
+  import Ecto.{Enum, Changeset, Query}
 
   defenum(StatusEnum, active: 0, inactive: 1)
 
@@ -22,5 +21,12 @@ defmodule FeedbackApi.User do
     user
     |> cast(attrs, [:name, :program, :status, :cohort_id])
     |> validate_required([:name, :program, :status, :cohort_id])
+  end
+
+  def authorize(api_key) do
+    Repo.one(
+      from u in User,
+      where: u.api_key == ^api_key
+    )
   end
 end

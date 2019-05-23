@@ -126,8 +126,8 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
     assert json_response(conn, 200) == []
   end
 
-  test "Returns a 401 if key is not provided", %{conn: conn} do
-    uri = "/api/v1/surveys/pending?api_key=lk246lj2hljk62l"
+  test "Returns a 401 if key is invalid", %{conn: conn} do
+    uri = "/api/v1/surveys/pending"
     conn = get(conn, uri)
 
     assert json_response(conn, 401) == %{"error" => "No API Key Provided"}
