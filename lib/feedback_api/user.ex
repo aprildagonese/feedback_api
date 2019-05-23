@@ -1,7 +1,6 @@
 defmodule FeedbackApi.User do
   use Ecto.Schema
   import Ecto.Changeset
-  import Ecto.Query
   import Ecto.Enum
 
   defenum(StatusEnum, active: 0, inactive: 1)
