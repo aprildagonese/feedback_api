@@ -1,6 +1,6 @@
 defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
   use FeedbackApiWeb.ConnCase
-  alias FeedbackApi.{Cohort, User, Group, Survey, Question, Answer, Response, Repo}
+  alias FeedbackApi.{Cohort, Group, Survey, Question, Repo}
 
   setup do
     survey = %Survey{name: "Test Survey"} |> Repo.insert!() |> Repo.preload([:groups, :questions])
@@ -38,7 +38,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
       %{description: "Four", value: 4}
     ]
 
-    [answer_1, answer_2, answer_3, answer_4] =
+    [_answer_1, _answer_2, answer_3, answer_4] =
       Enum.map(answer_list, fn answer ->
         Ecto.build_assoc(question, :answers, answer) |> Repo.insert!()
       end)
@@ -94,37 +94,48 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
   test "It can return the results from a survey for all groups", %{conn: conn} do
     survey = Repo.one(Survey)
     question = Repo.one(Question)
+    group = Repo.one(Group) |> Repo.preload(:users)
+    [user_1, user_2, user_3] = group.users
+
     uri = "/api/v1/surveys/#{survey.id}/averages"
 
     conn = get(conn, uri)
 
     expected = %{
-      "id" => survey.id,
-      "name" => survey.name,
-      "exp_date" => nil,
-      "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
-      "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
-      "status" => "active",
-      "questions" => [
-        %{
-          "id" => question.id,
-          "text" => "Pick a number between one and four",
-          "answers" => [
-            %{"description" => "Four", "value" => 4},
-            %{"description" => "Three", "value" => 3},
-            %{"description" => "Two", "value" => 2},
-            %{"description" => "One", "value" => 1}
+      "survey" => %{
+        "id" => survey.id,
+        "name" => survey.name,
+        "exp_date" => nil,
+        "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
+        "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
+        "status" => "active",
+        "questions" => [
+          %{
+            "id" => question.id,
+            "text" => "Pick a number between one and four",
+            "answers" => [
+              %{"description" => "Four", "value" => 4},
+              %{"description" => "Three", "value" => 3},
+              %{"description" => "Two", "value" => 2},
+              %{"description" => "One", "value" => 1}
+            ]
+          }
+        ],
+        "groups" => [
+          %{
+            "member_ids" => [user_1.id, user_2.id, user_3.id],
+            "name" => "Test"
+            }
           ]
-        }
-      ],
-      "averages" => [
-        %{
-          "question_id" => question.id,
-          "text" => question.text,
-          "average_rating" => "3.3333333333333333"
-        }
-      ]
-    }
+        },
+        "averages" => [
+          %{
+            "question_id" => question.id,
+            "text" => question.text,
+            "average_rating" => "3.3333333333333333"
+          }
+        ]
+      }
 
     assert json_response(conn, 200) == expected
   end
@@ -139,64 +150,56 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
     conn = get(conn, uri)
 
     expected = %{
-      "id" => survey.id,
-      "name" => survey.name,
-      "exp_date" => nil,
-      "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
-      "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
-      "status" => "active",
-      "questions" => [
+      "averages" => [
         %{
-          "text" => "Pick a number between one and four",
-          "answers" => [
-            %{"description" => "Four", "value" => 4},
-            %{"description" => "Three", "value" => 3},
-            %{"description" => "Two", "value" => 2},
-            %{"description" => "One", "value" => 1}
-          ]
-        }
-      ],
-      "groups" => [
+          "average_rating" => "3.5000000000000000",
+          "question_id" => question.id,
+          "user_id" => user_1.id
+        },
         %{
-          "id" => group.id,
-          "name" => "Test",
-          "members" => [
+          "average_rating" => "3.0000000000000000",
+          "question_id" => question.id,
+          "user_id" => user_2.id
+          }
+        ],
+        "survey" => %{
+          "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
+          "exp_date" => nil,
+          "groups" => [
             %{
-              "id" => user_1.id,
-              "name" => user_1.name,
-              "questions" => [
-                %{
-                  "id" => question.id,
-                  "text" => question.text,
-                  "average_rating" => 3.5
-                }
-              ]
-            },
+              "member_ids" => [user_1.id, user_2.id, user_3.id],
+              "name" => "Test"
+              }
+            ],
+          "id" => survey.id,
+          "name" => "Test Survey",
+          "questions" => [
             %{
-              "id" => user_2.id,
-              "name" => user_2.name,
-              "questions" => [
+              "answers" => [
                 %{
-                  "id" => question.id,
-                  "text" => question.text,
-                  "average_rating" => 3
-                }
-              ]
-            },
-            %{
-              "id" => user_3.id,
-              "name" => user_3.name,
-              "questions" => [
+                  "description" => "Four",
+                  "value" => 4
+                },
                 %{
-                  "id" => question.id,
-                  "text" => question.text,
-                  "average_rating" => nil
+                  "description" => "Three",
+                  "value" => 3
+                },
+                %{
+                  "description" => "Two",
+                  "value" => 2
+                },
+                %{
+                  "description" => "One",
+                  "value" => 1
                 }
-              ]
-            }
-          ]
-        }
-      ]
+              ],
+            "id" => question.id,
+            "text" => "Pick a number between one and four"
+          }
+        ],
+        "status" => "active",
+        "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at)
+      }
     }
 
     assert json_response(conn, 200) == expected
