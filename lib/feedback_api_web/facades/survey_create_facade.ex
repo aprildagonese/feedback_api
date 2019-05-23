@@ -5,8 +5,14 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   def create_survey(arguments) do
     Repo.transaction(fn ->
       try do
-        survey = Survey.changeset(%Survey{}, %{name: arguments["surveyName"], status: arguments["status"], exp_date: arguments["surveyExpiration"]})
-        |> Repo.insert!()
+        survey =
+          Survey.changeset(%Survey{}, %{
+            name: arguments["surveyName"],
+            status: arguments["status"],
+            exp_date: arguments["surveyExpiration"]
+          })
+          |> Repo.insert!()
+
         create_groups(survey, arguments["groups"])
         create_questions(survey, arguments["questions"])
       rescue
@@ -57,6 +63,7 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   defp create_answer(question, nested_answer) do
     # Answer is received as nested object, grab values for actual answer
     answer = hd(Map.values(nested_answer))
+
     new_answer =
       Ecto.build_assoc(question, :answers, %{
         description: answer["description"],
