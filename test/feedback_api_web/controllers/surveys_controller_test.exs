@@ -62,16 +62,16 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
     expected = [
       %{
         "groups" => [],
-        "name" => "A test survey",
+        "surveyName" => "A test survey",
         "id" => survey.id,
-        "exp_date" => nil,
+        "surveyExpiration" => nil,
         "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
         "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
         "questions" => [
           %{
             "id" => question.id,
-            "answers" => [%{"description" => "A thing", "value" => 3}],
-            "text" => "What is this?"
+            "options" => [%{"description" => "A thing", "pointValue" => 3}],
+            "questionTitle" => "What is this?"
           }
         ],
         "status" => "active"
