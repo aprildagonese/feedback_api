@@ -3,7 +3,7 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
   alias FeedbackApi.{Cohort, Survey, Question, Repo}
 
   setup do
-    cohorts = [%{id: 1, name: "1811"}, %{id: 2, name: "1811"}]
+    cohorts = [%{id: 1, status: :Active, name: "1811"}, %{id: 2, status: :Active, name: "1811"}]
     cohort_changesets = Enum.map(cohorts, fn cohort -> Cohort.changeset(%Cohort{}, cohort) end)
 
     [cohort_1, cohort_2] =
@@ -56,6 +56,7 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
 
   test "Return all surveys", %{conn: conn} do
     survey = Repo.one(Survey)
+    question = Repo.one(Question)
     conn = get(conn, "/api/v1/surveys")
 
     expected = [
@@ -68,6 +69,7 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
         "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
         "questions" => [
           %{
+            "id" => question.id,
             "answers" => [%{"description" => "A thing", "value" => 3}],
             "text" => "What is this?"
           }

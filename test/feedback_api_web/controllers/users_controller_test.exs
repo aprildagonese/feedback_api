@@ -1,6 +1,6 @@
 defmodule FeedbackApiWeb.UsersControllerTest do
-  use FeedbackApiWeb.ConnCase
-  alias FeedbackApi.{Cohort, User}
+  # use FeedbackApiWeb.ConnCase
+  # alias FeedbackApi.{Cohort, User}
 
   # test "Create users", %{conn: conn} do
   #   conn = conn |> put_req_header("content-type", "application/json")

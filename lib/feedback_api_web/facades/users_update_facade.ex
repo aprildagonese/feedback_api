@@ -16,6 +16,7 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
 
   def update_cohorts do
     cohorts = Rooster.cohorts()
+
     Enum.map(cohorts, fn cohort ->
       refresh_cohort(cohort)
     end)
@@ -24,6 +25,7 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
   def refresh_cohort(cohort) do
     name = cohort["attributes"]["name"]
     status = cohort["attributes"]["status"]
+
     result =
       case Repo.get_by(Cohort, %{name: name}) do
         nil -> %Cohort{}
@@ -40,6 +42,7 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
 
   def update_students do
     cohorts = Rooster.students()
+
     Enum.map(cohorts, fn cohort ->
       get_students(cohort)
     end)
@@ -49,6 +52,7 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
     name = cohort_data["attributes"]["name"]
     cohort = Repo.get_by(Cohort, name: name)
     students = cohort_data["attributes"]["students"]
+
     Enum.map(students, fn student ->
       update_student(student, cohort)
     end)
@@ -58,6 +62,7 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
     name = student["name"]
     program = student["program"]
     cohort = Repo.preload(cohort, [:users])
+
     result =
       case Repo.get_by(User, %{name: name}) do
         nil -> %User{}
