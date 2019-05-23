@@ -34,7 +34,7 @@ defmodule FeedbackApi.Survey do
     )
   end
 
-  def class_averages(survey_id) do
+  def averages(survey_id) do
     Repo.one(
       from survey in Survey,
         join: questions in assoc(survey, :questions),

@@ -2,10 +2,6 @@ defmodule FeedbackApiWeb.Surveys.AverageView do
   use FeedbackApiWeb, :view
   alias FeedbackApiWeb.{QuestionView, Surveys.AverageView}
 
-  def render("index.json", %{averages: averages}) do
-    render_one(averages, AverageView, "average.json")
-  end
-
   def render("show.json", %{average: average}) do
     render_one(average, AverageView, "average.json")
   end
