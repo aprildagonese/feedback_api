@@ -3,14 +3,14 @@ defmodule FeedbackApiWeb.Surveys.AverageView do
   alias FeedbackApiWeb.{QuestionView, Surveys.AverageView}
 
   def render("index.json", %{averages: averages}) do
-    render_one(averages, AverageView, "class_average.json")
+    render_one(averages, AverageView, "average.json")
   end
 
   def render("show.json", %{average: average}) do
-    render_one(average, AverageView, "group_average.json")
+    render_one(average, AverageView, "average.json")
   end
 
-  def render("class_average.json", %{average: average}) do
+  def render("average.json", %{average: average}) do
     %{
       id: average.survey.id,
       name: average.survey.name,
@@ -19,15 +19,14 @@ defmodule FeedbackApiWeb.Surveys.AverageView do
       created_at: average.survey.inserted_at,
       updated_at: average.survey.updated_at,
       questions: render_many(average.survey.questions, QuestionView, "question.json"),
-      averages: Enum.map(average.averages, fn average -> %{
-        question_id: average.id,
-        text: average.text,
-        average_rating: average.average
-        } end)
+      averages:
+        Enum.map(average.averages, fn average ->
+          %{
+            question_id: average.id,
+            text: average.text,
+            average_rating: average.average
+          }
+        end)
     }
-  end
-
-  def render("group_average.json", %{average: average}) do
-    %{}
   end
 end
