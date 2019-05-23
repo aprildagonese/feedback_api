@@ -50,6 +50,8 @@ defmodule FeedbackApi.Survey do
   def averages(survey_id) do
     Repo.one(
       from survey in Survey,
+        join: groups in assoc(survey, :groups),
+        join: users in assoc(groups, :users),
         join: questions in assoc(survey, :questions),
         join: answers in assoc(questions, :answers),
         join:
@@ -64,7 +66,7 @@ defmodule FeedbackApi.Survey do
         where: survey.id == ^survey_id,
         order_by: [asc: questions.id, desc: answers.value],
         select: %{survey: survey, averages: [averages]},
-        preload: [questions: {questions, answers: answers}]
+        preload: [groups: {groups, users: users}, questions: {questions, answers: answers}]
     )
   end
 
