@@ -7,7 +7,6 @@ defmodule FeedbackApi.Repo.Migrations.UpdateReferenceNamesOnResponse do
       remove :response_user
       add :recipient_id, references(:users, on_delete: :nothing)
       add :reviewer_id, references(:users, on_delete: :nothing)
-      
     end
 
     create index(:responses, [:recipient_id])

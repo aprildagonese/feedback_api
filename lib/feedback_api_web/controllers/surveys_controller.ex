@@ -5,16 +5,7 @@ defmodule FeedbackApiWeb.SurveyController do
   import Ecto.Query
 
   def index(conn, _params) do
-    surveys =
-      Repo.all(
-        from survey in Survey,
-          left_join: groups in assoc(survey, :groups),
-          left_join: users in assoc(groups, :users),
-          left_join: questions in assoc(survey, :questions),
-          left_join: answers in assoc(questions, :answers),
-          order_by: [desc: survey.inserted_at, desc: answers.value],
-          preload: [groups: {groups, users: users}, questions: {questions, answers: answers}]
-      )
+    surveys = Survey.all()
 
     render(conn, "index.json", surveys: surveys)
   end
