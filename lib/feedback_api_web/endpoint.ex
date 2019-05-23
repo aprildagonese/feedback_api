@@ -33,7 +33,8 @@ defmodule FeedbackApiWeb.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
-  plug Corsica, origins: ["http://localhost:3000", "https://turing-feedback-loop.herokuapp.com"]
+  plug Corsica, origins: ["http://localhost:3000", "https://turing-feedback-loop.herokuapp.com"],
+                allow_methods: ["GET", "POST", "PUT", "PATCH"]
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
