@@ -27,7 +27,6 @@ defmodule FeedbackApiWeb.Router do
       get "/user_averages", Surveys.UserAverageController, :show
     end
 
-
     scope "/surveys", Surveys do
       get "/pending", PendingController, :index
     end

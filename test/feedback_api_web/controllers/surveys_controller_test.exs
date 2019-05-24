@@ -3,7 +3,12 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
   alias FeedbackApi.{Cohort, Survey, User, Question, Repo}
 
   setup do
-    survey = %User{api_key: "mikedaowl"} |> Repo.insert!() |> Ecto.build_assoc(:surveys, %{name: "A test survey"})|> Repo.insert!()
+    survey =
+      %User{api_key: "mikedaowl"}
+      |> Repo.insert!()
+      |> Ecto.build_assoc(:surveys, %{name: "A test survey"})
+      |> Repo.insert!()
+
     cohorts = [%{id: 1, status: :Active, name: "1811"}, %{id: 2, status: :Active, name: "1811"}]
     cohort_changesets = Enum.map(cohorts, fn cohort -> Cohort.changeset(%Cohort{}, cohort) end)
 

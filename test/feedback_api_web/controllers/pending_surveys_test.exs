@@ -133,7 +133,6 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
     ]
 
     assert json_response(conn, 200) == expected
-
   end
 
   test "Returns an empty list for users with no pending surveys", %{conn: conn} do

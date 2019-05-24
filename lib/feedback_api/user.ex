@@ -31,12 +31,14 @@ defmodule FeedbackApi.User do
 
   def authorize(api_key) do
     case api_key do
-      nil -> nil
-      api_key -> Repo.one(
-        from u in User,
-        where: u.api_key == ^api_key
-      )
-    end
+      nil ->
+        nil
 
+      api_key ->
+        Repo.one(
+          from u in User,
+            where: u.api_key == ^api_key
+        )
+    end
   end
 end
