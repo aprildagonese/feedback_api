@@ -24,13 +24,14 @@ defmodule FeedbackApi.Survey do
     |> validate_required([:name, :status])
   end
 
-  def all do
+  def for_user(user) do
     Repo.all(
       from survey in Survey,
         left_join: groups in assoc(survey, :groups),
         left_join: users in assoc(groups, :users),
         left_join: questions in assoc(survey, :questions),
         left_join: answers in assoc(questions, :answers),
+        where: survey.user_id == ^user.id,
         order_by: [desc: survey.inserted_at, desc: answers.value],
         preload: [groups: {groups, users: users}, questions: {questions, answers: answers}]
     )

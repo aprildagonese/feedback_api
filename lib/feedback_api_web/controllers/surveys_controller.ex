@@ -1,13 +1,14 @@
 defmodule FeedbackApiWeb.SurveyController do
   use FeedbackApiWeb, :controller
-  alias FeedbackApi.{Survey, Repo}
+  alias FeedbackApi.{Survey, Repo, User}
   alias FeedbackApiWeb.SurveyCreateFacade
   import Ecto.Query
 
-  def index(conn, _params) do
-    surveys = Survey.all()
-
-    render(conn, "index.json", surveys: surveys)
+  def index(conn, params) do
+    case User.authorize(params["api_key"]) do
+      nil -> conn |> put_status(:unauthorized) |> json(%{error: "Invalid API Key"})
+      user -> conn |> render("index.json", %{surveys: Survey.for_user(user)})
+    end
   end
 
   def create(conn, params) do

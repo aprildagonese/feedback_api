@@ -91,7 +91,7 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
   end
 
   test "GET Surveys Returns no surveys if the user does not own any", %{conn: conn} do
-    conn = get(conn, "/api/v1/surveys?api_key=abdcef123")
+    conn = get(conn, "/api/v1/surveys?api_key=abcdef123")
 
     expected = []
 
