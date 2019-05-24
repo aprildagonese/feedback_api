@@ -1,7 +1,6 @@
 defmodule FeedbackApiWeb.Users.RegisterController do
   use FeedbackApiWeb, :controller
   alias FeedbackApi.{User, Repo}
-  alias FeedbackApiWeb.UserRegistration
   import Ecto.Query
 
   def create(conn, params) do
