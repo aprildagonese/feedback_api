@@ -27,7 +27,11 @@ defmodule FeedbackApiWeb.Router do
       get "/user_averages", Surveys.UserAverageController, :show
     end
 
+    post "/users/register", Users.RegisterController, :create
+    post "/users/login", Users.LoginController, :create
+
     resources "/users", UsersController, only: [:index, :create]
+
     resources "/cohorts", CohortController, only: [:index]
   end
 end
