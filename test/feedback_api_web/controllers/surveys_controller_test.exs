@@ -53,10 +53,10 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
     assert Survey |> Repo.aggregate(:count, :id) == 2
   end
 
-  test "Return all surveys", %{conn: conn} do
+  test "Return all surveys for the user", %{conn: conn} do
     survey = Repo.one(Survey)
     question = Repo.one(Question)
-    conn = get(conn, "/api/v1/surveys")
+    conn = get(conn, "/api/v1/surveys?api_key=mikedaowl")
 
     expected = [
       %{
@@ -78,5 +78,23 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
     ]
 
     assert expected == json_response(conn, 200)
+  end
+
+  test "GET Surveys Returns a 401 if an API key is invalid", %{conn: conn} do
+    conn = get(conn, "/api/v1/surveys?api_key=fakeapikey")
+
+    expected = %{
+      "error" => "Invalid API Key"
+    }
+
+    assert json_response(401, conn) == expected
+  end
+
+  test "GET Surveys Returns no surveys if the user does not own any", %{conn: conn} do
+    conn = get(conn, "/api/v1/surveys?api_key=abdcef123")
+
+    expected = []
+
+    assert json_response(200, conn) == expected
   end
 end
