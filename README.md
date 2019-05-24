@@ -13,6 +13,31 @@ In the event that an API key is invalid or not provided on routes where the pres
 }
 ```
 
+## `POST /api/v1/users/register`
+
+Purpose: To register a new user with an email address and password
+
+Params: None
+
+Sample Request:
+```
+{
+   "fullName": "April Dagonese",
+   "role": "Student",
+   "email": "dagonese@email.com",
+   "password": "test"
+}
+```
+Sample Response:
+```
+{
+    "api_key": "6d07603f-c6d8-47e7-b48b-2fea92eb51e5",
+    "full_name": "April Dagonese",
+    "id": 2,
+    "role": "Student"
+}
+```
+
 ## `POST /api/v1/users`
 
 Purpose: To trigger a refresh of the users and cohorts data stored in our database
