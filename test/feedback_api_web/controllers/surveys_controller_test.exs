@@ -87,7 +87,7 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
       "error" => "Invalid API Key"
     }
 
-    assert json_response(401, conn) == expected
+    assert json_response(conn, 401) == expected
   end
 
   test "GET Surveys Returns no surveys if the user does not own any", %{conn: conn} do
@@ -95,6 +95,6 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
 
     expected = []
 
-    assert json_response(200, conn) == expected
+    assert json_response(conn, 200) == expected
   end
 end
