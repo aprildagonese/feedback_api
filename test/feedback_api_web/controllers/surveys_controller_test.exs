@@ -57,7 +57,7 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
     conn = conn |> put_req_header("content-type", "application/json")
     body = File.read!("test/fixtures/failed_survey_create.json")
 
-    conn = post(conn, body)
+    conn = post(conn, "/api/v1/surveys", body)
 
     assert json_response(conn, 401) == %{"error" => "Invalid API Key"}
   end
