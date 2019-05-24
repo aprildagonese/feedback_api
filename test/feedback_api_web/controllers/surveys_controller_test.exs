@@ -12,9 +12,9 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
       end)
 
     cohort_1_students = [
-      %{id: 1, cohort_id: 1},
-      %{id: 2, cohort_id: 1},
-      %{id: 3, cohort_id: 1}
+      %{id: 1, cohort_id: 1, api_key: "abcdef123"},
+      %{id: 2, cohort_id: 1, api_key: "321fedcba"},
+      %{id: 3, cohort_id: 1, api_key: "aaawtf"}
     ]
 
     cohort_2_students = [
