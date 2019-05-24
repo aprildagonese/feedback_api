@@ -12,9 +12,13 @@ defmodule FeedbackApiWeb.SurveyController do
   end
 
   def create(conn, params) do
-    case SurveyCreateFacade.create_survey(params["survey"]) do
-      {:ok, _survey} -> conn |> put_status(:created) |> json(%{success: "Survey stored"})
-      {:error, error} -> conn |> put_status(:unprocessable_entity) |> json(%{error: error})
+    case User.authorize(params["api_key"]) do
+      nil -> conn |> put_status(:unauthorized) |> json(%{error: "Invalid API Key"})
+      user -> case SurveyCreateFacade.create_survey(params["survey"], user) do
+        {:ok, _survey} -> conn |> put_status(:created) |> json(%{success: "Survey stored"})
+        {:error, error} -> conn |> put_status(:unprocessable_entity) |> json(%{error: error})
+      end
     end
+
   end
 end
