@@ -53,6 +53,15 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
     assert Survey |> Repo.aggregate(:count, :id) == 2
   end
 
+  test "Survey creation fails if no API key is provided" do
+    conn = conn |> put_req_header("content-type", "application/json")
+    body = File.read!("test/fixtures/failed_survey_create.json")
+
+    conn = post(conn, body)
+
+    assert json_response(conn, 401) == %{"error" => "Invalid API Key"}
+  end
+
   test "Return all surveys for the user", %{conn: conn} do
     survey = Repo.one(Survey)
     question = Repo.one(Question)
