@@ -251,7 +251,7 @@ Sample Response:
    ]
 ```
 
-## `GET /api/v1/surveys/averages`
+## `GET /api/v1/surveys/:id/averages`
 
 Purpose: To retrive the average response values for a survey
 
@@ -296,7 +296,7 @@ Sample Response:
   }
 ```
 
-## `GET /api/v1/surveys/user_averages`
+## `GET /api/v1/surveys/:id/user_averages`
 
 Purpose: To retrive the average response values for a survey
 
