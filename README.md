@@ -19,7 +19,7 @@ Purpose: To register a new user with an email address and password
 
 Params: None
 
-Sample Request:
+Sample Request Body:
 ```
 {
    "fullName": "April Dagonese",
