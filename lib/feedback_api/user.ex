@@ -3,7 +3,7 @@ defmodule FeedbackApi.User do
   import Ecto.Changeset
   import Ecto.Enum
 
-  defenum(StatusEnum, active: 0, inactive: 1)
+  defenum(StatusEnum, Active: 0, Inactive: 1)
   defenum(RoleEnum, Student: 0, Instructor: 1)
 
   schema "users" do
@@ -25,7 +25,7 @@ defmodule FeedbackApi.User do
 
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :program, :status, :cohort_id])
+    |> cast(attrs, [:name, :program, :status, :cohort_id, :email, :password, :api_key, :role])
     |> validate_required([:name, :program, :status, :cohort_id])
   end
 end
