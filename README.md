@@ -91,7 +91,7 @@ Purpose: To trigger a refresh of the users and cohorts data stored in our databa
 
 Params: None
 
-## `GET /api/v1/students`
+## GET /api/v1/students
 
 Purpose: To retrieve all users stored in the database, with optional params
 
