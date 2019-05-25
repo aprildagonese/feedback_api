@@ -127,7 +127,29 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
         ],
         "groups" => [
           %{
-            "member_ids" => [user_1.id, user_2.id, user_3.id],
+            "members" => [
+              %{
+                "id" => user_1.id,
+                "name" => user_1.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              },
+              %{
+                "id" => user_2.id,
+                "name" => user_2.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              },
+              %{
+                "id" => user_3.id,
+                "name" => user_3.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              }
+            ],
             "name" => "Test"
           }
         ]
@@ -171,7 +193,29 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
         "surveyExpiration" => nil,
         "groups" => [
           %{
-            "member_ids" => [user_1.id, user_2.id, user_3.id],
+            "members" => [
+              %{
+                "id" => user_1.id,
+                "name" => user_1.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              },
+              %{
+                "id" => user_2.id,
+                "name" => user_2.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              },
+              %{
+                "id" => user_3.id,
+                "name" => user_3.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              }
+            ],
             "name" => "Test"
           }
         ],
