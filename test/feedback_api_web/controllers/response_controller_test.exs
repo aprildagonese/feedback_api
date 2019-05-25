@@ -1,4 +1,4 @@
-defmodule FeedbackApiWeb.ResponseController do
+defmodule FeedbackApiWeb.ResponseControllerTest do
   use FeedbackApiWeb.ConnCase
   alias FeedbackApi.{Cohort, Survey, User, Question, Repo, Answer}
   import Ecto.Query
@@ -65,7 +65,7 @@ defmodule FeedbackApiWeb.ResponseController do
       ]
     }
 
-    post(conn, "/api/v1/responses", body)
+    conn = post(conn, "/api/v1/responses", body)
 
     assert json_response(conn, 401) == %{"error" => "Invalid API Key"}
   end
@@ -75,7 +75,7 @@ defmodule FeedbackApiWeb.ResponseController do
     conn = conn |> put_req_header("content-type", "application/json")
     body =  %{api_key: user_1.api_key}
 
-    post(conn, "/api/v1/responses", body)
+    conn = post(conn, "/api/v1/responses", body)
 
     assert json_response(conn, 422) == %{"error" => "Invalid format"}
   end
@@ -93,7 +93,7 @@ defmodule FeedbackApiWeb.ResponseController do
       ]
     }
 
-    post(conn, "/api/v1/responses", body)
+    conn = post(conn, "/api/v1/responses", body)
 
     assert json_response(conn, 201) == %{"sucess" => "Responses have been stored"}
     assert Repo.one(from r in Response, select: count(r.id)) == 2
