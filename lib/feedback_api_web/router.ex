@@ -24,6 +24,7 @@ defmodule FeedbackApiWeb.Router do
 
     resources "/surveys", SurveyController, only: [:index, :create] do
       get "/averages", Surveys.AverageController, :show
+      get "/averages/student", Surveys.StudentAverageController, :show
       get "/user_averages", Surveys.UserAverageController, :show
     end
 

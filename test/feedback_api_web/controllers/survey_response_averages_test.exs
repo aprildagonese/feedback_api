@@ -253,6 +253,14 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
     assert json_response(conn, 200) == expected
   end
 
+  test "Averages for student returns a 401 if invalid API key", %{conn: conn} do
+    survey = Repo.one(Survey) |> Repo.preload(:questions)
+    uri = "/api/v1/surveys/#{survey.id}/averages/student?api_key=invalidkey"
+    conn = get(conn, uri)
+
+    assert json_response(conn, 400) == expected
+  end
+
   test "It can return averages for one user", %{conn: conn} do
     survey = Repo.one(Survey) |> Repo.preload(:questions)
     [question] = survey.questions
@@ -263,73 +271,75 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
     conn = get(conn, uri)
 
     expected = %{"averages" => [
-      %{
-        "average_rating" => "3.5000000000000000",
-        "question_id" => question.id,
-        "user_id" => user_1.id
+        %{
+          "average_rating" => "3.5000000000000000",
+          "question_id" => question.id,
+          "user_id" => user_1.id
+        }
+      ],
+      "survey" => %{
+        "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
+        "surveyExpiration" => nil,
+        "groups" => [
+          %{
+            "members" => [
+              %{
+                "id" => user_1.id,
+                "name" => user_1.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              },
+              %{
+                "id" => user_2.id,
+                "name" => user_2.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              },
+              %{
+                "id" => user_3.id,
+                "name" => user_3.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              }
+            ],
+            "name" => "Test"
+          }
+        ],
+        "id" => survey.id,
+        "surveyName" => "Test Survey",
+        "questions" => [
+          %{
+            "options" => [
+              %{
+                "description" => "Four",
+                "pointValue" => 4
+              },
+              %{
+                "description" => "Three",
+                "pointValue" => 3
+              },
+              %{
+                "description" => "Two",
+                "pointValue" => 2
+              },
+              %{
+                "description" => "One",
+                "pointValue" => 1
+              }
+            ],
+            "id" => question.id,
+            "questionTitle" => "Pick a number between one and four"
+          }
+        ],
+        "status" => "active",
+        "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at)
       }
-    ],
-    "survey" => %{
-      "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
-      "surveyExpiration" => nil,
-      "groups" => [
-        %{
-          "members" => [
-            %{
-              "id" => user_1.id,
-              "name" => user_1.name,
-              "cohort" => "1811",
-              "program" => "B",
-              "status" => "Active"
-            },
-            %{
-              "id" => user_2.id,
-              "name" => user_2.name,
-              "cohort" => "1811",
-              "program" => "B",
-              "status" => "Active"
-            },
-            %{
-              "id" => user_3.id,
-              "name" => user_3.name,
-              "cohort" => "1811",
-              "program" => "B",
-              "status" => "Active"
-            }
-          ],
-          "name" => "Test"
-        }
-      ],
-      "id" => survey.id,
-      "surveyName" => "Test Survey",
-      "questions" => [
-        %{
-          "options" => [
-            %{
-              "description" => "Four",
-              "pointValue" => 4
-            },
-            %{
-              "description" => "Three",
-              "pointValue" => 3
-            },
-            %{
-              "description" => "Two",
-              "pointValue" => 2
-            },
-            %{
-              "description" => "One",
-              "pointValue" => 1
-            }
-          ],
-          "id" => question.id,
-          "questionTitle" => "Pick a number between one and four"
-        }
-      ],
-      "status" => "active",
-      "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at)
     }
-  }
+
+    assert json_response(conn, 200) == expected
   end
 
   test "Returns null averages for questions with no feedback", %{conn: conn} do
@@ -342,72 +352,74 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
     conn = get(conn, uri)
 
     expected = %{"averages" => [
-      %{
-        "average_rating" => nil,
-        "question_id" => question.id,
-        "user_id" => user_1.id
+        %{
+          "average_rating" => nil,
+          "question_id" => question.id,
+          "user_id" => user_1.id
+        }
+      ],
+      "survey" => %{
+        "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
+        "surveyExpiration" => nil,
+        "groups" => [
+          %{
+            "members" => [
+              %{
+                "id" => user_1.id,
+                "name" => user_1.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              },
+              %{
+                "id" => user_2.id,
+                "name" => user_2.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              },
+              %{
+                "id" => user_3.id,
+                "name" => user_3.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              }
+            ],
+            "name" => "Test"
+          }
+        ],
+        "id" => survey.id,
+        "surveyName" => "Test Survey",
+        "questions" => [
+          %{
+            "options" => [
+              %{
+                "description" => "Four",
+                "pointValue" => 4
+              },
+              %{
+                "description" => "Three",
+                "pointValue" => 3
+              },
+              %{
+                "description" => "Two",
+                "pointValue" => 2
+              },
+              %{
+                "description" => "One",
+                "pointValue" => 1
+              }
+            ],
+            "id" => question.id,
+            "questionTitle" => "Pick a number between one and four"
+          }
+        ],
+        "status" => "active",
+        "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at)
       }
-    ],
-    "survey" => %{
-      "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
-      "surveyExpiration" => nil,
-      "groups" => [
-        %{
-          "members" => [
-            %{
-              "id" => user_1.id,
-              "name" => user_1.name,
-              "cohort" => "1811",
-              "program" => "B",
-              "status" => "Active"
-            },
-            %{
-              "id" => user_2.id,
-              "name" => user_2.name,
-              "cohort" => "1811",
-              "program" => "B",
-              "status" => "Active"
-            },
-            %{
-              "id" => user_3.id,
-              "name" => user_3.name,
-              "cohort" => "1811",
-              "program" => "B",
-              "status" => "Active"
-            }
-          ],
-          "name" => "Test"
-        }
-      ],
-      "id" => survey.id,
-      "surveyName" => "Test Survey",
-      "questions" => [
-        %{
-          "options" => [
-            %{
-              "description" => "Four",
-              "pointValue" => 4
-            },
-            %{
-              "description" => "Three",
-              "pointValue" => 3
-            },
-            %{
-              "description" => "Two",
-              "pointValue" => 2
-            },
-            %{
-              "description" => "One",
-              "pointValue" => 1
-            }
-          ],
-          "id" => question.id,
-          "questionTitle" => "Pick a number between one and four"
-        }
-      ],
-      "status" => "active",
-      "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at)
     }
-  }
+
+    assert json_response(conn, 200) == expected
   end
 end
