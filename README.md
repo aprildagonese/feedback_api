@@ -1,9 +1,33 @@
 # Turing Feedback API
 The backend data source for Turing's FeedbackLoop Service
 
+## Endpoints
+
 Base url: https://turing-feedback-api.herokuapp.com
 
-###### For any route requiring authorization:
+[POST /api/v1/users/register](#post-apiv1usersregister)
+
+[POST /api/v1/users/login](#post-apiv1userslogin)
+
+[POST /api/v1/users](#post-apiv1users)
+
+[GET /api/v1/students](#get-apiv1students)
+
+[GET /api/v1/cohorts](#post-apiv1cohorts)
+
+[POST /api/v1/surveys](#post-apiv1surveys)
+
+[GET /api/v1/surveys](#post-apiv1surveys)
+
+[GET /api/v1/surveys/:id/averages](#get-apiv1surveysidaverages)
+
+[GET /api/v1/surveys/:id/user-averages](#get-apiv1surveysiduser_averages)
+
+[GET /api/v1/surveys/pending](#post-apiv1surveyspending)
+
+[POST /api/v1/responses](#post-apiv1responses)
+
+## For Routes Requiring Authorization:
 
 In the event that an API key is invalid or not provided on routes where the presence of an API key is mandated, you will receive a `401` status code and the following message:
 
@@ -13,7 +37,7 @@ In the event that an API key is invalid or not provided on routes where the pres
 }
 ```
 
-## `POST /api/v1/users/register`
+## POST /api/v1/users/register
 
 Purpose: To register a new user with an email address and password
 
@@ -38,7 +62,7 @@ Sample Response:
 }
 ```
 
-## `POST /api/v1/users/login`
+## POST /api/v1/users/login
 
 Purpose: To authorize a user by their email address and password, and return their api_key if valid
 
@@ -61,7 +85,7 @@ Sample Response:
 }
 ```
 
-## `POST /api/v1/users`
+## POST /api/v1/users
 
 Purpose: To trigger a refresh of the users and cohorts data stored in our database
 
@@ -98,7 +122,39 @@ Sample Response:
    ]
    ```
 
-## `POST /api/v1/surveys`
+## GET /api/v1/cohorts
+
+Purpose: To retrieve a list of all active cohorts.
+
+Params: None
+
+Sample Response:
+``` JSON
+   [
+    {
+        "id": 13,
+        "name": "1903",
+        "status": "Active"
+    },
+    {
+        "id": 2,
+        "name": "1901",
+        "status": "Active"
+    },
+    {
+        "id": 28,
+        "name": "1904",
+        "status": "Active"
+    },
+    {
+        "id": 1,
+        "name": "1811",
+        "status": "Active"
+    }
+   ]
+```
+
+## POST /api/v1/surveys
 
 Purpose: To store a survey to the account of the user whose api_key is supplied as a param, with survey data in the request body
 
@@ -156,7 +212,7 @@ Sample Request Body:
      }
    }
    ```
-## `GET /api/v1/surveys`
+## GET /api/v1/surveys
 
 Purpose: To retrieve all surveys associated with the user whose api_key is supplied as a query param.
 
@@ -219,39 +275,8 @@ Sample Response Body:
      ]
    }
    ```
-## `GET /api/v1/cohorts`
 
-Purpose: To retrieve a list of all active cohorts.
-
-Params: None
-
-Sample Response:
-``` JSON
-   [
-    {
-        "id": 13,
-        "name": "1903",
-        "status": "Active"
-    },
-    {
-        "id": 2,
-        "name": "1901",
-        "status": "Active"
-    },
-    {
-        "id": 28,
-        "name": "1904",
-        "status": "Active"
-    },
-    {
-        "id": 1,
-        "name": "1811",
-        "status": "Active"
-    }
-   ]
-```
-
-## `GET /api/v1/surveys/:id/averages`
+## GET /api/v1/surveys/:id/averages
 
 Purpose: To retrive the average response values for a survey
 
@@ -296,7 +321,7 @@ Sample Response:
   }
 ```
 
-## `GET /api/v1/surveys/:id/user_averages`
+## GET /api/v1/surveys/:id/user_averages
 
 Purpose: To retrive the average response values for a survey
 
@@ -358,7 +383,7 @@ Sample Response:
 }
 ```
 
-## `GET /api/v1/surveys/pending`
+## GET /api/v1/surveys/pending
 
 Purpose: To retrieve the pending surveys to be completed for a user
 
@@ -408,7 +433,7 @@ Sample Response:
 ]
 ```
 
-## `POST /api/v1/responses`
+## POST /api/v1/responses
 
 Purpose: To submit responses on behalf of a user
 
