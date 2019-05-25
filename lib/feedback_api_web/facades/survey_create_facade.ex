@@ -5,16 +5,13 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   def create_survey(arguments, user) do
     Repo.transaction(fn ->
       try do
-        IO.inspect(arguments)
         survey =
           Ecto.build_assoc(user, :surveys, %Survey{
             name: arguments["surveyName"],
-            status: arguments["status"],
-            exp_date: NaiveDateTime.from_iso8601!(arguments["surveyExpiration"])
+            status: (arguments["status"]),
+            exp_date: parseDateTime(arguments["surveyExpiration"])
           })
           |> Repo.insert!()
-
-          IO.inspect(survey)
 
         create_groups(survey, arguments["groups"])
         create_questions(survey, arguments["questions"])
@@ -35,6 +32,7 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   defp create_group(survey, group) do
     new_group =
       Group.changeset(%Group{}, group) |> Repo.insert!() |> Repo.preload([:survey, :users])
+
 
     users = Repo.all(from u in User, where: u.id in ^group["members_ids"])
 
@@ -66,6 +64,7 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   defp create_answer(question, nested_answer) do
     # Answer is received as nested object, grab values for actual answer
     answer = hd(Map.values(nested_answer))
+    IO.inspect(answer)
 
     new_answer =
       Ecto.build_assoc(question, :answers, %{
@@ -74,5 +73,13 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
       })
 
     Repo.insert!(new_answer)
+  end
+
+  defp parseDateTime(time) do
+    case time do
+      nil -> nil
+      time -> NaiveDateTime.from_iso8601!(time)
+        |> NaiveDateTime.truncate(:second)
+    end
   end
 end
