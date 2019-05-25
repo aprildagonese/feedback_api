@@ -9,11 +9,11 @@ defmodule FeedbackApi.User do
   schema "users" do
     field :name, :string
     field :program, :string
-    field :status, StatusEnum
+    field :status, StatusEnum, default: 0
     field :email, :string
     field :password, :string
     field :api_key, :string
-    field :role, RoleEnum
+    field :role, RoleEnum, default: 0
     belongs_to :cohort, FeedbackApi.Cohort
     has_many :responses, FeedbackApi.Response, foreign_key: :reviewer_id
     has_many :ratings, FeedbackApi.Response, foreign_key: :recipient_id
@@ -26,7 +26,7 @@ defmodule FeedbackApi.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:name, :program, :status, :cohort_id, :email, :password, :api_key, :role])
-    |> validate_required([:name, :program, :status, :cohort_id])
+    |> validate_required([:name, :program, :status])
   end
 
   def authorize(api_key) do
@@ -40,5 +40,49 @@ defmodule FeedbackApi.User do
             where: u.api_key == ^api_key
         )
     end
+  end
+
+  def active_students do
+    Repo.all(
+      from u in User,
+        join: cohorts in assoc(u, :cohort),
+        where: u.role == ^:Student,
+        order_by: [asc: u.id],
+        preload: [cohort: cohorts]
+    )
+  end
+
+  def by_program(program) do
+    Repo.all(
+      from u in User,
+        join: cohorts in assoc(u, :cohort),
+        where: u.program == ^String.upcase(program),
+        where: u.status == ^:Active,
+        order_by: [asc: u.id],
+        preload: [cohort: cohorts]
+    )
+  end
+
+  def by_cohort(cohort) do
+    Repo.all(
+      from u in User,
+        join: cohorts in assoc(u, :cohort),
+        where: cohorts.name == ^cohort,
+        where: u.status == ^:Active,
+        order_by: [asc: u.id],
+        preload: [cohort: cohorts]
+    )
+  end
+
+  def by_program_and_cohort(program, cohort) do
+    Repo.all(
+      from u in User,
+        join: cohorts in assoc(u, :cohort),
+        where: cohorts.name == ^cohort,
+        where: u.program == ^String.upcase(program),
+        where: u.status == ^:Active,
+        order_by: [asc: u.id],
+        preload: [cohort: cohorts]
+    )
   end
 end

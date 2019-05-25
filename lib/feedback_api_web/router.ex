@@ -33,7 +33,8 @@ defmodule FeedbackApiWeb.Router do
 
     post "/users/register", Users.RegisterController, :create
     post "/users/login", Users.LoginController, :create
-    resources "/users", UsersController, only: [:index, :create]
+    resources "/users", UsersController, only: [:create]
+    resources "/students", UsersController, only: [:index]
 
     resources "/cohorts", CohortController, only: [:index]
 
