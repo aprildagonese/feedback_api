@@ -1,6 +1,6 @@
 defmodule FeedbackApiWeb.GroupView do
   use FeedbackApiWeb, :view
-  alias FeedbackApiWeb.GroupView
+  alias FeedbackApiWeb.{GroupView, UsersView}
 
   def render("index.json", %{groups: groups}) do
     render_many(groups, GroupView, "group.json")
@@ -11,6 +11,6 @@ defmodule FeedbackApiWeb.GroupView do
   end
 
   def render("group.json", %{group: group}) do
-    %{name: group.name, member_ids: Enum.map(group.users, fn user -> user.id end)}
+    %{name: group.name, members: render_many(group.users, UsersView, "user.json")}
   end
 end
