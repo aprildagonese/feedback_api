@@ -9,7 +9,10 @@ defmodule FeedbackApiWeb.Surveys.StudentAverageController do
 
       user ->
         conn
-        |> render("show.json", %{average: Survey.average_for_user(params["survey_id"], user)})
+        |> render("show.json", %{
+          average: Survey.average_for_user(params["survey_id"], user),
+          survey: Survey.one(params["survey_id"])
+          })
     end
   end
 end
