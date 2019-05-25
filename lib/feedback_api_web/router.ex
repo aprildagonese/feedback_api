@@ -36,5 +36,7 @@ defmodule FeedbackApiWeb.Router do
     resources "/users", UsersController, only: [:index, :create]
 
     resources "/cohorts", CohortController, only: [:index]
+
+    resources "/responses", ResponseController, only: [:create]
   end
 end
