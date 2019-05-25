@@ -448,10 +448,32 @@ Sample Response:
       "surveyExpiration": null,
       "groups": [
         {
-          "member_ids": [1, 2, 3],
-          "name": "Test"
-          }
-        ],
+          "name": "Test",
+          "members": [
+            {
+              "id": 1,
+              "name": "Peter Lapicola",
+              "cohort": "1811",
+              "program": "B",
+              "status": "Active"
+            },
+            {
+              "id": 2,
+              "name": "April Dagonese",
+              "cohort": "1811",
+              "program": "B",
+              "status": "Active"
+            },
+            {
+              "id": 3,
+              "name": "Scott Thomas",
+              "cohort": "1811",
+              "program": "B",
+              "status": "Active"
+            }
+          ]
+        }
+      ],
       "id": 1,
       "surveyName": "Test Survey",
       "questions": [
@@ -496,8 +518,23 @@ Sample Response:
   {
     "groups": [
       {
-        "member_ids": [2, 3],
-        "name": "Test"
+        "name": "Team1",
+        "members": [
+          {
+            "id": 8,
+            "name": "April Dagonese",
+            "cohort": "1811",
+            "program": "B",
+            "status": "Active"
+          },
+          {
+            "id": 9,
+            "name": "Scott Thomas",
+            "cohort": "1811",
+            "program": "B",
+            "status": "Active"
+          }
+        ]
       }
     ],
     "surveyName": "Test Survey",
