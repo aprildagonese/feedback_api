@@ -3,7 +3,10 @@ The backend data source for Turing's FeedbackLoop Service
 
 ## Endpoints
 
+[POST /api/v1/users/register](#post-apiv1usersregister)
+
 [POST /api/v1/users](#post-apiv1users)
+
 
 Base url: https://turing-feedback-api.herokuapp.com
 
@@ -17,7 +20,7 @@ In the event that an API key is invalid or not provided on routes where the pres
 }
 ```
 
-## `POST /api/v1/users/register`
+## POST /api/v1/users/register
 
 Purpose: To register a new user with an email address and password
 
