@@ -12,6 +12,12 @@ defmodule FeedbackApiWeb.ResponseCreateFacade do
   end
 
   defp create_single_response(response, user) do
-    %Response{reviewer_id: user.id, recipient_id: response["recipient"], question_id: response["question"], answer_id: response["answer"]} |> Repo.insert!()
+    %Response{
+      reviewer_id: user.id,
+      recipient_id: response["recipient"],
+      question_id: response["question"],
+      answer_id: response["answer"]
+    }
+    |> Repo.insert!()
   end
 end

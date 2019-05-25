@@ -58,7 +58,8 @@ defmodule FeedbackApiWeb.ResponseControllerTest do
     question = Repo.one(Question)
     answer = Repo.one(from a in Answer, where: a.value == 4)
     conn = conn |> put_req_header("content-type", "application/json")
-    body =  %{
+
+    body = %{
       responses: [
         %{question: question.id, answer: answer.id, recipient: user_2.id},
         %{question: question.id, answer: answer.id, recipient: user_3.id}
@@ -73,7 +74,7 @@ defmodule FeedbackApiWeb.ResponseControllerTest do
   test "Returns a 422 if the response is invalid", %{conn: conn} do
     [user_1, _user_2, _user_3] = Repo.all(User)
     conn = conn |> put_req_header("content-type", "application/json")
-    body =  %{api_key: user_1.api_key}
+    body = %{api_key: user_1.api_key}
 
     conn = post(conn, "/api/v1/responses", body)
 
@@ -85,7 +86,8 @@ defmodule FeedbackApiWeb.ResponseControllerTest do
     question = Repo.one(Question)
     answer = Repo.one(from a in Answer, where: a.value == 4)
     conn = conn |> put_req_header("content-type", "application/json")
-    body =  %{
+
+    body = %{
       api_key: user_1.api_key,
       responses: [
         %{question: question.id, answer: answer.id, recipient: user_2.id},
