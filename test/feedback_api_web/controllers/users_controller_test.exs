@@ -8,6 +8,7 @@ defmodule FeedbackApiWeb.UsersControllerTest do
     |> Repo.insert!()
 
     cohort_1901 = %Cohort{name: "1901"}
+    |> Repo.insert!()
 
     %User{name: "Inactive Student", program: "B", status: :Inactive} |> Repo.insert!()
 

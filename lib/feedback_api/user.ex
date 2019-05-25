@@ -41,4 +41,48 @@ defmodule FeedbackApi.User do
         )
     end
   end
+
+  def active_students do
+    Repo.all(
+      from u in User,
+        join: cohorts in assoc(u, :cohort),
+        where: u.role == ^:Student,
+        order_by: [asc: u.id],
+        preload: [cohort: cohorts]
+    )
+  end
+
+  def by_program(program) do
+    Repo.all(
+      from u in User,
+        join: cohorts in assoc(u, :cohort),
+        where: u.program == ^String.upcase(program),
+        where: u.status == ^:Active,
+        order_by: [asc: u.id],
+        preload: [cohort: cohorts]
+    )
+  end
+
+  def by_cohort(cohort) do
+    Repo.all(
+      from u in User,
+        join: cohorts in assoc(u, :cohort),
+        where: cohorts.name == ^cohort,
+        where: u.status == ^:Active,
+        order_by: [asc: u.id],
+        preload: [cohort: cohorts]
+    )
+  end
+
+  def by_program_and_cohort(program, cohort) do
+    Repo.all(
+      from u in User,
+        join: cohorts in assoc(u, :cohort),
+        where: cohorts.name == ^cohort,
+        where: u.program == ^String.upcase(program),
+        where: u.status == ^:Active,
+        order_by: [asc: u.id],
+        preload: [cohort: cohorts]
+    )
+  end
 end

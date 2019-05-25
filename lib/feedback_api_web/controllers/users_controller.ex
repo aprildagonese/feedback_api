@@ -15,36 +15,16 @@ defmodule FeedbackApiWeb.UsersController do
     users =
       case params do
         %{"cohort" => cohort, "program" => program} ->
-          Repo.all(
-            from u in User,
-              join: cohorts in assoc(u, :cohort),
-              where: cohorts.name == ^cohort,
-              where: u.program == ^String.upcase(program),
-              preload: [cohort: cohorts]
-          )
+          User.by_program_and_cohort(program, cohort)
 
         %{"cohort" => cohort} ->
-          Repo.all(
-            from u in User,
-              join: cohorts in assoc(u, :cohort),
-              where: cohorts.name == ^cohort,
-              preload: [cohort: cohorts]
-          )
+          User.by_cohort(cohort)
 
         %{"program" => program} ->
-          Repo.all(
-            from u in User,
-              join: cohorts in assoc(u, :cohort),
-              where: u.program == ^String.upcase(program),
-              preload: [cohort: cohorts]
-          )
+          User.by_program(program)
 
         %{} ->
-          Repo.all(
-            from u in User,
-              join: cohorts in assoc(u, :cohort),
-              preload: [cohort: cohorts]
-          )
+          User.active_students
       end
 
     render(conn, "index.json", users: users)
