@@ -26,7 +26,7 @@ defmodule FeedbackApi.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:name, :program, :status, :cohort_id, :email, :password, :api_key, :role])
-    |> validate_required([:name, :program, :status, :cohort_id])
+    |> validate_required([:name, :program, :status])
   end
 
   def authorize(api_key) do
