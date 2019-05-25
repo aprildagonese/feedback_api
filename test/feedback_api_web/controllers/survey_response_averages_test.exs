@@ -258,7 +258,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
     uri = "/api/v1/surveys/#{survey.id}/averages/student?api_key=invalidkey"
     conn = get(conn, uri)
 
-    assert json_response(conn, 400) == expected
+    assert json_response(conn, 401) == %{"error" => "Invalid API Key"}
   end
 
   test "It can return averages for one user", %{conn: conn} do
@@ -270,7 +270,8 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
 
     conn = get(conn, uri)
 
-    expected = %{"averages" => [
+    expected = %{
+      "averages" => [
         %{
           "average_rating" => "3.5000000000000000",
           "question_id" => question.id,
@@ -351,7 +352,8 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
 
     conn = get(conn, uri)
 
-    expected = %{"averages" => [
+    expected = %{
+      "averages" => [
         %{
           "average_rating" => nil,
           "question_id" => question.id,

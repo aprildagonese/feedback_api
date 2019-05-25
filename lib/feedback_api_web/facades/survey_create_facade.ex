@@ -8,7 +8,7 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
         survey =
           Ecto.build_assoc(user, :surveys, %Survey{
             name: arguments["surveyName"],
-            status: (arguments["status"]),
+            status: arguments["status"],
             exp_date: parseDateTime(arguments["surveyExpiration"])
           })
           |> Repo.insert!()
@@ -32,7 +32,6 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   defp create_group(survey, group) do
     new_group =
       Group.changeset(%Group{}, group) |> Repo.insert!() |> Repo.preload([:survey, :users])
-
 
     users = Repo.all(from u in User, where: u.id in ^group["members_ids"])
 
@@ -76,8 +75,11 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
 
   defp parseDateTime(time) do
     case time do
-      nil -> nil
-      time -> NaiveDateTime.from_iso8601!(time)
+      nil ->
+        nil
+
+      time ->
+        NaiveDateTime.from_iso8601!(time)
         |> NaiveDateTime.truncate(:second)
     end
   end
