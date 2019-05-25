@@ -3,7 +3,7 @@ The backend data source for Turing's FeedbackLoop Service
 
 ## Endpoints
 
-[POST /api/v1/users](##-post-/api/v1/users)
+[POST /api/v1/users](##post-/api/v1/users)
 
 Base url: https://turing-feedback-api.herokuapp.com
 
@@ -65,7 +65,7 @@ Sample Response:
 }
 ```
 
-## POST /api/v1/users
+##POST /api/v1/users
 
 Purpose: To trigger a refresh of the users and cohorts data stored in our database
 
