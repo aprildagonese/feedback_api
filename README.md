@@ -65,7 +65,7 @@ Sample Response:
 }
 ```
 
-# POST /api/v1/users
+## POST /api/v1/users
 
 Purpose: To trigger a refresh of the users and cohorts data stored in our database
 
