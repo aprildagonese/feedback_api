@@ -14,7 +14,7 @@ defmodule FeedbackApi.Response do
   @doc false
   def changeset(response, attrs) do
     response
-    |> cast(attrs, [])
+    |> cast(attrs, [:answer_id, :reviewer_id, :recipient_id, :question_id])
     |> validate_required([])
   end
 end

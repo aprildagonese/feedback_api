@@ -1,6 +1,6 @@
 defmodule FeedbackApiWeb.ResponseControllerTest do
   use FeedbackApiWeb.ConnCase
-  alias FeedbackApi.{Cohort, Survey, User, Question, Repo, Answer}
+  alias FeedbackApi.{Cohort, Survey, User, Question, Repo, Answer, Response}
   import Ecto.Query
 
   setup do
@@ -95,7 +95,7 @@ defmodule FeedbackApiWeb.ResponseControllerTest do
 
     conn = post(conn, "/api/v1/responses", body)
 
-    assert json_response(conn, 201) == %{"sucess" => "Responses have been stored"}
+    assert json_response(conn, 201) == %{"success" => "Responses have been stored"}
     assert Repo.one(from r in Response, select: count(r.id)) == 2
   end
 end
