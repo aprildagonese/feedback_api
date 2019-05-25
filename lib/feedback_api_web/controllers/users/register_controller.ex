@@ -5,17 +5,19 @@ defmodule FeedbackApiWeb.Users.RegisterController do
 
   def create(conn, params) do
     result =
-    case Repo.get_by(User, name: params["fullName"]) do
-      nil -> %User{}
-      user -> Ecto.Changeset.change(user)
-    end
-    |> User.changeset(%{email: params["email"],
-                        role: params["role"],
-                        password: Bcrypt.hash_pwd_salt(params["password"]),
-                        api_key: Ecto.UUID.generate,
-                        name: params["fullName"],
-                        status: "Active"})
-    |> Repo.insert_or_update()
+      case Repo.get_by(User, name: params["fullName"]) do
+        nil -> %User{}
+        user -> Ecto.Changeset.change(user)
+      end
+      |> User.changeset(%{
+        email: params["email"],
+        role: params["role"],
+        password: Bcrypt.hash_pwd_salt(params["password"]),
+        api_key: Ecto.UUID.generate(),
+        name: params["fullName"],
+        status: "Active"
+      })
+      |> Repo.insert_or_update()
 
     case result do
       {:ok, user} -> render(conn, "register_user.json", users: user)

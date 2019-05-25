@@ -2,11 +2,11 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   alias FeedbackApi.{Survey, User, Question, Group, Repo}
   import Ecto.Query
 
-  def create_survey(arguments) do
+  def create_survey(arguments, user) do
     Repo.transaction(fn ->
       try do
         survey =
-          Survey.changeset(%Survey{}, %{
+          Ecto.build_assoc(user, :surveys, %{
             name: arguments["surveyName"],
             status: arguments["status"],
             exp_date: arguments["surveyExpiration"]

@@ -407,3 +407,40 @@ Sample Response:
   }
 ]
 ```
+
+## `POST /api/v1/responses`
+
+Purpose: To submit responses on behalf of a user
+
+Params: None
+
+Sample Request:
+``` JSON
+{
+  "api_key": "lk2jlk2jl6",
+  "responses": [
+    {
+      "question": 7,
+      "answer": 11,
+      "recipient": 2
+    },
+    {
+      "question": 7,
+      "answer": 10,
+      "recipient": 6
+    },
+    {
+      "question": 7,
+      "answer": 9,
+      "recipient": 8
+    }
+  ]
+}
+```
+
+Sample Response:
+``` JSON
+{
+  "success": "Responses have been stored"
+}
+```

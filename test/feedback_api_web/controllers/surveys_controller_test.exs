@@ -1,8 +1,14 @@
 defmodule FeedbackApiWeb.SurveysControllerTest do
   use FeedbackApiWeb.ConnCase
-  alias FeedbackApi.{Cohort, Survey, Question, Repo}
+  alias FeedbackApi.{Cohort, Survey, User, Question, Repo}
 
   setup do
+    survey =
+      %User{api_key: "mikedaowl"}
+      |> Repo.insert!()
+      |> Ecto.build_assoc(:surveys, %{name: "A test survey"})
+      |> Repo.insert!()
+
     cohorts = [%{id: 1, status: :Active, name: "1811"}, %{id: 2, status: :Active, name: "1811"}]
     cohort_changesets = Enum.map(cohorts, fn cohort -> Cohort.changeset(%Cohort{}, cohort) end)
 
@@ -12,15 +18,15 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
       end)
 
     cohort_1_students = [
-      %{id: 1, cohort_id: 1},
-      %{id: 2, cohort_id: 1},
-      %{id: 3, cohort_id: 1}
+      %{cohort_id: 1, api_key: "abcdef123"},
+      %{cohort_id: 1, api_key: "321fedcba"},
+      %{cohort_id: 1, api_key: "aaawtf"}
     ]
 
     cohort_2_students = [
-      %{id: 4, cohort_id: 2},
-      %{id: 5, cohort_id: 2},
-      %{id: 6, cohort_id: 2}
+      %{cohort_id: 2},
+      %{cohort_id: 2},
+      %{cohort_id: 2}
     ]
 
     Enum.map(cohort_1_students, fn student ->
@@ -30,8 +36,6 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
     Enum.map(cohort_2_students, fn student ->
       Ecto.build_assoc(cohort_2, :users, student) |> Repo.insert!()
     end)
-
-    survey = Survey.changeset(%Survey{}, %{name: "A test survey"}) |> Repo.insert!()
 
     question =
       Question.changeset(%Question{}, %{text: "What is this?"})
@@ -54,10 +58,19 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
     assert Survey |> Repo.aggregate(:count, :id) == 2
   end
 
-  test "Return all surveys", %{conn: conn} do
+  test "Survey creation fails if no API key is provided" do
+    conn = conn |> put_req_header("content-type", "application/json")
+    body = File.read!("test/fixtures/failed_survey_create.json")
+
+    conn = post(conn, "/api/v1/surveys", body)
+
+    assert json_response(conn, 401) == %{"error" => "Invalid API Key"}
+  end
+
+  test "Return all surveys for the user", %{conn: conn} do
     survey = Repo.one(Survey)
     question = Repo.one(Question)
-    conn = get(conn, "/api/v1/surveys")
+    conn = get(conn, "/api/v1/surveys?api_key=mikedaowl")
 
     expected = [
       %{
@@ -79,5 +92,23 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
     ]
 
     assert expected == json_response(conn, 200)
+  end
+
+  test "GET Surveys Returns a 401 if an API key is invalid", %{conn: conn} do
+    conn = get(conn, "/api/v1/surveys?api_key=fakeapikey")
+
+    expected = %{
+      "error" => "Invalid API Key"
+    }
+
+    assert json_response(conn, 401) == expected
+  end
+
+  test "GET Surveys Returns no surveys if the user does not own any", %{conn: conn} do
+    conn = get(conn, "/api/v1/surveys?api_key=abcdef123")
+
+    expected = []
+
+    assert json_response(conn, 200) == expected
   end
 end

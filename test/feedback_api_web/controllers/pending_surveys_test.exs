@@ -1,13 +1,13 @@
 defmodule FeedbackApiWeb.PendingSurveysTest do
   use FeedbackApiWeb.ConnCase
-  alias FeedbackApi.{Cohort, Group, Survey, Question, Repo}
+  alias FeedbackApi.{Cohort, Group, Survey, Question, User, Repo}
 
   setup do
     cohort = %Cohort{name: "1811", status: :Active} |> Repo.insert!() |> Repo.preload(:users)
 
     students = [
-      %{name: "User 1", program: "B"},
-      %{name: "User 2", program: "B"},
+      %{name: "User 1", program: "B", api_key: "abc123"},
+      %{name: "User 2", program: "B", api_key: "123abc"},
       %{name: "User 3", program: "B"}
     ]
 
@@ -87,7 +87,7 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
     group = Repo.one(Group) |> Repo.preload(:users)
     [user_1, user_2, user_3] = group.users
 
-    uri = "/api/v1/surveys/pending?api_key=lk246lj2hljk62l"
+    uri = "/api/v1/surveys/pending?api_key=#{user_1.api_key}"
 
     conn = get(conn, uri)
 
@@ -133,18 +133,18 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
     ]
 
     assert json_response(conn, 200) == expected
-
   end
 
   test "Returns an empty list for users with no pending surveys", %{conn: conn} do
-    uri = "/api/v1/surveys/pending?api_key=lk246lj2hljk62l"
+    [_user_1, user_2, _user_3] = Repo.all(User)
+    uri = "/api/v1/surveys/pending?api_key=#{user_2.api_key}"
     conn = get(conn, uri)
 
     assert json_response(conn, 200) == []
   end
 
   test "Returns a 401 if key is invalid", %{conn: conn} do
-    uri = "/api/v1/surveys/pending"
+    uri = "/api/v1/surveys/pending?api_key=fakeapikey"
     conn = get(conn, uri)
 
     assert json_response(conn, 401) == %{"error" => "Invalid API Key"}
