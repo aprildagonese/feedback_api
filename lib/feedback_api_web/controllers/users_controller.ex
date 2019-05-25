@@ -24,7 +24,7 @@ defmodule FeedbackApiWeb.UsersController do
           User.by_program(program)
 
         %{} ->
-          User.active_students
+          User.active_students()
       end
 
     render(conn, "index.json", users: users)
