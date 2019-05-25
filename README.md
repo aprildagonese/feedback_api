@@ -3,6 +3,8 @@ The backend data source for Turing's FeedbackLoop Service
 
 ## Endpoints
 
+Base url: https://turing-feedback-api.herokuapp.com
+
 [POST /api/v1/users/register](#post-apiv1usersregister)
 
 [POST /api/v1/users/login](#post-apiv1userslogin)
@@ -25,10 +27,7 @@ The backend data source for Turing's FeedbackLoop Service
 
 [POST /api/v1/responses](#post-apiv1responses)
 
-
-Base url: https://turing-feedback-api.herokuapp.com
-
-###### For any route requiring authorization:
+## For Routes Requiring Authorization:
 
 In the event that an API key is invalid or not provided on routes where the presence of an API key is mandated, you will receive a `401` status code and the following message:
 
