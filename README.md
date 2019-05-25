@@ -198,14 +198,53 @@ Sample Request Body:
        "groups": [
          {
            "name": "Team1",
-           "members_ids": [
-             "7", "12", "4", "11"
-           ]
+           "members": [{
+             "id": 7,
+             "name": "Peter Lapicola",
+             "cohort": "1811",
+             "program": "B",
+             "status": "Active"
+           },
+           {
+             "id": 8,
+             "name": "April Dagonese",
+             "cohort": "1811",
+             "program": "B",
+             "status": "Active"
+           },
+           {
+             "id": 9,
+             "name": "Scott Thomas",
+             "cohort": "1811",
+             "program": "B",
+             "status": "Active"
+           }
+         ],
          },
          {
            "name": "Team2",
-           "members_ids": [
-             "2", "13", "17", "9"
+           "members": [
+             {
+               "id": 10,
+               "name": "Peregrine Reed",
+               "cohort": "1811",
+               "program": "B",
+               "status": "Active"
+             },
+             {
+               "id": 11,
+               "name": "Ty Mazey",
+               "cohort": "1811",
+               "program": "B",
+               "status": "Active"
+             },
+             {
+               "id": 12,
+               "name": "Zach Nager",
+               "cohort": "1811",
+               "program": "B",
+               "status": "Active"
+             }
            ]
          }
        ]
@@ -260,25 +299,65 @@ Sample Response Body:
          "groups": [
            {
              "name": "Team1",
-             "members_ids": [
-               "7", "12", "4", "11"
-             ]
+             "members": [
+               {
+                 "id": 7,
+                 "name": "Peter Lapicola",
+                 "cohort": "1811",
+                 "program": "B",
+                 "status": "Active"
+               },
+               {
+                 "id": 8,
+                 "name": "April Dagonese",
+                 "cohort": "1811",
+                 "program": "B",
+                 "status": "Active"
+               },
+               {
+                 "id": 9,
+                 "name": "Scott Thomas",
+                 "cohort": "1811",
+                 "program": "B",
+                 "status": "Active"
+               }
+             ],
            },
            {
              "name": "Team2",
-             "members_ids": [
-               "2", "13", "17", "9"
+             "members": [
+               {
+                 "id": 10,
+                 "name": "Peregrine Reed",
+                 "cohort": "1811",
+                 "program": "B",
+                 "status": "Active"
+               },
+               {
+                 "id": 11,
+                 "name": "Ty Mazey",
+                 "cohort": "1811",
+                 "program": "B",
+                 "status": "Active"
+               },
+               {
+                 "id": 12,
+                 "name": "Zach Nager",
+                 "cohort": "1811",
+                 "program": "B",
+                 "status": "Active"
+               }
              ]
            }
          ]
        }
      ]
    }
-   ```
+ ```
 
 ## GET /api/v1/surveys/:id/averages
 
-Purpose: To retrive the average response values for a survey
+Purpose: To retrieve the average response values for a survey
 
 Params: None
 
@@ -305,12 +384,32 @@ Sample Response:
       }
     ],
     "groups": [
+      {
+        "name": "Team1",
+        "members": [{
+          "id": 7,
+          "name": "Peter Lapicola",
+          "cohort": "1811",
+          "program": "B",
+          "status": "Active"
+        },
         {
-          "member_ids": [1, 2, 3],
-          "name": "Test"
+          "id": 8,
+          "name": "April Dagonese",
+          "cohort": "1811",
+          "program": "B",
+          "status": "Active"
+        },
+        {
+          "id": 9,
+          "name": "Scott Thomas",
+          "cohort": "1811",
+          "program": "B",
+          "status": "Active"
         }
-      ]
-    },
+      ],
+    }
+  ],
     "averages": [
       {
         "question_id": 42,
@@ -319,6 +418,8 @@ Sample Response:
       }
     ]
   }
+}
+
 ```
 
 ## GET /api/v1/surveys/:id/user_averages
