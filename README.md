@@ -165,7 +165,7 @@ Sample Request Body:
    {
      "api_key": "lkj4264lkmlkj98so9oug",
      "survey": {
-       "name": "1811 Cross-Pollination Project",
+       "surveyName": "1811 Cross-Pollination Project",
        "surveyExpiration": "Mon May 20 2019 17:43:49 GMT-0600 (Mountain Daylight Time)",
        "questions": [
          {
