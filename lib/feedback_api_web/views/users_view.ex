@@ -3,7 +3,7 @@ defmodule FeedbackApiWeb.UsersView do
   alias FeedbackApiWeb.UsersView
 
   def render("index.json", %{users: users}) do
-    render_many(users, UsersView, "user.json")
+    %{students: render_many(users, UsersView, "user.json")}
   end
 
   def render("show.json", %{user: user}) do

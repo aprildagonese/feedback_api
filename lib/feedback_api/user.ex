@@ -9,11 +9,11 @@ defmodule FeedbackApi.User do
   schema "users" do
     field :name, :string
     field :program, :string
-    field :status, StatusEnum
+    field :status, StatusEnum, default: 0
     field :email, :string
     field :password, :string
     field :api_key, :string
-    field :role, RoleEnum
+    field :role, RoleEnum, default: 0
     belongs_to :cohort, FeedbackApi.Cohort
     has_many :responses, FeedbackApi.Response, foreign_key: :reviewer_id
     has_many :ratings, FeedbackApi.Response, foreign_key: :recipient_id
