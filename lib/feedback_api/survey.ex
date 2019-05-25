@@ -105,6 +105,22 @@ defmodule FeedbackApi.Survey do
     )
   end
 
+  def average_for_user(survey_id, user) do
+    Repo.all(
+      from question in Question,
+        left_join: responses in assoc(question, :responses),
+        join: answers in assoc(responses, :answer),
+        where: question.survey_id == ^survey_id,
+        where: responses.recipient_id == ^user.id,
+        group_by: [question.id, responses.recipient_id],
+        select: %{
+          question_id: question.id,
+          user_id: responses.recipient_id,
+          average_rating: avg(answers.value)
+        }
+    )
+  end
+
   def user_averages(survey_id) do
     Repo.all(
       from question in Question,
