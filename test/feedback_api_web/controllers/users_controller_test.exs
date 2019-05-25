@@ -46,64 +46,63 @@ defmodule FeedbackApiWeb.UsersControllerTest do
       conn = get(conn, "/api/v1/students")
 
       expected = [
-          %{
-            "id" => user_1.id,
-            "name" => "Peter Lapicola",
-            "cohort" => "1811",
-            "program" => "B",
-            "status" => "Active"
-          },
-          %{
-            "id" => user_2.id,
-            "name" => "April Dagonese",
-            "cohort" => "1811",
-            "program" => "B",
-            "status" => "Active"
-          },
-          %{
-            "id" => user_3.id,
-            "name" => "Kim Myers",
-            "cohort" => "1811",
-            "program" => "F",
-            "status" => "Active"
-          },
-          %{
-            "id" => user_4.id,
-            "name" => "Taylor Sperry",
-            "cohort" => "1811",
-            "program" => "F",
-            "status" => "Active"
-          },
-          %{
-            "id" => user_5.id,
-            "name" => "Jennica Stiehl",
-            "cohort" => "1901",
-            "program" => "B",
-            "status" => "Active"
-          },
-          %{
-            "id" => user_6.id,
-            "name" => "Earl Stephens",
-            "cohort" => "1901",
-            "program" => "B",
-            "status" => "Active"
-          },
-          %{
-            "id" => user_7.id,
-            "name" => "Justin Pyktel",
-            "cohort" => "1901",
-            "program" => "F",
-            "status" => "Active"
-          },
-          %{
-            "id" => user_8.id,
-            "name" => "Raechel Odom",
-            "cohort" => "1901",
-            "program" => "F",
-            "status" => "Active"
-          }
-        ]
-
+        %{
+          "id" => user_1.id,
+          "name" => "Peter Lapicola",
+          "cohort" => "1811",
+          "program" => "B",
+          "status" => "Active"
+        },
+        %{
+          "id" => user_2.id,
+          "name" => "April Dagonese",
+          "cohort" => "1811",
+          "program" => "B",
+          "status" => "Active"
+        },
+        %{
+          "id" => user_3.id,
+          "name" => "Kim Myers",
+          "cohort" => "1811",
+          "program" => "F",
+          "status" => "Active"
+        },
+        %{
+          "id" => user_4.id,
+          "name" => "Taylor Sperry",
+          "cohort" => "1811",
+          "program" => "F",
+          "status" => "Active"
+        },
+        %{
+          "id" => user_5.id,
+          "name" => "Jennica Stiehl",
+          "cohort" => "1901",
+          "program" => "B",
+          "status" => "Active"
+        },
+        %{
+          "id" => user_6.id,
+          "name" => "Earl Stephens",
+          "cohort" => "1901",
+          "program" => "B",
+          "status" => "Active"
+        },
+        %{
+          "id" => user_7.id,
+          "name" => "Justin Pyktel",
+          "cohort" => "1901",
+          "program" => "F",
+          "status" => "Active"
+        },
+        %{
+          "id" => user_8.id,
+          "name" => "Raechel Odom",
+          "cohort" => "1901",
+          "program" => "F",
+          "status" => "Active"
+        }
+      ]
 
       assert json_response(conn, 200) == expected
     end
@@ -113,35 +112,35 @@ defmodule FeedbackApiWeb.UsersControllerTest do
       conn = get(conn, "/api/v1/students?cohort=1811")
 
       expected = [
-          %{
-            "id" => user_1.id,
-            "name" => "Peter Lapicola",
-            "cohort" => "1811",
-            "program" => "B",
-            "status" => "Active"
-          },
-          %{
-            "id" => user_2.id,
-            "name" => "April Dagonese",
-            "cohort" => "1811",
-            "program" => "B",
-            "status" => "Active"
-          },
-          %{
-            "id" => user_3.id,
-            "name" => "Kim Myers",
-            "cohort" => "1811",
-            "program" => "F",
-            "status" => "Active"
-          },
-          %{
-            "id" => user_4.id,
-            "name" => "Taylor Sperry",
-            "cohort" => "1811",
-            "program" => "F",
-            "status" => "Active"
-          }
-        ]
+        %{
+          "id" => user_1.id,
+          "name" => "Peter Lapicola",
+          "cohort" => "1811",
+          "program" => "B",
+          "status" => "Active"
+        },
+        %{
+          "id" => user_2.id,
+          "name" => "April Dagonese",
+          "cohort" => "1811",
+          "program" => "B",
+          "status" => "Active"
+        },
+        %{
+          "id" => user_3.id,
+          "name" => "Kim Myers",
+          "cohort" => "1811",
+          "program" => "F",
+          "status" => "Active"
+        },
+        %{
+          "id" => user_4.id,
+          "name" => "Taylor Sperry",
+          "cohort" => "1811",
+          "program" => "F",
+          "status" => "Active"
+        }
+      ]
 
       assert json_response(conn, 200) == expected
     end
@@ -151,35 +150,35 @@ defmodule FeedbackApiWeb.UsersControllerTest do
       conn = get(conn, "/api/v1/students?program=B")
 
       expected = [
-          %{
-            "id" => user_1.id,
-            "name" => "Peter Lapicola",
-            "cohort" => "1811",
-            "program" => "B",
-            "status" => "Active"
-          },
-          %{
-            "id" => user_2.id,
-            "name" => "April Dagonese",
-            "cohort" => "1811",
-            "program" => "B",
-            "status" => "Active"
-          },
-          %{
-            "id" => user_5.id,
-            "name" => "Jennica Stiehl",
-            "cohort" => "1901",
-            "program" => "B",
-            "status" => "Active"
-          },
-          %{
-            "id" => user_6.id,
-            "name" => "Earl Stephens",
-            "cohort" => "1901",
-            "program" => "B",
-            "status" => "Active"
-          }
-        ]
+        %{
+          "id" => user_1.id,
+          "name" => "Peter Lapicola",
+          "cohort" => "1811",
+          "program" => "B",
+          "status" => "Active"
+        },
+        %{
+          "id" => user_2.id,
+          "name" => "April Dagonese",
+          "cohort" => "1811",
+          "program" => "B",
+          "status" => "Active"
+        },
+        %{
+          "id" => user_5.id,
+          "name" => "Jennica Stiehl",
+          "cohort" => "1901",
+          "program" => "B",
+          "status" => "Active"
+        },
+        %{
+          "id" => user_6.id,
+          "name" => "Earl Stephens",
+          "cohort" => "1901",
+          "program" => "B",
+          "status" => "Active"
+        }
+      ]
 
       assert json_response(conn, 200) == expected
     end
@@ -189,21 +188,21 @@ defmodule FeedbackApiWeb.UsersControllerTest do
       conn = get(conn, "/api/v1/students?cohort=1811&program=B")
 
       expected = [
-          %{
-            "id" => user_1.id,
-            "name" => "Peter Lapicola",
-            "cohort" => "1811",
-            "program" => "B",
-            "status" => "Active"
-          },
-          %{
-            "id" => user_2.id,
-            "name" => "April Dagonese",
-            "cohort" => "1811",
-            "program" => "B",
-            "status" => "Active"
-          }
-        ]
+        %{
+          "id" => user_1.id,
+          "name" => "Peter Lapicola",
+          "cohort" => "1811",
+          "program" => "B",
+          "status" => "Active"
+        },
+        %{
+          "id" => user_2.id,
+          "name" => "April Dagonese",
+          "cohort" => "1811",
+          "program" => "B",
+          "status" => "Active"
+        }
+      ]
 
       assert json_response(conn, 200) == expected
     end

@@ -39,6 +39,7 @@ defmodule FeedbackApi.User do
           from u in User,
             where: u.api_key == ^api_key
         )
+        |> Repo.preload(:surveys)
     end
   end
 
