@@ -45,8 +45,7 @@ defmodule FeedbackApiWeb.UsersControllerTest do
       [_, user_1, user_2, user_3, user_4, user_5, user_6, user_7, user_8, _] = Repo.all(User)
       conn = get(conn, "/api/v1/students")
 
-      expected = %{
-        "students" => [
+      expected = [
           %{
             "id" => user_1.id,
             "name" => "Peter Lapicola",
@@ -104,7 +103,7 @@ defmodule FeedbackApiWeb.UsersControllerTest do
             "status" => "Active"
           }
         ]
-      }
+
 
       assert json_response(conn, 200) == expected
     end
@@ -113,8 +112,7 @@ defmodule FeedbackApiWeb.UsersControllerTest do
       [_, user_1, user_2, user_3, user_4, _, _, _, _, _] = Repo.all(User)
       conn = get(conn, "/api/v1/students?cohort=1811")
 
-      expected = %{
-        "students" => [
+      expected = [
           %{
             "id" => user_1.id,
             "name" => "Peter Lapicola",
@@ -144,7 +142,6 @@ defmodule FeedbackApiWeb.UsersControllerTest do
             "status" => "Active"
           }
         ]
-      }
 
       assert json_response(conn, 200) == expected
     end
@@ -153,8 +150,7 @@ defmodule FeedbackApiWeb.UsersControllerTest do
       [_, user_1, user_2, _, _, user_5, user_6, _, _, _] = Repo.all(User)
       conn = get(conn, "/api/v1/students?program=B")
 
-      expected = %{
-        "students" => [
+      expected = [
           %{
             "id" => user_1.id,
             "name" => "Peter Lapicola",
@@ -184,7 +180,6 @@ defmodule FeedbackApiWeb.UsersControllerTest do
             "status" => "Active"
           }
         ]
-      }
 
       assert json_response(conn, 200) == expected
     end
@@ -193,8 +188,7 @@ defmodule FeedbackApiWeb.UsersControllerTest do
       [_, user_1, user_2, _, _, _, _, _, _, _] = Repo.all(User)
       conn = get(conn, "/api/v1/students?cohort=1811&program=B")
 
-      expected = %{
-        "students" => [
+      expected = [
           %{
             "id" => user_1.id,
             "name" => "Peter Lapicola",
@@ -210,7 +204,6 @@ defmodule FeedbackApiWeb.UsersControllerTest do
             "status" => "Active"
           }
         ]
-      }
 
       assert json_response(conn, 200) == expected
     end

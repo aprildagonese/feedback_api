@@ -67,15 +67,15 @@ Purpose: To trigger a refresh of the users and cohorts data stored in our databa
 
 Params: None
 
-## `GET /api/v1/users`
+## `GET /api/v1/students`
 
 Purpose: To retrieve all users stored in the database, with optional params
 
 Optional Params:
-- `/api/v1/users?program=b`
-- `/api/v1/users?program=f`
-- `/api/v1/users?cohort=1811`
-- `/api/v1/users?cohort=1903`
+- `/api/v1/students?program=b`
+- `/api/v1/students?program=f`
+- `/api/v1/students?cohort=1811`
+- `/api/v1/students?cohort=1903`
 
 Sample Response:
 
