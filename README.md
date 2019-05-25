@@ -17,7 +17,7 @@ The backend data source for Turing's FeedbackLoop Service
 
 [GET /api/v1/surveys](#post-apiv1surveys)
 
-[GET /api/v1/surveys/:id/averages](#post-apiv1surveys:idaverages)
+[GET /api/v1/surveys/:id/averages](#get-apiv1surveysidaverages)
 
 [GET /api/v1/surveys/:id/user-averages](#get-apiv1surveysiduser_averages)
 
