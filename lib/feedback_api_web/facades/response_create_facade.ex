@@ -1,6 +1,5 @@
 defmodule FeedbackApiWeb.ResponseCreateFacade do
   alias FeedbackApi.{Repo, Response}
-  import Ecto.Query
 
   def create(responses, user) do
     try do

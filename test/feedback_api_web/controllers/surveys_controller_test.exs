@@ -18,15 +18,15 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
       end)
 
     cohort_1_students = [
-      %{id: 1, cohort_id: 1, api_key: "abcdef123"},
-      %{id: 2, cohort_id: 1, api_key: "321fedcba"},
-      %{id: 3, cohort_id: 1, api_key: "aaawtf"}
+      %{cohort_id: 1, api_key: "abcdef123"},
+      %{cohort_id: 1, api_key: "321fedcba"},
+      %{cohort_id: 1, api_key: "aaawtf"}
     ]
 
     cohort_2_students = [
-      %{id: 4, cohort_id: 2},
-      %{id: 5, cohort_id: 2},
-      %{id: 6, cohort_id: 2}
+      %{cohort_id: 2},
+      %{cohort_id: 2},
+      %{cohort_id: 2}
     ]
 
     Enum.map(cohort_1_students, fn student ->
