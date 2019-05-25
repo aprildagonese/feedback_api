@@ -64,7 +64,6 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   defp create_answer(question, nested_answer) do
     # Answer is received as nested object, grab values for actual answer
     answer = hd(Map.values(nested_answer))
-    IO.inspect(answer)
 
     new_answer =
       Ecto.build_assoc(question, :answers, %{

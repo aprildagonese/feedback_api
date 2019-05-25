@@ -262,7 +262,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
 
     conn = get(conn, uri)
 
-    "averages" => [
+    expected = %{"averages" => [
       %{
         "average_rating" => "3.5000000000000000",
         "question_id" => question.id,
@@ -341,7 +341,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
 
     conn = get(conn, uri)
 
-    "averages" => [
+    expected = %{"averages" => [
       %{
         "average_rating" => nil,
         "question_id" => question.id,
