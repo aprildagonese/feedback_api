@@ -4,7 +4,6 @@ The backend data source for Turing's FeedbackLoop Service
 ## Endpoints
 
 [POST /api/v1/users/register](#post-apiv1usersregister)
-
 [POST /api/v1/users](#post-apiv1users)
 
 
