@@ -35,7 +35,7 @@ defmodule FeedbackApiWeb.Endpoint do
   plug Plug.Head
 
   plug Corsica,
-    origins: ["http://localhost:3000", "https://turing-feedback-loop.herokuapp.com", "http://turingfeedback.com"],
+    origins: ["http://localhost:3000", "https://turing-feedback-loop.herokuapp.com", "http://turingfeedback.com", "https://turingfeedback.com"],
     allow_methods: ["GET", "POST", "PUT", "PATCH"],
     allow_headers: :all
 
