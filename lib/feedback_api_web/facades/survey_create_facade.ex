@@ -15,6 +15,7 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
 
         create_groups(survey, arguments["groups"])
         create_questions(survey, arguments["questions"])
+        FeedbackApi.SurveyNotificationSupervisor.send_notifications(survey)
       rescue
         _e -> Repo.rollback("Missing required fields")
       end
