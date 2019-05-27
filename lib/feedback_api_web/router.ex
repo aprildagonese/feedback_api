@@ -30,6 +30,7 @@ defmodule FeedbackApiWeb.Router do
 
     scope "/surveys", Surveys do
       get "/pending", PendingController, :index
+      get "/history", HistoryController, :index
     end
 
     post "/users/register", Users.RegisterController, :create
