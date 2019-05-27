@@ -11,6 +11,13 @@ defmodule FeedbackApiWeb.SurveyController do
     end
   end
 
+  def show(conn, params) do
+    case Survey.one(params["id"]) do
+      nil -> conn |> put_status(:not_found) |> json%{error: "Not found"}
+      survey -> conn |> render("show.json", %{survey: survey})
+    end
+  end
+
   def create(conn, params) do
     case User.authorize(params["api_key"]) do
       nil ->
