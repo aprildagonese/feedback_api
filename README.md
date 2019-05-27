@@ -401,12 +401,14 @@ Sample Response:
     {
       "average_rating": 3.5000000000000000,
       "question_id": 42,
-      "user_id": 1
+      "user_id": 1,
+      "fullName": "Peter Lapicola"
     },
     {
       "average_rating": 3.0000000000000000,
       "question_id": 42,
-      "user_id": 2
+      "user_id": 2,
+      "fullName": "April Dagonese"
       }
     ],
     "survey": {
@@ -485,7 +487,8 @@ Sample Response:
     {
       "average_rating": 3.5000000000000000,
       "question_id": 42,
-      "user_id": 1
+      "user_id": 1,
+      "fullName": "Peter Lapicola"
     },
     ],
     "survey": {
