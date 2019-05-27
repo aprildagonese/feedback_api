@@ -11,7 +11,11 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
   end
 
   def deactivate_students do
-    Repo.update_all(User, set: [status: :inactive])
+    (from user in User,
+      where: user.role == 0,
+      where: user.status == 0,
+      update: [set: [status: 1]]
+    )|> Repo.update_all([])
   end
 
   def update_cohorts do
@@ -24,7 +28,7 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
 
   def refresh_cohort(cohort) do
     name = cohort["attributes"]["name"]
-    status = cohort["attributes"]["status"]
+    status = String.capitalize(cohort["attributes"]["status"])
 
     result =
       case Repo.get_by(Cohort, %{name: name}) do
@@ -68,7 +72,7 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
         nil -> %User{}
         user -> Ecto.Changeset.change(user)
       end
-      |> User.changeset(%{name: name, status: :active, program: program, cohort_id: cohort.id})
+      |> User.changeset(%{name: name, status: :Active, program: program, cohort_id: cohort.id})
       |> Repo.insert_or_update()
 
     case result do

@@ -5,7 +5,8 @@ defmodule Services.Mailer do
 
     url = "http://mail.turingfeedback.com/api/v1/messages"
     headers = [{"Content-type", "application/json"}]
+    options = [recv_timeout: 40_000, timeout: 40_000]
 
-    HTTPoison.post(url, body, headers, timeout: 30000)
+    HTTPoison.post(url, body, headers, options)
   end
 end
