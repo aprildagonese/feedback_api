@@ -58,6 +58,7 @@ defmodule FeedbackApi.Survey do
   end
 
   def pending_for_user(user) do
+    # Would like to do in one query using having, just trying to make sure it works for now
     Repo.all(
       from survey in Survey,
         join: groups in assoc(survey, :groups),
