@@ -157,5 +157,7 @@ defmodule FeedbackApiWeb.StudentSurveyHistoryTest do
           ]
         }
       ]
+
+      assert json_response(conn, 200) == expected
   end
 end

@@ -51,7 +51,7 @@ defmodule FeedbackApi.Survey do
         join: answers in assoc(questions, :answers),
         where: users.id == ^user.id,
         where: members.id != ^user.id,
-        order_by: [desc: survey.status, asc: survey.id],
+        order_by: [asc: members.id, desc: answers.value, desc: survey.status, asc: survey.id],
         preload: [groups: {groups, users: {members, cohort: cohort}},
         questions: {questions, answers: answers}]
     )
