@@ -61,8 +61,8 @@ defmodule FeedbackApiWeb.ResponseControllerTest do
 
     body = %{
       responses: [
-        %{question: question.id, answer: answer.id, recipient: user_2.id},
-        %{question: question.id, answer: answer.id, recipient: user_3.id}
+        %{question: question.id, answer: answer.id, member: user_2.id},
+        %{question: question.id, answer: answer.id, member: user_3.id}
       ]
     }
 
@@ -90,8 +90,8 @@ defmodule FeedbackApiWeb.ResponseControllerTest do
     body = %{
       api_key: user_1.api_key,
       responses: [
-        %{question: question.id, answer: answer.id, recipient: user_2.id},
-        %{question: question.id, answer: answer.id, recipient: user_3.id}
+        %{question: question.id, answer: answer.id, member: user_2.id},
+        %{question: question.id, answer: answer.id, member: user_3.id}
       ]
     }
 

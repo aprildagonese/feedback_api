@@ -3,8 +3,6 @@ defmodule Services.Mailer do
     HTTPoison.start()
     body = Poison.encode!(users)
 
-    IO.inspect(body)
-
     url = "http://mail.turingfeedback.com/api/v1/messages"
     headers = [{"Content-type", "application/json"}]
 
