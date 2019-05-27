@@ -11,6 +11,6 @@ defmodule FeedbackApiWeb.AnswerView do
   end
 
   def render("answer.json", %{answer: answer}) do
-    %{description: answer.description, pointValue: answer.value}
+    %{id: answer.id, description: answer.description, pointValue: answer.value}
   end
 end
