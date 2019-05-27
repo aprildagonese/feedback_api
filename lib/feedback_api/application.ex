@@ -23,7 +23,6 @@ defmodule FeedbackApi.Application do
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: FeedbackApi.Supervisor]
-    IO.inspect(System.get_env("ROOSTER_API_KEY"))
     Supervisor.start_link(children, opts)
   end
 
