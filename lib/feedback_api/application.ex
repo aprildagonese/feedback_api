@@ -16,12 +16,14 @@ defmodule FeedbackApi.Application do
       # Starts a worker by calling: FeedbackApi.Worker.start_link(arg)
       # {FeedbackApi.Worker, arg},
       {Task.Supervisor, name: FeedbackApi.SurveyNotificationSupervisor},
-      FeedbackApi.CloseSurveyWorker
+      FeedbackApi.CloseSurveyWorker,
+      FeedbackApi.RefreshUserWorker
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: FeedbackApi.Supervisor]
+    IO.inspect(System.get_env("ROOSTER_API_KEY"))
     Supervisor.start_link(children, opts)
   end
 

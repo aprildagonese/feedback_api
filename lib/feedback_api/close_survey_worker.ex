@@ -10,7 +10,7 @@ defmodule FeedbackApi.CloseSurveyWorker do
   end
 
   def init(:ok) do
-    Survey.expire_old_surveys
+    if Mix.env() == :prod, do: Survey.expire_old_surveys
     Process.send_after(self(), :work, @interval)
     {:ok, %{last_run_at: nil}}
   end

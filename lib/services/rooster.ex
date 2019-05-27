@@ -2,23 +2,27 @@ defmodule Services.Rooster do
   def cohorts do
     HTTPoison.start()
 
+    headers = []
+    options = [recv_timeout: 40_000, timeout: 40_000]
     url =
-      "http://turing-rooster.herokuapp.com/api/v1/cohorts?key=OsLvluNTvbQxWRKs0Cnn7CMLVBQ1tF8p"
+      "http://turing-rooster.herokuapp.com/api/v1/cohorts?key=#{System.get_env("ROOSTER_API_KEY")}"
 
-    response = HTTPoison.get!(url)
+    response = HTTPoison.get!(url, headers, options)
     results = Poison.decode!(response.body)
-    _data = results["data"]
+    results["data"]
   end
 
   def students do
     HTTPoison.start()
 
+    headers = []
+    options = [recv_timeout: 40_000, timeout: 40_000]
     url =
-      "http://turing-rooster.herokuapp.com/api/v1/cohorts/active?key=OsLvluNTvbQxWRKs0Cnn7CMLVBQ1tF8p"
+      "http://turing-rooster.herokuapp.com/api/v1/cohorts/active?key=#{System.get_env("ROOSTER_API_KEY")}"
 
-    response = HTTPoison.get!(url)
+    response = HTTPoison.get!(url, headers, options)
     results = Poison.decode!(response.body)
-    _data = results["data"]
+    results["data"]
   end
 end
 
