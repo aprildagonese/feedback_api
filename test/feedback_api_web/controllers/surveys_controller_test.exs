@@ -1,6 +1,6 @@
 defmodule FeedbackApiWeb.SurveysControllerTest do
   use FeedbackApiWeb.ConnCase
-  alias FeedbackApi.{Cohort, Survey, User, Question, Repo}
+  alias FeedbackApi.{Cohort, Survey, User, Question, Answer, Repo}
 
   setup do
     survey =
@@ -70,6 +70,7 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
   test "Return all surveys for the user", %{conn: conn} do
     survey = Repo.one(Survey)
     question = Repo.one(Question)
+    answer = Repo.one(Answer)
     conn = get(conn, "/api/v1/surveys?api_key=mikedaowl")
 
     expected = [
@@ -83,7 +84,7 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
         "questions" => [
           %{
             "id" => question.id,
-            "options" => [%{"description" => "A thing", "pointValue" => 3}],
+            "options" => [%{"description" => "A thing", "pointValue" => 3, "id" => answer.id}],
             "questionTitle" => "What is this?"
           }
         ],
