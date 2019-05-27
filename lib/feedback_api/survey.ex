@@ -40,6 +40,23 @@ defmodule FeedbackApi.Survey do
     )
   end
 
+  def for_participant(user) do
+    Repo.all(
+      from survey in Survey,
+        join: groups in assoc(survey, :groups),
+        join: users in assoc(groups, :users),
+        join: members in assoc(groups, :users),
+        join: cohort in assoc(users, :cohort),
+        join: questions in assoc(survey, :questions),
+        join: answers in assoc(questions, :answers),
+        where: users.id == ^user.id,
+        where: members.id != ^user.id,
+        order_by: [asc: members.id, desc: answers.value, desc: survey.status, asc: survey.id],
+        preload: [groups: {groups, users: {members, cohort: cohort}},
+        questions: {questions, answers: answers}]
+    )
+  end
+
   def one(id) do
     Repo.one(
       from survey in Survey,
@@ -58,18 +75,22 @@ defmodule FeedbackApi.Survey do
   end
 
   def pending_for_user(user) do
+    # Would like to do in one query using having, just trying to make sure it works for now
     Repo.all(
       from survey in Survey,
         join: groups in assoc(survey, :groups),
-        join: users in assoc(groups, :users),
         join: members in assoc(groups, :users),
         left_join: cohort in assoc(members, :cohort),
-        left_join: responses in assoc(users, :responses),
         join: questions in assoc(survey, :questions),
         join: answers in assoc(questions, :answers),
-        where: users.id == ^user.id,
         where: members.id != ^user.id,
-        where: is_nil(responses.id),
+        where: survey.id not in ^Repo.all(
+          from s in Survey,
+          join: q in assoc(s, :questions),
+          join: r in assoc(q, :responses),
+          where: r.reviewer_id == ^user.id,
+          select: s.id
+        ),
         order_by: [asc: members.id, desc: answers.value, asc: survey.id],
         preload: [
           groups: {groups, users: {members, cohort: cohort}},

@@ -25,6 +25,8 @@ Base url: https://turing-feedback-api.herokuapp.com
 
 [GET /api/v1/surveys/pending](#post-apiv1surveyspending)
 
+[GET /api/v1/surveys/history](#post-apiv1surveyshistory)
+
 [POST /api/v1/responses](#post-apiv1responses)
 
 ## For Routes Requiring Authorization:
@@ -612,6 +614,71 @@ Sample Response:
       }
     ],
     "status": "active"
+  }
+]
+```
+
+## GET /api/v1/surveys/history
+
+Purpose: To retrieve the completed and pending surveys to be completed for a user
+
+Params: `api_key={USER_API_KEY_HERE}`
+
+Sample Response:
+``` JSON
+[
+  {
+    "groups": [
+      {
+        "name": "Team1",
+        "members": [
+          {
+            "id": 8,
+            "name": "April Dagonese",
+            "cohort": "1811",
+            "program": "B",
+            "status": "Active"
+          },
+          {
+            "id": 9,
+            "name": "Scott Thomas",
+            "cohort": "1811",
+            "program": "B",
+            "status": "Active"
+          }
+        ]
+      }
+    ],
+    "surveyName": "Test Survey",
+    "id": 12,
+    "surveyExpiration": null,
+    "created_at": "2019-05-23T05:24:58",
+    "updated_at": "2019-05-23T05:24:58",
+    "questions": [
+      {
+        "options": [
+          {
+            "description": "Four",
+            "pointValue": 4
+          },
+          {
+            "description": "Three",
+            "pointValue": 3
+          },
+          {
+            "description": "Two",
+            "pointValue": 2
+          },
+          {
+            "description": "One",
+            "pointValue": 1
+          }
+        ],
+        "id": 42,
+        "questionTitle": "Pick a number between one and four"
+      }
+    ],
+    "status": "closed"
   }
 ]
 ```

@@ -1,6 +1,6 @@
 defmodule FeedbackApiWeb.PendingSurveysTest do
   use FeedbackApiWeb.ConnCase
-  alias FeedbackApi.{Cohort, Group, Survey, Question, Answer, User, Repo}
+  alias FeedbackApi.{Cohort, Group, Survey, Question, Answer, Repo}
 
   setup do
     cohort = %Cohort{name: "1811", status: :Active} |> Repo.insert!() |> Repo.preload(:users)
@@ -78,15 +78,35 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
     Ecto.Changeset.put_assoc(Ecto.Changeset.change(response_2), :question, question)
     |> Repo.update!()
 
+    survey_2 =
+      Ecto.build_assoc(user_2, :surveys, %Survey{name: "Test Survey Two"})
+      |> Repo.insert!()
+      |> Repo.preload([:groups, :questions])
+
+    group_2 =
+      Ecto.build_assoc(survey_2, :groups, %{name: "Group Two!"})
+      |> Repo.insert!()
+      |> Repo.preload([:users, :survey])
+
+    Ecto.Changeset.put_assoc(Ecto.Changeset.change(group_2), :users, users) |> Repo.update!()
+
+    question_two =
+      Ecto.build_assoc(survey_2, :questions, %{text: "Another Question"})
+      |> Repo.insert!()
+      |> Repo.preload(:answers)
+
+    Ecto.build_assoc(question_two, :answers, %{description: "One", value: 1})
+    |> Repo.insert!()
+
     :ok
   end
 
   test "Returns surveys pending for a user", %{conn: conn} do
-    survey = Repo.one(Survey)
-    question = Repo.one(Question)
-    [answer_1, answer_2, answer_3, answer_4] = Repo.all(Answer)
-    group = Repo.one(Group) |> Repo.preload(:users)
-    [user_1, user_2, user_3] = group.users
+    [survey_1, survey_2] = Repo.all(Survey)
+    [question_1, question_2] = Repo.all(Question)
+    [answer_1, answer_2, answer_3, answer_4, answer_5] = Repo.all(Answer)
+    [group_1, _group_2] = Repo.all(Group) |> Repo.preload(:users)
+    [user_1, user_2, user_3] = group_1.users
 
     uri = "/api/v1/surveys/pending?api_key=#{user_1.api_key}"
 
@@ -116,10 +136,10 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
           }
         ],
         "surveyName" => "Test Survey",
-        "id" => survey.id,
+        "id" => survey_1.id,
         "surveyExpiration" => nil,
-        "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
-        "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
+        "created_at" => NaiveDateTime.to_iso8601(survey_1.inserted_at),
+        "updated_at" => NaiveDateTime.to_iso8601(survey_1.updated_at),
         "questions" => [
           %{
             "options" => [
@@ -144,23 +164,116 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
                 "id" => answer_1.id
               }
             ],
-            "id" => question.id,
+            "id" => question_1.id,
             "questionTitle" => "Pick a number between one and four"
           }
         ],
         "status" => "active"
-      }
+      },
+      %{
+        "groups" => [
+        %{
+          "members" => [
+            %{
+              "id" => user_2.id,
+              "name" => user_2.name,
+              "cohort" => "1811",
+              "program" => "B",
+              "status" => "Active"
+            },
+            %{
+              "id" => user_3.id,
+              "name" => user_3.name,
+              "cohort" => "1811",
+              "program" => "B",
+              "status" => "Active"
+            }
+          ],
+          "name" => "Group Two!"
+        }
+      ],
+      "surveyName" => "Test Survey Two",
+      "id" => survey_2.id,
+      "surveyExpiration" => nil,
+      "created_at" => NaiveDateTime.to_iso8601(survey_2.inserted_at),
+      "updated_at" => NaiveDateTime.to_iso8601(survey_2.updated_at),
+      "questions" => [
+        %{
+          "options" => [
+            %{
+              "description" => "One",
+              "pointValue" => 1,
+              "id" => answer_5.id
+            }
+          ],
+          "id" => question_2.id,
+          "questionTitle" => "Another Question"
+        }
+      ],
+      "status" => "active"
+    }
     ]
 
     assert json_response(conn, 200) == expected
   end
 
-  test "Returns an empty list for users with no pending surveys", %{conn: conn} do
-    [_user_1, user_2, _user_3] = Repo.all(User)
+  test "Doesn't return completed surveys", %{conn: conn} do
+    [_survey_1, survey_2] = Repo.all(Survey)
+    [_question_1, question_2] = Repo.all(Question)
+    [_answer_1, _answer_2, _answer_3, _answer_4, answer_5] = Repo.all(Answer)
+    [group_1, _group_2] = Repo.all(Group) |> Repo.preload(:users)
+    [user_1, user_2, user_3] = group_1.users
+
     uri = "/api/v1/surveys/pending?api_key=#{user_2.api_key}"
+
     conn = get(conn, uri)
 
-    assert json_response(conn, 200) == []
+    expected = [
+      %{
+        "groups" => [
+        %{
+          "members" => [
+            %{
+              "id" => user_1.id,
+              "name" => user_1.name,
+              "cohort" => "1811",
+              "program" => "B",
+              "status" => "Active"
+            },
+            %{
+              "id" => user_3.id,
+              "name" => user_3.name,
+              "cohort" => "1811",
+              "program" => "B",
+              "status" => "Active"
+            }
+          ],
+          "name" => "Group Two!"
+        }
+      ],
+      "surveyName" => "Test Survey Two",
+      "id" => survey_2.id,
+      "surveyExpiration" => nil,
+      "created_at" => NaiveDateTime.to_iso8601(survey_2.inserted_at),
+      "updated_at" => NaiveDateTime.to_iso8601(survey_2.updated_at),
+      "questions" => [
+        %{
+          "options" => [
+            %{
+              "description" => "One",
+              "pointValue" => 1,
+              "id" => answer_5.id
+            }
+          ],
+          "id" => question_2.id,
+          "questionTitle" => "Another Question"
+        }
+      ],
+      "status" => "active"
+    }
+  ]
+
+  assert json_response(conn, 200) == expected
   end
 
   test "Returns a 401 if key is invalid", %{conn: conn} do
