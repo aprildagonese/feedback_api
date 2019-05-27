@@ -112,14 +112,14 @@ Sample Response:
         "id": 48,
         "name": "William Homer",
         "program": "B",
-        "status": "active"
+        "status": "Active"
     },
     {
         "cohort": "1903",
         "id": 49,
         "name": "Katherine Williams",
         "program": "F",
-        "status": "active"
+        "status": "Active"
     }
    ]
    ```
@@ -345,7 +345,7 @@ Sample Response:
     "surveyExpiration": null,
     "created_at": "2019-05-23T05:24:58",
     "updated_at": "2019-05-23T05:24:58",
-    "status": "active",
+    "status": "Active",
     "questions": [
       {
         "id": 42,
@@ -470,7 +470,7 @@ Sample Response:
         "questionTitle": "Pick a number between one and four"
       }
     ],
-    "status": "active",
+    "status": "Active",
     "updated_at": "2019-05-23T05:24:58"
   }
 }
@@ -550,7 +550,7 @@ Sample Response:
         "questionTitle": "Pick a number between one and four"
       }
     ],
-    "status": "active",
+    "status": "Active",
     "updated_at": "2019-05-23T05:24:58"
   }
 }
@@ -616,7 +616,7 @@ Sample Response:
         "questionTitle": "Pick a number between one and four"
       }
     ],
-    "status": "active"
+    "status": "Active"
   }
 ]
 ```

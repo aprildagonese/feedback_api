@@ -121,7 +121,7 @@ defmodule FeedbackApiWeb.StudentSurveyHistoryTest do
           "surveyExpiration" => nil,
           "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
           "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
-          "status" => "active",
+          "status" => "Active",
           "questions" => [
             %{
               "id" => question.id,

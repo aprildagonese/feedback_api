@@ -168,7 +168,7 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
             "questionTitle" => "Pick a number between one and four"
           }
         ],
-        "status" => "active"
+        "status" => "Active"
       },
       %{
         "groups" => [
@@ -210,7 +210,7 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
           "questionTitle" => "Another Question"
         }
       ],
-      "status" => "active"
+      "status" => "Active"
     }
     ]
 
@@ -269,7 +269,7 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
           "questionTitle" => "Another Question"
         }
       ],
-      "status" => "active"
+      "status" => "Active"
     }
   ]
 

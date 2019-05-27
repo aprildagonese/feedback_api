@@ -88,7 +88,7 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
             "questionTitle" => "What is this?"
           }
         ],
-        "status" => "active"
+        "status" => "Active"
       }
     ]
 

@@ -3,11 +3,11 @@ defmodule FeedbackApi.Survey do
   import Ecto.{Enum, Query, Changeset}
   alias FeedbackApi.{Survey, Question, User, Repo, Group}
 
-  defenum(StatusEnum, active: 0, closed: 1, disabled: 3)
+  defenum(StatusEnum, Active: 0, Closed: 1, Disabled: 3)
 
   schema "surveys" do
     field :name, :string
-    field :status, StatusEnum, default: :active
+    field :status, StatusEnum, default: :Active
     field :exp_date, :naive_datetime
     belongs_to :user, User
     has_many :groups, Group

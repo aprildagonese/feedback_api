@@ -3,7 +3,7 @@
   "survey":
     {
       "surveyName": "Test",
-      "status": "closed",
+      "status": "Closed",
       "surveyExpiration": null,
       "created_at": "Sat May 18 2019 17:43:49 GMT-0600 (Mountain Daylight Time)",
       "updated_at": "Sat May 18 2019 17:43:49 GMT-0600 (Mountain Daylight Time)",

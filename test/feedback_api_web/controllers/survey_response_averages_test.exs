@@ -113,7 +113,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
         "surveyExpiration" => nil,
         "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
         "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
-        "status" => "active",
+        "status" => "Active",
         "questions" => [
           %{
             "id" => question.id,
@@ -253,7 +253,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
             "questionTitle" => "Pick a number between one and four"
           }
         ],
-        "status" => "active",
+        "status" => "Active",
         "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at)
       }
     }
@@ -349,7 +349,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
             "questionTitle" => "Pick a number between one and four"
           }
         ],
-        "status" => "active",
+        "status" => "Active",
         "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at)
       }
     }
