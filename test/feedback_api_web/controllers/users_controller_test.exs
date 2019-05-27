@@ -1,7 +1,6 @@
 defmodule FeedbackApiWeb.UsersControllerTest do
   use FeedbackApiWeb.ConnCase
   alias FeedbackApi.{Cohort, User, Repo}
-  import Ecto.Query
 
   setup do
     cohort_1811 =

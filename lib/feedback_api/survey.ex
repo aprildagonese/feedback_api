@@ -69,10 +69,9 @@ defmodule FeedbackApi.Survey do
         where: members.id != ^user.id,
         where: survey.id not in ^Repo.all(
           from s in Survey,
-          join: g in assoc(s, :groups),
-          join: u in assoc(g, :users),
-          join: r in assoc(u, :responses),
-          where: u.id == ^user.id,
+          join: q in assoc(s, :questions),
+          join: r in assoc(q, :responses),
+          where: r.reviewer_id == ^user.id,
           select: s.id
         ),
         order_by: [asc: members.id, desc: answers.value, asc: survey.id],
