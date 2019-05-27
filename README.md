@@ -19,6 +19,8 @@ Base url: https://turing-feedback-api.herokuapp.com
 
 [GET /api/v1/surveys](#post-apiv1surveys)
 
+[GET /api/v1/surveys/:id](#post-apiv1surveysid)
+
 [GET /api/v1/surveys/:id/averages](#get-apiv1surveysidaverages)
 
 [GET /api/v1/surveys/:id/user-averages](#get-apiv1surveysiduser_averages)
@@ -321,6 +323,104 @@ Sample Response Body:
        }
      ]
    }
+ ```
+## GET /api/v1/surveys/:id
+
+Purpose: To retrieve a survey based on id.
+
+Required Params: None
+
+Sample Response Body:
+   ``` JSON
+ {
+   "id": 1,
+   "status": "closed",
+   "surveyExpiration": "Mon May 20 2019 17:43:49 GMT-0600 (Mountain Daylight Time)",
+   "created_at": "Sat May 18 2019 17:43:49 GMT-0600 (Mountain Daylight Time)",
+   "updated_at": "Sat May 18 2019 17:43:49 GMT-0600 (Mountain Daylight Time)",
+   "questions": [
+     {
+       "id": 1,
+       "questionTitle": "How well did this person communicate with the rest of the team?",
+       "options": [
+         {
+           "id": 1,
+           "pointValue": 1,
+           "description": "The person did not follow up regularly and often demonstrated unclear or inconsistent communication."
+         },
+         {
+           "id": 2,
+           "pointValue": 2,
+           "description": "The person was mostly consistent but was sometimes unclear in a way that slowed down the team or created frustration."
+         },
+         {
+           "id": 3,
+           "pointValue": 3,
+           "description": "The person overall contributed positively in terms of communication."
+         },
+         {
+           "id": 4,
+           "pointValue": 4,
+           "description": "The person demonstrated clear and timely communication very consistently."
+         },
+       ]
+     }
+   ],
+   "groups": [
+     {
+       "name": "Team1",
+       "members": [
+         {
+           "id": 7,
+           "name": "Peter Lapicola",
+           "cohort": "1811",
+           "program": "B",
+           "status": "Active"
+         },
+         {
+           "id": 8,
+           "name": "April Dagonese",
+           "cohort": "1811",
+           "program": "B",
+           "status": "Active"
+         },
+         {
+           "id": 9,
+           "name": "Scott Thomas",
+           "cohort": "1811",
+           "program": "B",
+           "status": "Active"
+         }
+       ],
+     },
+     {
+       "name": "Team2",
+       "members": [
+         {
+           "id": 10,
+           "name": "Peregrine Reed",
+           "cohort": "1811",
+           "program": "B",
+           "status": "Active"
+         },
+         {
+           "id": 11,
+           "name": "Ty Mazey",
+           "cohort": "1811",
+           "program": "B",
+           "status": "Active"
+         },
+         {
+           "id": 12,
+           "name": "Zach Nager",
+           "cohort": "1811",
+           "program": "B",
+           "status": "Active"
+         }
+       ]
+     }
+   ]
+ }
  ```
 
 ## GET /api/v1/surveys/:id/averages
