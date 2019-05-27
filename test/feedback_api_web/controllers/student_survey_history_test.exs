@@ -96,7 +96,7 @@ defmodule FeedbackApiWeb.StudentSurveyHistoryTest do
 
   test "Returns a 404 if API key is missing or invalid", %{conn: conn} do
     survey = Repo.one(Survey)
-    uri = "/api/v1/surveys/#{survey.id}/history?api_key=FakeApiKey"
+    uri = "/api/v1/surveys/history?api_key=FakeApiKey"
 
     conn = get(conn, uri)
 
@@ -110,7 +110,7 @@ defmodule FeedbackApiWeb.StudentSurveyHistoryTest do
     group = Repo.one(Group) |> Repo.preload(:users)
     [user_1, user_2, user_3] = group.users
 
-    uri = "/api/v1/surveys/#{survey.id}/history?api_key=#{user_2.api_key}"
+    uri = "/api/v1/surveys/history?api_key=#{user_2.api_key}"
 
     conn = get(conn, uri)
 
