@@ -109,7 +109,7 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
     survey = Repo.one(Survey)
     question = Repo.one(Question)
     answer = Repo.one(Answer)
-    conn = get(conn, "/api/v1/surveys/#{survey_id}")
+    conn = get(conn, "/api/v1/surveys/#{survey.id}")
 
     expected = %{
       "groups" => [],

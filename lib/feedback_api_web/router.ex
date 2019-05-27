@@ -22,7 +22,7 @@ defmodule FeedbackApiWeb.Router do
   scope "/api/v1", FeedbackApiWeb do
     pipe_through :api
 
-    resources "/surveys", SurveyController, only: [:index, :create] do
+    resources "/surveys", SurveyController, only: [:index, :show, :create] do
       get "/averages", Surveys.AverageController, :show
       get "/averages/student", Surveys.StudentAverageController, :show
       get "/user_averages", Surveys.UserAverageController, :show
