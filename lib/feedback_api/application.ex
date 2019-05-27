@@ -15,7 +15,8 @@ defmodule FeedbackApi.Application do
       FeedbackApiWeb.Endpoint,
       # Starts a worker by calling: FeedbackApi.Worker.start_link(arg)
       # {FeedbackApi.Worker, arg},
-      {Task.Supervisor, name: FeedbackApi.SurveyNotificationSupervisor}
+      {Task.Supervisor, name: FeedbackApi.SurveyNotificationSupervisor},
+      FeedbackApi.CloseSurveyWorker
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

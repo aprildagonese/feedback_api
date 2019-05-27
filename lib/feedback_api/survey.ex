@@ -160,4 +160,13 @@ defmodule FeedbackApi.Survey do
         }
     )
   end
+
+  def expire_old_surveys do
+    (
+      from survey in Survey,
+      where: survey.status == 0,
+      where: survey.exp_date < ^NaiveDateTime.utc_now(),
+      update: [set: [status: 1, updated_at: ^NaiveDateTime.utc_now()]]
+    ) |> Repo.update_all([])
+  end
 end
