@@ -105,6 +105,32 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
     assert json_response(conn, 401) == expected
   end
 
+  test "Return a single survey", %{conn: conn} do
+    survey = Repo.one(Survey)
+    question = Repo.one(Question)
+    answer = Repo.one(Answer)
+    conn = get(conn, "/api/v1/surveys/#{survey_id}")
+
+    expected = %{
+      "groups" => [],
+      "surveyName" => "A test survey",
+      "id" => survey.id,
+      "surveyExpiration" => nil,
+      "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
+      "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
+      "questions" => [
+        %{
+          "id" => question.id,
+          "options" => [%{"description" => "A thing", "pointValue" => 3, "id" => answer.id}],
+          "questionTitle" => "What is this?"
+        }
+      ],
+      "status" => "Active"
+    }
+
+    assert expected == json_response(conn, 200)
+  end
+
   test "GET Surveys Returns no surveys if the user does not own any", %{conn: conn} do
     conn = get(conn, "/api/v1/surveys?api_key=abcdef123")
 
