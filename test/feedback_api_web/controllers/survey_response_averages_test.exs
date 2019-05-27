@@ -182,12 +182,14 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
         %{
           "average_rating" => "3.5000000000000000",
           "question_id" => question.id,
-          "user_id" => user_1.id
+          "user_id" => user_1.id,
+          "fullName" => user_1.name
         },
         %{
           "average_rating" => "3.0000000000000000",
           "question_id" => question.id,
-          "user_id" => user_2.id
+          "user_id" => user_2.id,
+          "fullName" => user_2.name
         }
       ],
       "survey" => %{
@@ -282,7 +284,8 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
         %{
           "average_rating" => "3.5000000000000000",
           "question_id" => question.id,
-          "user_id" => user_1.id
+          "user_id" => user_1.id,
+          "fullName" => user_1.name
         }
       ],
       "survey" => %{

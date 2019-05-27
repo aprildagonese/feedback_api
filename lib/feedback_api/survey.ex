@@ -109,12 +109,14 @@ defmodule FeedbackApi.Survey do
     Repo.all(
       from question in Question,
         left_join: responses in assoc(question, :responses),
+        join: recipient in assoc(responses, :recipient),
         join: answers in assoc(responses, :answer),
         where: question.survey_id == ^survey_id,
         where: responses.recipient_id == ^user.id,
-        group_by: [question.id, responses.recipient_id],
+        group_by: [question.id, recipient.name, responses.recipient_id],
         select: %{
           question_id: question.id,
+          user_name: recipient.name,
           user_id: responses.recipient_id,
           average_rating: avg(answers.value)
         }
@@ -125,11 +127,13 @@ defmodule FeedbackApi.Survey do
     Repo.all(
       from question in Question,
         left_join: responses in assoc(question, :responses),
+        join: recipient in assoc(responses, :recipient),
         join: answers in assoc(responses, :answer),
         where: question.survey_id == ^survey_id,
-        group_by: [question.id, responses.recipient_id],
+        group_by: [question.id, recipient.name, responses.recipient_id],
         select: %{
           question_id: question.id,
+          user_name: recipient.name,
           user_id: responses.recipient_id,
           average_rating: avg(answers.value)
         }

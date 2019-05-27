@@ -14,6 +14,7 @@ defmodule FeedbackApiWeb.Surveys.UserAverageView do
           %{
             user_id: user.user_id,
             question_id: user.question_id,
+            fullName: user.user_name,
             average_rating: user.average_rating
           }
         end)
