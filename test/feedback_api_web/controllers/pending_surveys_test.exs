@@ -1,6 +1,6 @@
 defmodule FeedbackApiWeb.PendingSurveysTest do
   use FeedbackApiWeb.ConnCase
-  alias FeedbackApi.{Cohort, Group, Survey, Question, User, Repo}
+  alias FeedbackApi.{Cohort, Group, Survey, Question, Answer, User, Repo}
 
   setup do
     cohort = %Cohort{name: "1811", status: :Active} |> Repo.insert!() |> Repo.preload(:users)
@@ -84,6 +84,7 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
   test "Returns surveys pending for a user", %{conn: conn} do
     survey = Repo.one(Survey)
     question = Repo.one(Question)
+    [answer_1, answer_2, answer_3, answer_4] = Repo.all(Answer)
     group = Repo.one(Group) |> Repo.preload(:users)
     [user_1, user_2, user_3] = group.users
 
@@ -124,19 +125,23 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
             "options" => [
               %{
                 "description" => "Four",
-                "pointValue" => 4
+                "pointValue" => 4,
+                "id" => answer_4.id
               },
               %{
                 "description" => "Three",
-                "pointValue" => 3
+                "pointValue" => 3,
+                "id" => answer_3.id
               },
               %{
                 "description" => "Two",
-                "pointValue" => 2
+                "pointValue" => 2,
+                "id" => answer_2.id
               },
               %{
                 "description" => "One",
-                "pointValue" => 1
+                "pointValue" => 1,
+                "id" => answer_1.id
               }
             ],
             "id" => question.id,
