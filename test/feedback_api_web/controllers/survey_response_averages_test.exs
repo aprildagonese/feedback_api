@@ -1,6 +1,6 @@
 defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
   use FeedbackApiWeb.ConnCase
-  alias FeedbackApi.{Cohort, Group, Survey, Question, Repo}
+  alias FeedbackApi.{Cohort, Group, Survey, Question, Answer, Repo}
 
   setup do
     cohort = %Cohort{name: "1811", status: :Active} |> Repo.insert!() |> Repo.preload(:users)
@@ -98,6 +98,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
   test "It can return the results from a survey for all groups", %{conn: conn} do
     survey = Repo.one(Survey)
     question = Repo.one(Question)
+    [answer_1, answer_2, answer_3, answer_4] = Repo.all(Answer)
     group = Repo.one(Group) |> Repo.preload(:users)
     [user_1, user_2, user_3] = group.users
 
@@ -118,10 +119,10 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
             "id" => question.id,
             "questionTitle" => "Pick a number between one and four",
             "options" => [
-              %{"description" => "Four", "pointValue" => 4},
-              %{"description" => "Three", "pointValue" => 3},
-              %{"description" => "Two", "pointValue" => 2},
-              %{"description" => "One", "pointValue" => 1}
+              %{"description" => "Four", "pointValue" => 4, "id" => answer_4.id},
+              %{"description" => "Three", "pointValue" => 3, "id" => answer_3.id},
+              %{"description" => "Two", "pointValue" => 2, "id" => answer_2.id},
+              %{"description" => "One", "pointValue" => 1, "id" => answer_1.id}
             ]
           }
         ],
@@ -169,6 +170,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
   test "It can return the results from a survey for a group", %{conn: conn} do
     survey = Repo.one(Survey) |> Repo.preload(:questions)
     [question] = survey.questions
+    [answer_1, answer_2, answer_3, answer_4] = Repo.all(Answer)
     group = Repo.one(Group) |> Repo.preload(:users)
     [user_1, user_2, user_3] = group.users
     uri = "/api/v1/surveys/#{survey.id}/user_averages"
@@ -226,19 +228,23 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
             "options" => [
               %{
                 "description" => "Four",
-                "pointValue" => 4
+                "pointValue" => 4,
+                "id" => answer_4.id
               },
               %{
                 "description" => "Three",
-                "pointValue" => 3
+                "pointValue" => 3,
+                "id" => answer_3.id
               },
               %{
                 "description" => "Two",
-                "pointValue" => 2
+                "pointValue" => 2,
+                "id" => answer_2.id
               },
               %{
                 "description" => "One",
-                "pointValue" => 1
+                "pointValue" => 1,
+                "id" => answer_1.id
               }
             ],
             "id" => question.id,
@@ -264,6 +270,7 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
   test "It can return averages for one user", %{conn: conn} do
     survey = Repo.one(Survey) |> Repo.preload(:questions)
     [question] = survey.questions
+    [answer_1, answer_2, answer_3, answer_4] = Repo.all(Answer)
     group = Repo.one(Group) |> Repo.preload(:users)
     [user_1, user_2, user_3] = group.users
     uri = "/api/v1/surveys/#{survey.id}/averages/student?api_key=#{user_1.api_key}"
@@ -316,19 +323,23 @@ defmodule FeedbackApiWeb.SurveyResponseAveragesTest do
             "options" => [
               %{
                 "description" => "Four",
-                "pointValue" => 4
+                "pointValue" => 4,
+                "id" => answer_4.id
               },
               %{
                 "description" => "Three",
-                "pointValue" => 3
+                "pointValue" => 3,
+                "id" => answer_3.id
               },
               %{
                 "description" => "Two",
-                "pointValue" => 2
+                "pointValue" => 2,
+                "id" => answer_2.id
               },
               %{
                 "description" => "One",
-                "pointValue" => 1
+                "pointValue" => 1,
+                "id" => answer_1.id
               }
             ],
             "id" => question.id,
