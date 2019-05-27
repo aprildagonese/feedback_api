@@ -61,15 +61,19 @@ defmodule FeedbackApi.Survey do
     Repo.all(
       from survey in Survey,
         join: groups in assoc(survey, :groups),
-        join: users in assoc(groups, :users),
         join: members in assoc(groups, :users),
         left_join: cohort in assoc(members, :cohort),
-        left_join: responses in assoc(users, :responses),
         join: questions in assoc(survey, :questions),
         join: answers in assoc(questions, :answers),
-        where: users.id == ^user.id,
         where: members.id != ^user.id,
-        where: is_nil(responses.id),
+        where: survey.id not in ^Repo.all(
+          from s in Survey,
+          join: g in assoc(s, :groups),
+          join: u in assoc(g, :users),
+          join: r in assoc(u, :responses),
+          where: u.id == ^user.id,
+          select: s.id
+        ),
         order_by: [asc: members.id, desc: answers.value, asc: survey.id],
         preload: [
           groups: {groups, users: {members, cohort: cohort}},
