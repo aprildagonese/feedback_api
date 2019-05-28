@@ -66,7 +66,7 @@ defmodule FeedbackApi.Survey do
         left_join: questions in assoc(survey, :questions),
         left_join: answers in assoc(questions, :answers),
         where: survey.id == ^id,
-        order_by: [desc: survey.inserted_at, desc: answers.value],
+        order_by: [asc: users.id, desc: survey.inserted_at, desc: answers.value],
         preload: [
           groups: {groups, users: {users, cohort: cohort}},
           questions: {questions, answers: answers}
@@ -100,30 +100,15 @@ defmodule FeedbackApi.Survey do
   end
 
   def averages(survey_id) do
-    Repo.one(
-      from survey in Survey,
-        join: groups in assoc(survey, :groups),
-        join: users in assoc(groups, :users),
-        left_join: cohort in assoc(users, :cohort),
-        join: questions in assoc(survey, :questions),
-        join: answers in assoc(questions, :answers),
-        join:
-          averages in subquery(
-            from q2 in Question,
-              join: a2 in assoc(q2, :answers),
-              join: responses in assoc(a2, :responses),
-              group_by: q2.id,
-              select: %{id: q2.id, text: q2.text, average: avg(a2.value)}
-          ),
-        on: questions.id == averages.id,
-        where: survey.id == ^survey_id,
-        order_by: [asc: questions.id, desc: answers.value],
-        select: %{survey: survey, averages: [averages]},
-        preload: [
-          groups: {groups, users: {users, cohort: cohort}},
-          questions: {questions, answers: answers}
-        ]
-    )
+    Repo.all(
+        from question in Question,
+          join: answers in assoc(question, :answers),
+          join: responses in assoc(answers, :responses),
+          where: question.survey_id == ^survey_id,
+          group_by: question.id,
+          order_by: [asc: question.id],
+          select: %{id: question.id, text: question.text, average: avg(answers.value)}
+      )
   end
 
   def average_for_user(survey_id, user) do
