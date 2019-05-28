@@ -84,6 +84,7 @@ defmodule FeedbackApi.Survey do
         join: questions in assoc(survey, :questions),
         join: answers in assoc(questions, :answers),
         where: members.id != ^user.id,
+        where: survey.status == 0,
         where: survey.id not in ^Repo.all(
           from s in Survey,
           join: q in assoc(s, :questions),
