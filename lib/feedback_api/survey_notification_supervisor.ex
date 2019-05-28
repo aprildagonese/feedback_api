@@ -14,8 +14,8 @@ defmodule FeedbackApi.SurveyNotificationSupervisor do
     |> Enum.map(fn user -> %{
       email: user.email,
       user_name: user.name,
-      survey_name: survey.name} end)
+      message_name: survey.name} end)
 
-    Task.Supervisor.start_child(__MODULE__, Services.Mailer, :send_notifications, [users], opts)
+    Task.Supervisor.start_child(__MODULE__, Services.Mailer, :send_survey_notifications, [users], opts)
   end
 end

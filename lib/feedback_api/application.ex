@@ -16,6 +16,7 @@ defmodule FeedbackApi.Application do
       # Starts a worker by calling: FeedbackApi.Worker.start_link(arg)
       # {FeedbackApi.Worker, arg},
       {Task.Supervisor, name: FeedbackApi.SurveyNotificationSupervisor},
+      {Task.Supervisor, name: FeedbackApi.WelcomeNotificationSupervisor},
       FeedbackApi.CloseSurveyWorker,
       FeedbackApi.RefreshUserWorker
     ]
