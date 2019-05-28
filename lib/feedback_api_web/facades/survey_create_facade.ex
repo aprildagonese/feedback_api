@@ -8,10 +8,12 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
         survey =
           Ecto.build_assoc(user, :surveys, %Survey{
             name: arguments["surveyName"],
-            status: String.capitalize(arguments["status"]),
+            status: parse_status(arguments["status"]),
             exp_date: parseDateTime(arguments["surveyExpiration"])
           })
           |> Repo.insert!()
+
+        IO.inspect(survey)
 
         create_groups(survey, arguments["groups"])
         create_questions(survey, arguments["questions"])
@@ -82,6 +84,13 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
       time ->
         NaiveDateTime.from_iso8601!(time)
         |> NaiveDateTime.truncate(:second)
+    end
+  end
+
+  def parse_status(status) do
+    case status do
+      nil -> "Active"
+      status -> String.capitalize(status)
     end
   end
 end
