@@ -98,14 +98,34 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
     Ecto.build_assoc(question_two, :answers, %{description: "One", value: 1})
     |> Repo.insert!()
 
+    closed_survey =
+      Ecto.build_assoc(user_3, :surveys, %Survey{name: "Test Survey", status: :Closed})
+      |> Repo.insert!()
+      |> Repo.preload([:groups, :questions])
+
+    closed_group =
+      Ecto.build_assoc(closed_survey, :groups, %{name: "Test Closed"})
+      |> Repo.insert!()
+      |> Repo.preload([:users, :survey])
+
+    Ecto.Changeset.put_assoc(Ecto.Changeset.change(closed_group), :users, users) |> Repo.update!()
+
+    closed_question =
+      Ecto.build_assoc(closed_survey, :questions, %{text: "Another Question"})
+      |> Repo.insert!()
+      |> Repo.preload(:answers)
+
+    Ecto.build_assoc(closed_question, :answers, %{description: "One", value: 1})
+    |> Repo.insert!()
+
     :ok
   end
 
   test "Returns surveys pending for a user", %{conn: conn} do
-    [survey_1, survey_2] = Repo.all(Survey)
-    [question_1, question_2] = Repo.all(Question)
-    [answer_1, answer_2, answer_3, answer_4, answer_5] = Repo.all(Answer)
-    [group_1, _group_2] = Repo.all(Group) |> Repo.preload(:users)
+    [survey_1, survey_2, _survey_3] = Repo.all(Survey)
+    [question_1, question_2, _question_3] = Repo.all(Question)
+    [answer_1, answer_2, answer_3, answer_4, answer_5, _answer_6] = Repo.all(Answer)
+    [group_1, _group_2, _group_3] = Repo.all(Group) |> Repo.preload(:users)
     [user_1, user_2, user_3] = group_1.users
 
     uri = "/api/v1/surveys/pending?api_key=#{user_1.api_key}"
@@ -218,10 +238,10 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
   end
 
   test "Doesn't return completed surveys", %{conn: conn} do
-    [_survey_1, survey_2] = Repo.all(Survey)
-    [_question_1, question_2] = Repo.all(Question)
-    [_answer_1, _answer_2, _answer_3, _answer_4, answer_5] = Repo.all(Answer)
-    [group_1, _group_2] = Repo.all(Group) |> Repo.preload(:users)
+    [_survey_1, survey_2, _survey_3] = Repo.all(Survey)
+    [_question_1, question_2, _question_3] = Repo.all(Question)
+    [_answer_1, _answer_2, _answer_3, _answer_4, answer_5, _answer_6] = Repo.all(Answer)
+    [group_1, _group_2, _group_3] = Repo.all(Group) |> Repo.preload(:users)
     [user_1, user_2, user_3] = group_1.users
 
     uri = "/api/v1/surveys/pending?api_key=#{user_2.api_key}"
