@@ -7,7 +7,6 @@ defmodule Services.Mailer do
   end
 
   def send_welcome_notification(user) do
-    IO.inspect(user)
     body = Poison.encode!(user)
     url = "http://mail.turingfeedback.com/api/v1/welcome"
 
