@@ -13,8 +13,6 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
           })
           |> Repo.insert!()
 
-        IO.inspect(survey)
-
         create_groups(survey, arguments["groups"])
         create_questions(survey, arguments["questions"])
         FeedbackApi.SurveyNotificationSupervisor.send_notifications(survey)
