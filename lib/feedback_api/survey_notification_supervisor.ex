@@ -16,6 +16,6 @@ defmodule FeedbackApi.SurveyNotificationSupervisor do
       user_name: user.name,
       survey_name: survey.name} end)
 
-    Task.Supervisor.start_child(__MODULE__, Services.Mailer, :send_notifications, [users], opts)
+    Task.Supervisor.start_child(__MODULE__, Services.Mailer, :send_survey_notifications, [users], opts)
   end
 end
