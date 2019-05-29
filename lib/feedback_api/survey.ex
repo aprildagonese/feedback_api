@@ -138,6 +138,7 @@ defmodule FeedbackApi.Survey do
         join: answers in assoc(responses, :answer),
         where: question.survey_id == ^survey_id,
         group_by: [question.id, recipient.name, responses.recipient_id],
+        order_by: [asc: responses.recipient_id, asc: question.id],
         select: %{
           question_id: question.id,
           user_name: recipient.name,
