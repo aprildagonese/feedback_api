@@ -85,6 +85,7 @@ defmodule FeedbackApi.Survey do
         join: answers in assoc(questions, :answers),
         where: members.id != ^user.id,
         where: survey.status == 0,
+        where: groups.id in ^Enum.map(user.groups, fn x -> x.id end),
         where: survey.id not in ^Repo.all(
           from s in Survey,
           join: q in assoc(s, :questions),
