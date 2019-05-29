@@ -1,6 +1,6 @@
 defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
-  use FeedbackApiWeb, :controller
-  import FeedbackApi.{Repo, Cohort, Survey}
+  use FeedbackApiWeb.ConnCase
+  alias FeedbackApi.{Repo, Cohort, User, Question, Survey}
 
   setup do
     cohort = %Cohort{name: "1811", status: :Active} |> Repo.insert!() |> Repo.preload(:users)
@@ -49,6 +49,7 @@ defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
 
     answer_2 =
       Ecto.build_assoc(question_2, :answers, %{description: "One", value: 1})
+      |> Repo.insert!()
 
     :ok
   end
