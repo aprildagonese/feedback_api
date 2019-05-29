@@ -1,7 +1,7 @@
 # Turing Feedback API
 The backend data source for Turing's FeedbackLoop Service
 
-For instructions on installation and requirements, see [Getting Started](#gettingstarted)
+For instructions on installation and requirements, see [Getting Started](#getting-started)
 
 ## Endpoints
 
