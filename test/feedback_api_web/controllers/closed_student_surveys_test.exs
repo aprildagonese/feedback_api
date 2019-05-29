@@ -100,6 +100,6 @@ defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
 
     conn = get(conn, uri)
 
-    assert json_response(conn, 401) == %{error: "Invalid API Key"}
+    assert json_response(conn, 401) == %{"error" => "Invalid API Key"}
   end
 end
