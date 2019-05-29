@@ -1,6 +1,6 @@
 defmodule FeedbackApiWeb.Surveys.ClosedController do
   use FeedbackApiWeb, :controller
-  alias FeedbackApi.{User}
+  alias FeedbackApi.{User, Survey}
 
   def index(conn, params) do
     case User.authorize(params["api_key"]) do

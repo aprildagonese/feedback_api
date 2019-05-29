@@ -101,6 +101,25 @@ defmodule FeedbackApi.Survey do
     )
   end
 
+  def closed_for_user(user) do
+    Repo.all(
+      from survey in Survey,
+        join: groups in assoc(survey, :groups),
+        join: members in assoc(groups, :users),
+        left_join: cohort in assoc(members, :cohort),
+        join: questions in assoc(survey, :questions),
+        join: answers in assoc(questions, :answers),
+        where: members.id != ^user.id,
+        where: survey.status == 1,
+        where: groups.id in ^Enum.map(user.groups, fn x -> x.id end),
+        order_by: [asc: members.id, desc: answers.value, asc: survey.id],
+        preload: [
+          groups: {groups, users: {members, cohort: cohort}},
+          questions: {questions, answers: answers}
+        ]
+    )
+  end
+
   def averages(survey_id) do
     Repo.all(
         from question in Question,
