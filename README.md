@@ -5,7 +5,7 @@ For instructions on installation and requirements, see [Getting Started](#gettin
 
 ## Endpoints
 
-Base url: https://turing-feedback-api.herokuapp.com
+Base url: https://api.turingfeedback.com
 
 [POST /api/v1/users/register](#post-apiv1usersregister)
 
