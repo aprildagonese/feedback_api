@@ -31,6 +31,8 @@ Base url: https://api.turingfeedback.com
 
 [GET /api/v1/surveys/history](#post-apiv1surveyshistory)
 
+[GET /api/v1/surveys/closed](#post-apiv1surveysclosed)
+
 [POST /api/v1/responses](#post-apiv1responses)
 
 ## For Routes Requiring Authorization:
@@ -719,6 +721,71 @@ Sample Response:
       }
     ],
     "status": "Active"
+  }
+]
+```
+
+## GET /api/v1/surveys/pending
+
+Purpose: To retrieve the closed surveys for which a user was assignedd
+
+Params: `api_key={USER_API_KEY_HERE}`
+
+Sample Response:
+``` JSON
+[
+  {
+    "groups": [
+      {
+        "name": "Team1",
+        "members": [
+          {
+            "id": 8,
+            "name": "April Dagonese",
+            "cohort": "1811",
+            "program": "B",
+            "status": "Active"
+          },
+          {
+            "id": 9,
+            "name": "Scott Thomas",
+            "cohort": "1811",
+            "program": "B",
+            "status": "Active"
+          }
+        ]
+      }
+    ],
+    "surveyName": "Closed Survey",
+    "id": 8,
+    "surveyExpiration": null,
+    "created_at": "2019-05-23T05:24:58",
+    "updated_at": "2019-05-23T05:24:58",
+    "questions": [
+      {
+        "options": [
+          {
+            "description": "Four",
+            "pointValue": 4
+          },
+          {
+            "description": "Three",
+            "pointValue": 3
+          },
+          {
+            "description": "Two",
+            "pointValue": 2
+          },
+          {
+            "description": "One",
+            "pointValue": 1
+          }
+        ],
+        "id": 42,
+        "questionTitle": "Pick a number between one and four"
+      }
+    ],
+    "status": "Closed"
   }
 ]
 ```
