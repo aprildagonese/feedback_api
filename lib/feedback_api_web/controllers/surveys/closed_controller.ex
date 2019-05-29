@@ -5,7 +5,7 @@ defmodule FeedbackApiWeb.Surveys.ClosedController do
   def index(conn, params) do
     case User.authorize(params["api_key"]) do
       nil -> conn |> put_status(:unauthorized) |> json(%{error: "Invalid API Key"})
-      user -> conn |> render("index.json", Survey.closed_for_user(user))
+      user -> conn |> render("index.json", %{surveys: Survey.closed_for_user(user)})
     end
   end
 end

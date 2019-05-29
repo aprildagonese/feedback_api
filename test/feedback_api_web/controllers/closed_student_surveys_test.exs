@@ -10,6 +10,11 @@ defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
       |> Repo.insert!()
       |> Repo.preload([:responses, :ratings])
 
+    user_2 =
+      Ecto.build_assoc(cohort, :users, %{name: "User 2", program: "B", api_key: "123abc"})
+      |> Repo.insert!()
+      |> Repo.preload([:responses, :ratings])
+
     survey =
       Ecto.build_assoc(user, :surveys, %Survey{name: "Open Survey"})
       |> Repo.insert!()
@@ -20,7 +25,7 @@ defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
       |> Repo.insert!()
       |> Repo.preload([:users, :survey])
 
-    Ecto.Changeset.put_assoc(Ecto.Changeset.change(group), :users, [user]) |> Repo.update!()
+    Ecto.Changeset.put_assoc(Ecto.Changeset.change(group), :users, [user, user_2]) |> Repo.update!()
 
     question =
       Ecto.build_assoc(survey, :questions, %{text: "Pick a number between one and four"})
@@ -40,7 +45,7 @@ defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
       |> Repo.insert!()
       |> Repo.preload([:users, :survey])
 
-    Ecto.Changeset.put_assoc(Ecto.Changeset.change(group_2), :users, [user]) |> Repo.update!()
+    Ecto.Changeset.put_assoc(Ecto.Changeset.change(group_2), :users, [user, user_2]) |> Repo.update!()
 
     question_2 =
       Ecto.build_assoc(survey_2, :questions, %{text: "Pick a number between one and four"})
@@ -58,7 +63,7 @@ defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
     [_, survey] = Repo.all(Survey) |> Repo.preload([:groups, :questions])
     [question] = survey.questions
     [group] = survey.groups
-    user = Repo.one(User)
+    [user, user_2] = Repo.all(User)
     [_, question] = Repo.all(Question) |> Repo.preload(:answers)
     [answer] = question.answers
 
@@ -95,7 +100,7 @@ defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
   end
 
   test "Returns a 401 if an invalid key is provided", %{conn: conn} do
-    user = Repo.one(User)
+    [user, _] = Repo.all(User)
     uri = "/api/v1/surveys/closed"
 
     conn = get(conn, uri)
