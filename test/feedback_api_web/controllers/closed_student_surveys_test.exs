@@ -25,15 +25,15 @@ defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
       |> Repo.insert!()
       |> Repo.preload([:users, :survey])
 
-    Ecto.Changeset.put_assoc(Ecto.Changeset.change(group), :users, [user, user_2]) |> Repo.update!()
+    Ecto.Changeset.put_assoc(Ecto.Changeset.change(group), :users, [user, user_2])
+    |> Repo.update!()
 
     question =
       Ecto.build_assoc(survey, :questions, %{text: "Pick a number between one and four"})
       |> Repo.insert!()
       |> Repo.preload(:answers)
 
-    answer =
-      Ecto.build_assoc(question, :answers, %{description: "One", value: 1})
+    answer = Ecto.build_assoc(question, :answers, %{description: "One", value: 1})
 
     survey_2 =
       Ecto.build_assoc(user, :surveys, %Survey{name: "Closed Survey", status: 1})
@@ -45,7 +45,8 @@ defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
       |> Repo.insert!()
       |> Repo.preload([:users, :survey])
 
-    Ecto.Changeset.put_assoc(Ecto.Changeset.change(group_2), :users, [user, user_2]) |> Repo.update!()
+    Ecto.Changeset.put_assoc(Ecto.Changeset.change(group_2), :users, [user, user_2])
+    |> Repo.update!()
 
     question_2 =
       Ecto.build_assoc(survey_2, :questions, %{text: "Pick a number between one and four"})
@@ -106,7 +107,6 @@ defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
     ]
 
     assert json_response(conn, 200) == expected
-
   end
 
   test "Returns a 401 if an invalid key is provided", %{conn: conn} do

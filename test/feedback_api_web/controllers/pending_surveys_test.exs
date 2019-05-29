@@ -192,46 +192,46 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
       },
       %{
         "groups" => [
-        %{
-          "members" => [
-            %{
-              "id" => user_2.id,
-              "name" => user_2.name,
-              "cohort" => "1811",
-              "program" => "B",
-              "status" => "Active"
-            },
-            %{
-              "id" => user_3.id,
-              "name" => user_3.name,
-              "cohort" => "1811",
-              "program" => "B",
-              "status" => "Active"
-            }
-          ],
-          "name" => "Group Two!"
-        }
-      ],
-      "surveyName" => "Test Survey Two",
-      "id" => survey_2.id,
-      "surveyExpiration" => nil,
-      "created_at" => NaiveDateTime.to_iso8601(survey_2.inserted_at),
-      "updated_at" => NaiveDateTime.to_iso8601(survey_2.updated_at),
-      "questions" => [
-        %{
-          "options" => [
-            %{
-              "description" => "One",
-              "pointValue" => 1,
-              "id" => answer_5.id
-            }
-          ],
-          "id" => question_2.id,
-          "questionTitle" => "Another Question"
-        }
-      ],
-      "status" => "Active"
-    }
+          %{
+            "members" => [
+              %{
+                "id" => user_2.id,
+                "name" => user_2.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              },
+              %{
+                "id" => user_3.id,
+                "name" => user_3.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              }
+            ],
+            "name" => "Group Two!"
+          }
+        ],
+        "surveyName" => "Test Survey Two",
+        "id" => survey_2.id,
+        "surveyExpiration" => nil,
+        "created_at" => NaiveDateTime.to_iso8601(survey_2.inserted_at),
+        "updated_at" => NaiveDateTime.to_iso8601(survey_2.updated_at),
+        "questions" => [
+          %{
+            "options" => [
+              %{
+                "description" => "One",
+                "pointValue" => 1,
+                "id" => answer_5.id
+              }
+            ],
+            "id" => question_2.id,
+            "questionTitle" => "Another Question"
+          }
+        ],
+        "status" => "Active"
+      }
     ]
 
     assert json_response(conn, 200) == expected
@@ -251,49 +251,49 @@ defmodule FeedbackApiWeb.PendingSurveysTest do
     expected = [
       %{
         "groups" => [
-        %{
-          "members" => [
-            %{
-              "id" => user_1.id,
-              "name" => user_1.name,
-              "cohort" => "1811",
-              "program" => "B",
-              "status" => "Active"
-            },
-            %{
-              "id" => user_3.id,
-              "name" => user_3.name,
-              "cohort" => "1811",
-              "program" => "B",
-              "status" => "Active"
-            }
-          ],
-          "name" => "Group Two!"
-        }
-      ],
-      "surveyName" => "Test Survey Two",
-      "id" => survey_2.id,
-      "surveyExpiration" => nil,
-      "created_at" => NaiveDateTime.to_iso8601(survey_2.inserted_at),
-      "updated_at" => NaiveDateTime.to_iso8601(survey_2.updated_at),
-      "questions" => [
-        %{
-          "options" => [
-            %{
-              "description" => "One",
-              "pointValue" => 1,
-              "id" => answer_5.id
-            }
-          ],
-          "id" => question_2.id,
-          "questionTitle" => "Another Question"
-        }
-      ],
-      "status" => "Active"
-    }
-  ]
+          %{
+            "members" => [
+              %{
+                "id" => user_1.id,
+                "name" => user_1.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              },
+              %{
+                "id" => user_3.id,
+                "name" => user_3.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              }
+            ],
+            "name" => "Group Two!"
+          }
+        ],
+        "surveyName" => "Test Survey Two",
+        "id" => survey_2.id,
+        "surveyExpiration" => nil,
+        "created_at" => NaiveDateTime.to_iso8601(survey_2.inserted_at),
+        "updated_at" => NaiveDateTime.to_iso8601(survey_2.updated_at),
+        "questions" => [
+          %{
+            "options" => [
+              %{
+                "description" => "One",
+                "pointValue" => 1,
+                "id" => answer_5.id
+              }
+            ],
+            "id" => question_2.id,
+            "questionTitle" => "Another Question"
+          }
+        ],
+        "status" => "Active"
+      }
+    ]
 
-  assert json_response(conn, 200) == expected
+    assert json_response(conn, 200) == expected
   end
 
   test "Returns a 401 if key is invalid", %{conn: conn} do

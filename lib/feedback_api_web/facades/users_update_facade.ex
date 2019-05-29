@@ -11,11 +11,12 @@ defmodule FeedbackApiWeb.UsersUpdateFacade do
   end
 
   def deactivate_students do
-    (from user in User,
+    from(user in User,
       where: user.role == 0,
       where: user.status == 0,
       update: [set: [status: 1]]
-    )|> Repo.update_all([])
+    )
+    |> Repo.update_all([])
   end
 
   def update_cohorts do
