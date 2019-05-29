@@ -71,29 +71,39 @@ defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
 
     conn = get(conn, uri)
 
-    expected = %{
-      "id" => survey.id,
-      "surveyName" => survey.name,
-      "surveyExpiration" => nil,
-      "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
-      "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
-      "status" => "Closed",
-      "questions" => [
-        %{
-          "id" => question.id,
-          "questionTitle" => "Pick a number between one and four",
-          "options" => [
-            %{"description" => "One", "pointValue" => 1, "id" => answer.id}
-          ]
-        }
-      ],
-      "groups" => [
-        %{
-          "members" => [],
-          "name" => "Test"
-        }
-      ]
-    }
+    expected = [
+      %{
+        "id" => survey.id,
+        "surveyName" => survey.name,
+        "surveyExpiration" => nil,
+        "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
+        "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
+        "status" => "Closed",
+        "questions" => [
+          %{
+            "id" => question.id,
+            "questionTitle" => "Pick a number between one and four",
+            "options" => [
+              %{"description" => "One", "pointValue" => 1, "id" => answer.id}
+            ]
+          }
+        ],
+        "groups" => [
+          %{
+            "members" => [
+              %{
+                "id" => user_2.id,
+                "name" => user_2.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              }
+            ],
+            "name" => "Test"
+          }
+        ]
+      }
+    ]
 
     assert json_response(conn, 200) == expected
 
