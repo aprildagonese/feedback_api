@@ -62,7 +62,7 @@ defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
     [_, question] = Repo.all(Question) |> Repo.preload(:answers)
     [answer] = question.answers
 
-    uri = "/api/v1/surveys/closed"
+    uri = "/api/v1/surveys/closed?api_key=#{user.api_key}"
 
     conn = get(conn, uri)
 
@@ -92,5 +92,14 @@ defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
 
     assert json_response(conn, 200) == expected
 
+  end
+
+  test "Returns a 401 if an invalid key is provided", %{conn: conn} do
+    user = Repo.one(User)
+    uri = "/api/v1/surveys/closed"
+
+    conn = get(conn, uri)
+
+    assert json_response(conn, 401) == %{error: "Invalid API Key"}
   end
 end
