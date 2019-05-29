@@ -1,6 +1,6 @@
 defmodule FeedbackApiWeb.Users.RegisterController do
   use FeedbackApiWeb, :controller
-  alias FeedbackApi.{User, Repo, }
+  alias FeedbackApi.{User, Repo}
   import Ecto.Query
 
   def create(conn, params) do
@@ -23,7 +23,9 @@ defmodule FeedbackApiWeb.Users.RegisterController do
       {:ok, user} ->
         FeedbackApi.WelcomeNotificationSupervisor.send_notification(user)
         render(conn, "register_user.json", users: user)
-      {:error, error} -> conn |> put_status(:request_timeout) |> json(%{error: error})
+
+      {:error, error} ->
+        conn |> put_status(:request_timeout) |> json(%{error: error})
     end
   end
 end

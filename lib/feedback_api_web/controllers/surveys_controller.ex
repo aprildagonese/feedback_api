@@ -13,7 +13,7 @@ defmodule FeedbackApiWeb.SurveyController do
 
   def show(conn, params) do
     case Survey.one(params["id"]) do
-      nil -> conn |> put_status(:not_found) |> json%{error: "Not found"}
+      nil -> conn |> put_status(:not_found) |> json(%{error: "Not found"})
       survey -> conn |> render("show.json", %{survey: survey})
     end
   end

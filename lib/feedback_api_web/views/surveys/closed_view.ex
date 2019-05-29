@@ -1,4 +1,4 @@
-defmodule FeedbackApiWeb.Surveys.HistoryView do
+defmodule FeedbackApiWeb.Surveys.ClosedView do
   use FeedbackApiWeb, :view
   alias FeedbackApiWeb.SurveyView
 

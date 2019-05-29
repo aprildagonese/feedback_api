@@ -4,6 +4,7 @@ defmodule Services.Rooster do
 
     headers = []
     options = [recv_timeout: 40_000, timeout: 40_000]
+
     url =
       "http://turing-rooster.herokuapp.com/api/v1/cohorts?key=#{System.get_env("ROOSTER_API_KEY")}"
 
@@ -17,8 +18,11 @@ defmodule Services.Rooster do
 
     headers = []
     options = [recv_timeout: 40_000, timeout: 40_000]
+
     url =
-      "http://turing-rooster.herokuapp.com/api/v1/cohorts/active?key=#{System.get_env("ROOSTER_API_KEY")}"
+      "http://turing-rooster.herokuapp.com/api/v1/cohorts/active?key=#{
+        System.get_env("ROOSTER_API_KEY")
+      }"
 
     response = HTTPoison.get!(url, headers, options)
     results = Poison.decode!(response.body)

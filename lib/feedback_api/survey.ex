@@ -52,8 +52,10 @@ defmodule FeedbackApi.Survey do
         where: users.id == ^user.id,
         where: members.id != ^user.id,
         order_by: [asc: members.id, desc: answers.value, desc: survey.status, asc: survey.id],
-        preload: [groups: {groups, users: {members, cohort: cohort}},
-        questions: {questions, answers: answers}]
+        preload: [
+          groups: {groups, users: {members, cohort: cohort}},
+          questions: {questions, answers: answers}
+        ]
     )
   end
 
@@ -86,13 +88,14 @@ defmodule FeedbackApi.Survey do
         where: members.id != ^user.id,
         where: survey.status == 0,
         where: groups.id in ^Enum.map(user.groups, fn x -> x.id end),
-        where: survey.id not in ^Repo.all(
-          from s in Survey,
-          join: q in assoc(s, :questions),
-          join: r in assoc(q, :responses),
-          where: r.reviewer_id == ^user.id,
-          select: s.id
-        ),
+        where:
+          survey.id not in ^Repo.all(
+            from s in Survey,
+              join: q in assoc(s, :questions),
+              join: r in assoc(q, :responses),
+              where: r.reviewer_id == ^user.id,
+              select: s.id
+          ),
         order_by: [asc: members.id, desc: answers.value, asc: survey.id],
         preload: [
           groups: {groups, users: {members, cohort: cohort}},
@@ -101,16 +104,34 @@ defmodule FeedbackApi.Survey do
     )
   end
 
+  def closed_for_user(user) do
+    Repo.all(
+      from survey in Survey,
+        join: groups in assoc(survey, :groups),
+        join: users in assoc(groups, :users),
+        join: cohorts in assoc(users, :cohort),
+        join: questions in assoc(survey, :questions),
+        join: answers in assoc(questions, :answers),
+        where: survey.status == 1,
+        where: users.id != ^user.id,
+        where: groups.id in ^Enum.map(user.groups, fn group -> group.id end),
+        preload: [
+          groups: {groups, users: {users, cohort: cohorts}},
+          questions: {questions, answers: answers}
+        ]
+    )
+  end
+
   def averages(survey_id) do
     Repo.all(
-        from question in Question,
-          join: answers in assoc(question, :answers),
-          join: responses in assoc(answers, :responses),
-          where: question.survey_id == ^survey_id,
-          group_by: question.id,
-          order_by: [asc: question.id],
-          select: %{id: question.id, text: question.text, average: avg(answers.value)}
-      )
+      from question in Question,
+        join: answers in assoc(question, :answers),
+        join: responses in assoc(answers, :responses),
+        where: question.survey_id == ^survey_id,
+        group_by: question.id,
+        order_by: [asc: question.id],
+        select: %{id: question.id, text: question.text, average: avg(answers.value)}
+    )
   end
 
   def average_for_user(survey_id, user) do
@@ -150,11 +171,11 @@ defmodule FeedbackApi.Survey do
   end
 
   def expire_old_surveys do
-    (
-      from survey in Survey,
+    from(survey in Survey,
       where: survey.status == 0,
       where: survey.exp_date < ^NaiveDateTime.utc_now(),
       update: [set: [status: 1, updated_at: ^NaiveDateTime.utc_now()]]
-    ) |> Repo.update_all([])
+    )
+    |> Repo.update_all([])
   end
 end

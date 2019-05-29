@@ -1,5 +1,4 @@
 defmodule FeedbackApi.WelcomeNotificationSupervisor do
-
   def send_notification(user) do
     opts = [restart: :transient]
 
@@ -9,6 +8,12 @@ defmodule FeedbackApi.WelcomeNotificationSupervisor do
       message_name: "Welcome"
     }
 
-    Task.Supervisor.start_child(__MODULE__, Services.Mailer, :send_welcome_notification, [user], opts)
+    Task.Supervisor.start_child(
+      __MODULE__,
+      Services.Mailer,
+      :send_welcome_notification,
+      [user],
+      opts
+    )
   end
 end

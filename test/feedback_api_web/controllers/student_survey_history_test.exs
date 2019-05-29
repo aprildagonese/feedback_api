@@ -95,7 +95,6 @@ defmodule FeedbackApiWeb.StudentSurveyHistoryTest do
   end
 
   test "Returns a 404 if API key is missing or invalid", %{conn: conn} do
-    survey = Repo.one(Survey)
     uri = "/api/v1/surveys/history?api_key=FakeApiKey"
 
     conn = get(conn, uri)
@@ -115,49 +114,49 @@ defmodule FeedbackApiWeb.StudentSurveyHistoryTest do
     conn = get(conn, uri)
 
     expected = [
-        %{
-          "id" => survey.id,
-          "surveyName" => survey.name,
-          "surveyExpiration" => nil,
-          "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
-          "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
-          "status" => "Active",
-          "questions" => [
-            %{
-              "id" => question.id,
-              "questionTitle" => "Pick a number between one and four",
-              "options" => [
-                %{"description" => "Four", "pointValue" => 4, "id" => answer_4.id},
-                %{"description" => "Three", "pointValue" => 3, "id" => answer_3.id},
-                %{"description" => "Two", "pointValue" => 2, "id" => answer_2.id},
-                %{"description" => "One", "pointValue" => 1, "id" => answer_1.id}
-              ]
-            }
-          ],
-          "groups" => [
-            %{
-              "members" => [
-                %{
-                  "id" => user_1.id,
-                  "name" => user_1.name,
-                  "cohort" => "1811",
-                  "program" => "B",
-                  "status" => "Active"
-                },
-                %{
-                  "id" => user_3.id,
-                  "name" => user_3.name,
-                  "cohort" => "1811",
-                  "program" => "B",
-                  "status" => "Active"
-                }
-              ],
-              "name" => "Test"
-            }
-          ]
-        }
-      ]
+      %{
+        "id" => survey.id,
+        "surveyName" => survey.name,
+        "surveyExpiration" => nil,
+        "created_at" => NaiveDateTime.to_iso8601(survey.inserted_at),
+        "updated_at" => NaiveDateTime.to_iso8601(survey.updated_at),
+        "status" => "Active",
+        "questions" => [
+          %{
+            "id" => question.id,
+            "questionTitle" => "Pick a number between one and four",
+            "options" => [
+              %{"description" => "Four", "pointValue" => 4, "id" => answer_4.id},
+              %{"description" => "Three", "pointValue" => 3, "id" => answer_3.id},
+              %{"description" => "Two", "pointValue" => 2, "id" => answer_2.id},
+              %{"description" => "One", "pointValue" => 1, "id" => answer_1.id}
+            ]
+          }
+        ],
+        "groups" => [
+          %{
+            "members" => [
+              %{
+                "id" => user_1.id,
+                "name" => user_1.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              },
+              %{
+                "id" => user_3.id,
+                "name" => user_3.name,
+                "cohort" => "1811",
+                "program" => "B",
+                "status" => "Active"
+              }
+            ],
+            "name" => "Test"
+          }
+        ]
+      }
+    ]
 
-      assert json_response(conn, 200) == expected
+    assert json_response(conn, 200) == expected
   end
 end
