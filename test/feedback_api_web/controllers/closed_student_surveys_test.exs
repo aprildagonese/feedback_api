@@ -33,7 +33,7 @@ defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
       |> Repo.insert!()
       |> Repo.preload(:answers)
 
-    answer = Ecto.build_assoc(question, :answers, %{description: "One", value: 1})
+    Ecto.build_assoc(question, :answers, %{description: "One", value: 1})
 
     survey_2 =
       Ecto.build_assoc(user, :surveys, %Survey{name: "Closed Survey", status: 1})
@@ -53,17 +53,14 @@ defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
       |> Repo.insert!()
       |> Repo.preload(:answers)
 
-    answer_2 =
-      Ecto.build_assoc(question_2, :answers, %{description: "One", value: 1})
-      |> Repo.insert!()
+    Ecto.build_assoc(question_2, :answers, %{description: "One", value: 1})
+    |> Repo.insert!()
 
     :ok
   end
 
   test "Returns closed surveys where the user was a participant", %{conn: conn} do
     [_, survey] = Repo.all(Survey) |> Repo.preload([:groups, :questions])
-    [question] = survey.questions
-    [group] = survey.groups
     [user, user_2] = Repo.all(User)
     [_, question] = Repo.all(Question) |> Repo.preload(:answers)
     [answer] = question.answers
@@ -110,7 +107,6 @@ defmodule FeedbackApiWeb.ClosedStudentSurveysTest do
   end
 
   test "Returns a 401 if an invalid key is provided", %{conn: conn} do
-    [user, _] = Repo.all(User)
     uri = "/api/v1/surveys/closed"
 
     conn = get(conn, uri)

@@ -95,7 +95,6 @@ defmodule FeedbackApiWeb.StudentSurveyHistoryTest do
   end
 
   test "Returns a 404 if API key is missing or invalid", %{conn: conn} do
-    survey = Repo.one(Survey)
     uri = "/api/v1/surveys/history?api_key=FakeApiKey"
 
     conn = get(conn, uri)
