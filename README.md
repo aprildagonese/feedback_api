@@ -1,6 +1,8 @@
 # Turing Feedback API
 The backend data source for Turing's FeedbackLoop Service
 
+For instructions on installation and requirements, see [Getting Started](#gettingstarted)
+
 ## Endpoints
 
 Base url: https://turing-feedback-api.herokuapp.com
@@ -822,3 +824,64 @@ Sample Response:
   "success": "Responses have been stored"
 }
 ```
+
+## Getting Started
+
+### Dependencies
+
+The application requires the following dependencies prior to setup:
+
+- Elixir
+- Phoenix
+- PostgreSQL
+
+### Initial Setup:
+
+``` bash
+mix deps.get # Install Application Dependencies
+mix ecto.create # Create database
+mix ecto.migrate # Run migrations
+mix run ./priv/repo/seeds.exs # Seed the database with users
+```
+
+Additionally, the application requires access to the TuringSchool Rooster application. The token for which much be provided in the environment variables for the application.
+
+Once the above has been executed, you can start the server using `ROOSTER_API_KEY={YOUR_ROOSTER_KEY_HERE} mix phx.server`
+
+### Testing
+
+To execute the test suite, run the command `mix test`. Testing is handled through the ExUnit library. The test suite will automatically create and migrate the database when run.
+
+### Known Issues
+
+- User creation is troublesome due to lack of concrete availability for instructor information and student emails. This could be resolved in the future by modifying the applicaiton to use TuringSchool's Census for student information that contains an externally identifiable service to correlate users to.
+
+- Elixir convention regarding directory setup was noted to not be in place.
+
+- Unit testing of model methods should be implemented.
+
+- Testing of services and workers should be implemented.
+
+### Contributing
+
+To contribute to this project, please fork and issue a pull request to the master branch with a note indicating changes made.
+
+### Core Contributors
+
+- @aprildagonese (Author)
+- @plapicola (Author)
+
+### Database Schema
+
+![Database Schema](/schema.png)
+
+### Tech Stack
+
+This application was built using the following technologies:
+
+- Elixir
+- Phoenix
+- ExUnit
+- PostgreSQL
+- Heroku
+- TravisCI
