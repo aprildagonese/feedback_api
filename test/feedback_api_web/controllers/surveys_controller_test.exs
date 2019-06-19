@@ -3,8 +3,10 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
   alias FeedbackApi.{Cohort, Survey, User, Question, Answer, Repo}
 
   setup do
+    %User{api_key: "wxyz897", role: :Instructor} |> Repo.insert!()
+
     survey =
-      %User{api_key: "mikedaowl"}
+      %User{api_key: "mikedaowl", role: :Instructor}
       |> Repo.insert!()
       |> Ecto.build_assoc(:surveys, %{name: "A test survey"})
       |> Repo.insert!()
@@ -132,10 +134,18 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
   end
 
   test "GET Surveys Returns no surveys if the user does not own any", %{conn: conn} do
-    conn = get(conn, "/api/v1/surveys?api_key=abcdef123")
+    conn = get(conn, "/api/v1/surveys?api_key=wxyz897")
 
     expected = []
 
     assert json_response(conn, 200) == expected
+  end
+
+  test "Student should receive status 401", %{conn: conn} do
+    conn = get(conn, "/api/v1/surveys?api_key=abcdef123")
+
+    expected = %{"error" => "Invalid API Key"}
+
+    assert json_response(conn, 401) == expected
   end
 end
