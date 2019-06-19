@@ -5,7 +5,7 @@ defmodule FeedbackApiWeb.SurveyController do
   import Ecto.Query
 
   def index(conn, params) do
-    case User.authorize(params["api_key"]) do
+    case User.authorize_instructor(params["api_key"]) do
       nil -> conn |> put_status(:unauthorized) |> json(%{error: "Invalid API Key"})
       user -> conn |> render("index.json", %{surveys: Survey.for_user(user)})
     end
@@ -19,7 +19,7 @@ defmodule FeedbackApiWeb.SurveyController do
   end
 
   def create(conn, params) do
-    case User.authorize(params["api_key"]) do
+    case User.authorize_instructor(params["api_key"]) do
       nil ->
         conn |> put_status(:unauthorized) |> json(%{error: "Invalid API Key"})
 

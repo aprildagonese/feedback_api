@@ -29,7 +29,7 @@ defmodule FeedbackApi.User do
     |> validate_required([:name, :status, :role])
   end
 
-  def authorize(api_key) do
+  def authorize_instructor(api_key) do
     case api_key do
       nil ->
         nil
@@ -37,7 +37,23 @@ defmodule FeedbackApi.User do
       api_key ->
         Repo.one(
           from u in User,
-            where: u.api_key == ^api_key
+            where: u.api_key == ^api_key,
+            where: u.role == ^:Instructor
+        )
+        |> Repo.preload([:surveys, :groups])
+    end
+  end
+
+  def authorize_student(api_key) do
+    case api_key do
+      nil ->
+        nil
+
+      api_key ->
+        Repo.one(
+          from u in User,
+            where: u.api_key == ^api_key,
+            where: u.role == ^:Student
         )
         |> Repo.preload([:surveys, :groups])
     end

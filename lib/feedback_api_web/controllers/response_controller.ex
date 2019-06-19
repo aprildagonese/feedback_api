@@ -4,7 +4,7 @@ defmodule FeedbackApiWeb.ResponseController do
   alias FeedbackApiWeb.ResponseCreateFacade
 
   def create(conn, params) do
-    case User.authorize(params["api_key"]) do
+    case User.authorize_student(params["api_key"]) do
       nil ->
         conn |> put_status(:unauthorized) |> json(%{error: "Invalid API Key"})
 
