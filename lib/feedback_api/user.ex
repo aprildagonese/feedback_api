@@ -17,8 +17,9 @@ defmodule FeedbackApi.User do
     belongs_to :cohort, FeedbackApi.Cohort
     has_many :responses, FeedbackApi.Response, foreign_key: :reviewer_id
     has_many :ratings, FeedbackApi.Response, foreign_key: :recipient_id
-    has_many :surveys, FeedbackApi.Survey
+    # has_many :surveys, FeedbackApi.Survey
     many_to_many :groups, FeedbackApi.Group, join_through: FeedbackApi.GroupMember
+    many_to_many :surveys, FeedbackApi.User, join_through: FeedbackApi.SurveyOwner
 
     timestamps()
   end

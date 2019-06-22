@@ -12,6 +12,7 @@ defmodule FeedbackApi.Survey do
     belongs_to :user, User
     has_many :groups, Group
     has_many :questions, Question
+    many_to_many :owners, FeedbackApi.User, join_through: FeedbackApi.SurveyOwner
 
     timestamps()
   end
