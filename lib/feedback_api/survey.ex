@@ -32,7 +32,8 @@ defmodule FeedbackApi.Survey do
         left_join: cohort in assoc(users, :cohort),
         left_join: questions in assoc(survey, :questions),
         left_join: answers in assoc(questions, :answers),
-        where: survey.user_id == ^user.id,
+        left_join: owners in assoc(survey, :owners),
+        where: owners.id == ^user.id,
         order_by: [asc: survey.status, desc: survey.inserted_at, desc: answers.value],
         preload: [
           groups: {groups, users: {users, cohort: cohort}},

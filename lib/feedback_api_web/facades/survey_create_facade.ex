@@ -6,12 +6,23 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
     Repo.transaction(fn ->
       try do
         survey =
-          Ecto.build_assoc(user, :surveys, %Survey{
+          # Ecto.build_assoc(user, :surveys, %Survey{
+          #   name: arguments["surveyName"],
+          #   status: parse_status(arguments["status"]),
+          #   exp_date: parseDateTime(arguments["surveyExpiration"])
+          # })
+          # |> Repo.insert!()
+
+          %Survey{
             name: arguments["surveyName"],
             status: parse_status(arguments["status"]),
             exp_date: parseDateTime(arguments["surveyExpiration"])
-          })
+          }
           |> Repo.insert!()
+          |> Repo.preload(:owners)
+          |> Ecto.Changeset.change()
+          |> Ecto.Changeset.put_assoc(:owners, [user])
+          |> Repo.update!()
 
         create_groups(survey, arguments["groups"])
         create_questions(survey, arguments["questions"])
