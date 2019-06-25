@@ -117,6 +117,7 @@ defmodule FeedbackApi.Survey do
         where: survey.status == 1,
         where: users.id != ^user.id,
         where: groups.id in ^Enum.map(user.groups, fn group -> group.id end),
+        order_by: [desc: survey.id],
         preload: [
           groups: {groups, users: {users, cohort: cohorts}},
           questions: {questions, answers: answers}
