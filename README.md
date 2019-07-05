@@ -916,6 +916,7 @@ Sample Response:
     "name" => "Sal Espinosa"
   }
 ]
+```
 
 ## Getting Started
 
