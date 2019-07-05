@@ -69,6 +69,16 @@ defmodule FeedbackApi.User do
     )
   end
 
+  def active_instructors(requester) do
+    Repo.all(
+      from u in User,
+        where: u.role == ^:Instructor,
+        where: u.status == ^:Active,
+        where: u.id != ^requester.id,
+        order_by: [asc: u.id]
+    )
+  end
+
   def by_program(program) do
     Repo.all(
       from u in User,
