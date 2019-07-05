@@ -6,7 +6,7 @@ defmodule FeedbackApiWeb.Staff.InstructorsControllerTest do
    setup do
       instructor_1 = %User{name: "Mike Dao", api_key: "redlobster", role: :Instructor} |> Repo.insert!()
       instructor_2 = %User{name: "Josh Mejia", api_key: "getofftheshed", role: :Instructor} |> Repo.insert!()
-      inactive_instructor = %User{name: "Hashtag Steve", status: :Inactive, role: :Instructor} |> Repo.insert!()
+      inactive_instructor = %User{name: "Hashtag Steve", api_key: "inactive", status: :Inactive, role: :Instructor} |> Repo.insert!()
       student = %User{name: "Tyler", api_key: "dota", role: :Student} |> Repo.insert!()
       {:ok, users: [instructor_1, instructor_2, inactive_instructor, student]}
    end
