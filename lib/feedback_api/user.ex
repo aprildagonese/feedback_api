@@ -38,7 +38,8 @@ defmodule FeedbackApi.User do
         Repo.one(
           from u in User,
             where: u.api_key == ^api_key,
-            where: u.role == ^:Instructor
+            where: u.role == ^:Instructor,
+            where: u.status == ^:Active
         )
         |> Repo.preload([:surveys, :groups])
     end
