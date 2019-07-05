@@ -1,4 +1,4 @@
-defmodule FeedbackApiWeb.Staff.InstructorsControllerTest do
+defmodule FeedbackApiWeb.Staff.InstructorControllerTest do
    use FeedbackApiWeb.ConnCase
 
    alias FeedbackApi.{Repo, User}

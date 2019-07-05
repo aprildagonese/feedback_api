@@ -1,4 +1,4 @@
-defmodule FeedbackApiWeb.Api.V2.Staff.InstructorsController do
+defmodule FeedbackApiWeb.Api.V2.Staff.InstructorController do
    use FeedbackApiWeb, :controller
 
    alias FeedbackApi.User
