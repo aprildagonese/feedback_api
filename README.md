@@ -7,6 +7,8 @@ For instructions on installation and requirements, see [Getting Started](#gettin
 
 Base url: https://api.turingfeedback.com
 
+### API V1
+
 [POST /api/v1/users/register](#post-apiv1usersregister)
 
 [POST /api/v1/users/login](#post-apiv1userslogin)
@@ -34,6 +36,10 @@ Base url: https://api.turingfeedback.com
 [GET /api/v1/surveys/closed](#post-apiv1surveysclosed)
 
 [POST /api/v1/responses](#post-apiv1responses)
+
+### API V2
+
+[GET /api/v2/staff/instructors](#get-apiv2staffinstructors)
 
 ## For Routes Requiring Authorization:
 
@@ -890,6 +896,26 @@ Sample Response:
 {
   "success": "Responses have been stored"
 }
+```
+
+## GET /api/v2/staff/instructors
+
+Purpose: To retreive the listing of active instructors in the application
+
+Params: API Key of an instructor account is required to be passed with key `api_key`
+
+Sample Response:
+``` JSON
+[
+  {
+    "id" => 2,
+    "name" => "Josh Mejia"
+  },
+  {
+    "id" => 3,
+    "name" => "Sal Espinosa"
+  }
+]
 ```
 
 ## Getting Started

@@ -38,7 +38,8 @@ defmodule FeedbackApi.User do
         Repo.one(
           from u in User,
             where: u.api_key == ^api_key,
-            where: u.role == ^:Instructor
+            where: u.role == ^:Instructor,
+            where: u.status == ^:Active
         )
         |> Repo.preload([:surveys, :groups])
     end
@@ -66,6 +67,16 @@ defmodule FeedbackApi.User do
         where: u.role == ^:Student,
         order_by: [asc: u.id],
         preload: [cohort: cohorts]
+    )
+  end
+
+  def active_instructors(requester) do
+    Repo.all(
+      from u in User,
+        where: u.role == ^:Instructor,
+        where: u.status == ^:Active,
+        where: u.id != ^requester.id,
+        order_by: [asc: u.id]
     )
   end
 

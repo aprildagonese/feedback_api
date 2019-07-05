@@ -43,4 +43,14 @@ defmodule FeedbackApiWeb.Router do
 
     resources "/responses", ResponseController, only: [:create]
   end
+
+  scope "/api", FeedbackApiWeb.Api, as: :api do
+    pipe_through :api
+
+    scope "/v2", V2, as: :v2 do
+      scope "/staff", Staff, as: :staff do
+        resources "/instructors", InstructorController, only: [:index]
+      end
+    end
+  end
 end
