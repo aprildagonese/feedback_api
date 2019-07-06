@@ -50,6 +50,7 @@ defmodule FeedbackApiWeb.Router do
     scope "/v2", V2, as: :v2 do
       scope "/staff", Staff, as: :staff do
         resources "/instructors", InstructorController, only: [:index]
+        resources "/surveys", SurveysController, only: [:create]
       end
     end
   end

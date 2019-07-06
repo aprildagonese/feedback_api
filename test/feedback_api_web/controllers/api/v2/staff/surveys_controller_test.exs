@@ -16,7 +16,7 @@ defmodule FeedbackApiWeb.Api.V2.Staff.SurveysControllerTest do
       test "Surveys can be created", %{conn: conn} do
          {:ok, body} = File.read("test/fixtures/v2_survey_create.json")
    
-         conn = post(conn, "/api/v2/surveys", body)
+         conn = post(conn, "/api/v2/staff/surveys", body)
    
          assert json_response(conn, 201) == %{"success" => "Survey stored"}
          assert Repo.aggregate(Survey, :count, :id) == 1
@@ -26,7 +26,7 @@ defmodule FeedbackApiWeb.Api.V2.Staff.SurveysControllerTest do
       test "Survey creation returns a 401 if no API key is provided", %{conn: conn} do
          {:ok, body} = File.read("test/fixtures/v2_survey_create_no_apikey.json")
          
-         conn = post(conn, "/api/v2/surveys", body)
+         conn = post(conn, "/api/v2/staff/surveys", body)
    
          assert json_response(conn, 401) == %{"error" => "Invalid API Key"}
       end
@@ -34,7 +34,7 @@ defmodule FeedbackApiWeb.Api.V2.Staff.SurveysControllerTest do
       test "Survey creation returns a 401 if a student API key is provided", %{conn: conn} do
          {:ok, body} = File.read("test/fixtures/v2_survey_create_student_apikey.json")
    
-         conn = post(conn, "/api/v2/surveys", body)
+         conn = post(conn, "/api/v2/staff/surveys", body)
    
          assert json_response(conn, 401) == %{"error" => "Invalid API Key"}
       end
