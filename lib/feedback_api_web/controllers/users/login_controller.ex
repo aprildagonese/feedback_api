@@ -1,7 +1,6 @@
 defmodule FeedbackApiWeb.Users.LoginController do
   use FeedbackApiWeb, :controller
   alias FeedbackApi.{User, Repo}
-  import Ecto.Query
 
   def create(conn, params) do
     user = Repo.get_by(User, email: params["email"])

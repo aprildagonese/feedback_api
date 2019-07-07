@@ -20,8 +20,24 @@ defmodule FeedbackApi.Survey do
   @doc false
   def changeset(survey, attrs) do
     survey
-    |> cast(attrs, [:name, :status, :exp_date, :user_id])
-    |> validate_required([:name, :status, :user_id])
+    |> cast(attrs, [:name, :status, :exp_date])
+    |> validate_required([:name, :status])
+  end
+
+  def create_from_request(params, user) do
+    Survey.changeset(%Survey{}, %{
+      name: params["surveyName"],
+      status: String.capitalize(params["status"] || "Active"),
+      exp_date:
+        params["surveyExpiration"] &&
+          NaiveDateTime.from_iso8601!(params["surveyExpiration"])
+          |> NaiveDateTime.truncate(:second)
+    })
+    |> put_assoc(:owners, [user | User.find_all_by_id(params["owners"])])
+    |> put_assoc(:groups, [])
+    |> put_assoc(:questions, [])
+
+    # |> Repo.insert!()
   end
 
   def for_user(user) do

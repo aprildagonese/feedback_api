@@ -29,6 +29,17 @@ defmodule FeedbackApi.User do
     |> validate_required([:name, :status, :role])
   end
 
+  def find_all_by_id(ids) when is_list(ids) do
+    Repo.all(
+      from u in User,
+        where: u.id in ^ids
+    )
+  end
+
+  def find_all_by_id(_ids) do
+    []
+  end
+
   def authorize_instructor(api_key) do
     case api_key do
       nil ->

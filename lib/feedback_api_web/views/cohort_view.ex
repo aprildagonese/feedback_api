@@ -1,7 +1,6 @@
 defmodule FeedbackApiWeb.CohortView do
   use FeedbackApiWeb, :view
   alias FeedbackApiWeb.CohortView
-  import Ecto.Enum
 
   def render("index.json", %{cohorts: cohorts}) do
     render_many(cohorts, CohortView, "cohort.json")

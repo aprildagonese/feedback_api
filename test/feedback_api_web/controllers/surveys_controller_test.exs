@@ -5,7 +5,7 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
   setup do
     %User{api_key: "wxyz897", role: :Instructor} |> Repo.insert!()
 
-    mikedaowl = 
+    mikedaowl =
       %User{api_key: "mikedaowl", role: :Instructor}
       |> Repo.insert!()
 
@@ -13,7 +13,7 @@ defmodule FeedbackApiWeb.SurveysControllerTest do
       %Survey{name: "A test survey"}
       |> Repo.insert!()
       |> Repo.preload(:owners)
-      |> Ecto.Changeset.change
+      |> Ecto.Changeset.change()
       |> Ecto.Changeset.put_assoc(:owners, [mikedaowl])
       |> Repo.update!()
 

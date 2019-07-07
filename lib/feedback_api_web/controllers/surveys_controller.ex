@@ -1,8 +1,7 @@
 defmodule FeedbackApiWeb.SurveyController do
   use FeedbackApiWeb, :controller
-  alias FeedbackApi.{Survey, Repo, User}
+  alias FeedbackApi.{Survey, User}
   alias FeedbackApiWeb.SurveyCreateFacade
-  import Ecto.Query
 
   def index(conn, params) do
     case User.authorize_instructor(params["api_key"]) do
