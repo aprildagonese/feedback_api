@@ -21,10 +21,11 @@ defmodule FeedbackApi.Question do
   end
 
   def create_for_survey(survey, params, answers) do
-    question = changeset(%Question{}, %{
-      text: params["questionTitle"]
-    })
-    |> put_assoc(:answers, answers)
+    question =
+      changeset(%Question{}, %{
+        text: params["questionTitle"]
+      })
+      |> put_assoc(:answers, answers)
 
     put_assoc(survey, :questions, [question | survey.changes.questions])
   end

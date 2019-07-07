@@ -21,8 +21,9 @@ defmodule FeedbackApi.Answer do
   end
 
   def create_from_request(nested_answer) do
-    answer = Map.values(nested_answer)
-    |> hd()
+    answer =
+      Map.values(nested_answer)
+      |> hd()
 
     changeset(%Answer{}, %{
       description: answer["description"],

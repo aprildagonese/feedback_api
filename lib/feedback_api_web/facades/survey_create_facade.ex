@@ -2,7 +2,7 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   alias FeedbackApi.{Survey, Question, Group, Answer, Repo}
 
   def create_survey(params, user) do
-   Survey.create_from_request(params, user)
+    Survey.create_from_request(params, user)
     |> create_groups(params["groups"])
     |> create_questions(params["questions"])
     |> Repo.insert()
@@ -13,10 +13,9 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   end
 
   defp create_questions(survey, questions) do
-    Enum.reduce(questions, survey, 
-      fn question, survey 
-        -> Question.create_for_survey(survey, question, create_answers(question["options"]))
-      end)
+    Enum.reduce(questions, survey, fn question, survey ->
+      Question.create_for_survey(survey, question, create_answers(question["options"]))
+    end)
   end
 
   defp create_answers(answers) do

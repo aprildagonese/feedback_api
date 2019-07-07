@@ -20,9 +20,10 @@ defmodule FeedbackApi.Group do
   end
 
   def create_for_survey(survey, group) do
-    group = Group.changeset(%Group{}, group)
-    |> put_assoc(:users, FeedbackApi.User.find_all_by_id(group["members_ids"]))
-    
+    group =
+      Group.changeset(%Group{}, group)
+      |> put_assoc(:users, FeedbackApi.User.find_all_by_id(group["members_ids"]))
+
     put_assoc(survey, :groups, [group | survey.changes.groups])
   end
 end

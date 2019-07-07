@@ -28,11 +28,15 @@ defmodule FeedbackApi.Survey do
     Survey.changeset(%Survey{}, %{
       name: params["surveyName"],
       status: String.capitalize(params["status"] || "Active"),
-      exp_date: params["surveyExpiration"] && (NaiveDateTime.from_iso8601!(params["surveyExpiration"]) |> NaiveDateTime.truncate(:second))
+      exp_date:
+        params["surveyExpiration"] &&
+          NaiveDateTime.from_iso8601!(params["surveyExpiration"])
+          |> NaiveDateTime.truncate(:second)
     })
     |> put_assoc(:owners, [user | User.find_all_by_id(params["owners"])])
     |> put_assoc(:groups, [])
     |> put_assoc(:questions, [])
+
     # |> Repo.insert!()
   end
 
