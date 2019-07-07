@@ -5,6 +5,8 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
   def create_survey(arguments, user) do
     Repo.transaction(fn ->
       try do
+        owners = User.find_all_by_id(arguments["owners"])
+
         survey =
           %Survey{
             name: arguments["surveyName"],
@@ -14,7 +16,7 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
           |> Repo.insert!()
           |> Repo.preload(:owners)
           |> Ecto.Changeset.change()
-          |> Ecto.Changeset.put_assoc(:owners, [user])
+          |> Ecto.Changeset.put_assoc(:owners, [user | owners])
           |> Repo.update!()
 
         create_groups(survey, arguments["groups"])
