@@ -1,8 +1,7 @@
 defmodule FeedbackApiWeb.UsersController do
   use FeedbackApiWeb, :controller
-  alias FeedbackApi.{User, Repo}
+  alias FeedbackApi.User
   alias FeedbackApiWeb.UsersUpdateFacade
-  import Ecto.Query
 
   def create(conn, _params) do
     case UsersUpdateFacade.update_data() do
