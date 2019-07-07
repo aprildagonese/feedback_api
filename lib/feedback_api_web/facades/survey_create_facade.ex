@@ -6,6 +6,12 @@ defmodule FeedbackApiWeb.SurveyCreateFacade do
     |> create_groups(params["groups"])
     |> create_questions(params["questions"])
     |> Repo.insert()
+    |> case do
+      {:ok, survey} -> FeedbackApi.SurveyNotificationSupervisor.send_notifications(survey)
+        {:ok, survey}
+
+      {:error, _changeset} -> {:error, "Missing required fields"}
+    end
   end
 
   defp create_groups(survey, groups) do

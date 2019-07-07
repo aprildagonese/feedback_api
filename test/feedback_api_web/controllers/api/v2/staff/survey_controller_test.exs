@@ -1,4 +1,4 @@
-defmodule FeedbackApiWeb.Api.V2.Staff.SurveysControllerTest do
+defmodule FeedbackApiWeb.Api.V2.Staff.SurveyControllerTest do
   use FeedbackApiWeb.ConnCase
 
   alias FeedbackApi.{Repo, Survey, User, SurveyOwner}
@@ -39,6 +39,15 @@ defmodule FeedbackApiWeb.Api.V2.Staff.SurveysControllerTest do
       conn = post(conn, "/api/v2/staff/surveys", body)
 
       assert json_response(conn, 401) == %{"error" => "Invalid API Key"}
+    end
+
+    test "Surveys with missing information result in a 422 and an error message", %{conn: conn} do
+      {:ok, body} = File.read("test/fixtures/v2_failed_survey_create.json") # Missing description for one question
+
+      conn = post(conn, "/api/v2/staff/surveys", body)
+
+      assert json_response(conn, 422) == %{"error" => "Missing required fields"}
+      assert Repo.aggregate(Survey, :count, :id) == 0
     end
   end
 end

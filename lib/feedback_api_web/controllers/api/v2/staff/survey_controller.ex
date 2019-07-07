@@ -1,4 +1,4 @@
-defmodule FeedbackApiWeb.Api.V2.Staff.SurveysController do
+defmodule FeedbackApiWeb.Api.V2.Staff.SurveyController do
   use FeedbackApiWeb, :controller
 
   alias FeedbackApi.User
