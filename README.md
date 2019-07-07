@@ -40,6 +40,7 @@ Base url: https://api.turingfeedback.com
 ### API V2
 
 [GET /api/v2/staff/instructors](#get-apiv2staffinstructors)
+[POST /api/v2/staff/surveys](#post-apiv2staffsurveys)
 
 ## For Routes Requiring Authorization:
 
@@ -917,6 +918,69 @@ Sample Response:
   }
 ]
 ```
+
+## POST /api/v2/surveys
+
+Purpose: To store a survey on behalf of the supplied users and the user who submitted the request using survey data in the request body
+
+Sample Request Body:
+   ``` JSON
+   {
+  "api_key": "aP1-k3Y-g0es-here",
+  "survey":
+    {
+      "surveyName": "Test",
+      "status": "closed",
+      "surveyExpiration": "2019-06-23T21:27:31",
+      "questions": [
+        {
+          "id": 1,
+          "questionTitle": "How well did this person communicate with the rest of the team?",
+          "options": [
+            { "option_1": {
+            	"pointValue": 1,
+              "description": "The person did not follow up regularly and often demonstrated unclear or inconsistent communication."
+            	}
+            },
+            {
+              "option_2": {
+              	  "pointValue": 2,
+            	 "description": "The person was mostly consistent but was sometimes unclear in a way that slowed down the team or created frustration."
+              }
+            },
+            {
+              "option_3": {
+              	 "value": 3,
+              "description": "The person overall contributed positively in terms of communication."
+              }
+            },
+            {
+            	"option_4": {
+            		"value": 4,
+              "description": "The person demonstrated clear and timely communication very consistently."
+            	}
+            }
+          ]
+        }
+      ],
+      "groups": [
+        {
+          "name": "Team1",
+          "members_ids": [
+            "7", "12", "4", "11"
+          ]
+        },
+        {
+          "name": "Team2",
+          "members_ids": [
+            "2", "13", "17", "9"
+          ]
+        }
+      ],
+      "owners": [42, 91]
+    }
+}
+   ```
 
 ## Getting Started
 
